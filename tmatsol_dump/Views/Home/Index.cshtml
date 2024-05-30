@@ -1,0 +1,788 @@
+﻿@model tmatsol_dump.Models.ContactUs
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!--Fall carousel carouselExampleIndicators-->
+
+<div id="popUpmain" style="display:none">
+    <div>
+        <button onclick="cl()">X</button>
+        <video id="video1" src="~/images/Gallery/THINK SOFTWARE FINAL.mp4" width="100%" height="50%" controls muted autoplay loop></video>
+    </div>
+</div>
+
+<section id="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="2500">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="9"></li>
+        </ol>
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <img class="w-100 carousel-img img-fluid" src="~/images/thinkrestaurantimg1.jpg" alt="Think POS Restaurant Software">
+
+                <div class="carousel-caption">
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="w-100 carousel-img" src="~/images/retailsw1.jpg" alt="Think POS Retail Software">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+            <div class="carousel-item">
+
+                <img class="w-100 carousel-img" src="~/images/Account.jpg" alt="Think POS Accounting Software">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+            <div class="carousel-item">
+
+                <img class="w-100 carousel-img" src="~/images/laundry.jpg" alt="Think POS Laundry Software">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+
+            <div class="carousel-item">
+
+                <img class="w-100 carousel-img" src="~/images/spa.jpg" alt="Think POS Saloon & Spa Software">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+            <div class="carousel-item">
+
+                <img class="w-100 carousel-img" src="~/images/car.jpg" alt="Think Car wash Software">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+            <div class="carousel-item">
+
+                <img class="w-100 carousel-img" src="~/images/meat.jpg" alt="Think Meat Shop Software">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+            <div class="carousel-item">
+
+                <img class="w-100 carousel-img" src="~/images/club.jpg" alt="Think Bar and Club Software">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+            <div class="carousel-item">
+
+                <img class="w-100 carousel-img" src="~/images/tour.jpg" alt="Think Tour and Tourism Software">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</section>
+<div style="position:fixed;width:100%;z-index:9999;">
+    <marquee behavior="scroll" direction="left" onmouseover="this.stop()" onmouseout="this.start()" loop>
+        @*<h1 style="color:maroon">Life Time Licence FREE.</h1>*@
+        <img src="~/images/ad.png" height="90" width="500" />
+    </marquee>
+</div>
+
+<!-- Products -->
+<div id="container1" class="container">
+
+    <div class="title-with-divider">
+        <span class="h1">Our Products</span>
+        <br />
+    </div>
+    <video id="video1" src="~/images/op.mp4" muted controls width="100%" height="450" autoplay loop></video>
+
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="~/images/logo.png" alt="Think Restaurant Management">
+                <div class="card-body">
+                    <h5 class="card-title">Think Restaurant Management</h5>
+                    <p class="card-text"><a href="#popUp" onclick="up()">Features ></a></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="~/images/logo.png" alt="Think Retail Management">
+                <div class="card-body">
+                    <h5 class="card-title">Think Retail Management</h5>
+                    <p class="card-text"><a href="#popUp" onclick="up1()">Features ></a></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="~/images/logo.png" alt="Think TMATS">
+                <div class="card-body">
+                    <h5 class="card-title">Think Accounting</h5>
+                    <p class="card-text"><a href="#popUp" onclick="up2()">Features ></a></p>
+                </div>
+            </div>
+
+        </div>
+
+        <br />
+        <!--Deck2-->
+        <div class="card-deck justify-content-center">
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="~/images/logo.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Think Laundry Management</h5>
+                    <p class="card-text"><a href="#popUp" onclick="up3()">Features ></a></p>
+
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="~/images/logo.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Think Saloon &amp; Spa Management </h5>
+                    <p class="card-text"><a href="#popUp" onclick="up4()">Features ></a></p>
+
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="~/images/logo.png" alt="Think TMATS">
+                <div class="card-body">
+                    <h5 class="card-title">Think Car Wash</h5>
+                    <p class="card-text"><a href="#popUp" onclick="up5()">Features ></a></p>
+
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="card-deck justify-content-around">
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="~/images/logo.png" alt="Think Restaurant Management">
+                <div class="card-body">
+                    <h5 class="card-title">Think Meat Shop</h5>
+                    <p class="card-text"><a href="#popUp" onclick="up6()">Features ></a></p>
+
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="~/images/logo.png" alt="Think Retail Management">
+                <div class="card-body">
+                    <h5 class="card-title">Think Bar and Club</h5>
+                    <p class="card-text"><a href="#popUp" onclick="up7()">Features ></a></p>
+
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="~/images/logo.png" alt="Think TMATS">
+                <div class="card-body">
+                    <h5 class="card-title">Think Tour and Tourism</h5>
+                    <p class="card-text"><a href="#popUp" onclick="up8()">Features ></a></p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<br />
+<!--Clients-->
+<div class="container">
+
+    <div id="clients-title" class="title-with-divider">
+        <span class="h1">Our Clients</span>
+    </div>
+
+    <!--Client Lopgos-->
+
+    <section id="clients">
+        <div class="grid">
+
+            <marquee behavior="scroll" direction="left" onmouseover="this.stop()" onmouseout="this.start()">
+                @for (int i = 0; i < 99; i++)
+                {
+                    <img class="w-100 carousel-img img-fluid" style="height:100px" src="~/images/Client_img/1.jpg" alt="1" />
+                    <img class="w-100 carousel-img img-fluid" style="height:100px" src="~/images/Client_img/2.jpg" alt="2" />
+                    <img class="w-100 carousel-img img-fluid" style="height:100px" src="~/images/Client_img/3.jpg" alt="3" />
+                    <img class="w-100 carousel-img img-fluid" style="height:100px" src="~/images/Client_img/4.jpg" alt="4" />
+                    <img class="w-100 carousel-img img-fluid" style="height:100px" src="~/images/Client_img/5.jpg" alt="5" />
+                    <img class="w-100 carousel-img img-fluid" style="height:100px" src="~/images/Client_img/6.jpg" alt="6" />
+                    <img class="w-100 carousel-img img-fluid" style="height:100px" src="~/images/Client_img/7.jpg" alt="7" />
+                }
+
+            </marquee>
+
+
+        </div>
+    </section>
+
+</div>
+
+<br />
+<!--Accomplishments-->
+<div class="container">
+
+    <div id="clients-title" class="title-with-divider">
+        <span class="h1">Accomplishments</span>
+    </div>
+
+    <section id="accomplishments">
+        <div class="card-deck justify-content-around row">
+            <div class="accomplishments-card client-services col-md-2 col-xs-2">
+                <img height="50%" width="65%" src="~/images/soc_icon/1.png" />
+                <div class="card-body">
+                    <h5 class="card-title"><span class="count">880</span></h5>
+                    <p class="card-text">CLIENTS</p>
+                </div>
+            </div>
+            <div class="accomplishments-card client-services col-md-2 col-xs-2">
+                <img height="50%" width="65%" src="~/images/soc_icon/2.png" />
+                <div class="card-body">
+                    <h5 class="card-title"><span class="count">6</span></h5>
+                    <p class="card-text">COUNTRIES</p>
+                </div>
+            </div>
+            <div class="accomplishments-card client-services col-md-2 col-xs-2">
+                <img height="50%" width="65%" src="~/images/soc_icon/3.png" />
+                <div class="card-body">
+                    <h5 class="card-title"><span class="count">96</span>%</h5>
+                    <p class="card-text">SATISFACTION</p>
+                </div>
+            </div>
+            <div class="accomplishments-card client-services col-md-2 col-xs-2">
+                <img height="50%" width="65%" src="~/images/soc_icon/4.png" />
+                <div class="card-body">
+                    <h5 class="card-title"><span class="count">16</span></h5>
+                    <p class="card-text">YEARS OF SERVICES</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<br />
+<!--Demo Request-->
+<div id="demo" class="pt-lg-6 pb-lg-6 pt-5">
+    <div class="container text-center">
+        <h2 id="demoh2" class="text-uppercase">Request For Demo</h2>
+        <h4 id="demoh4" class="text-uppercase">provide your Email and Contact Number for free live demo</h4>
+
+        @using (Html.BeginForm("contactusIndex", "Home", FormMethod.Post, new { id = "demoform" }))
+        {
+            <div class="form-group row pt-lg-4 pb-lg-4 pt-4">
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger text-left" })
+
+                <div class="col-sm-12 col-md-4 offset-md-4">
+                    @Html.EditorFor(model => model.emailId, new { htmlAttributes = new { @class = "form-control mb-4 demoControl", placeholder = "Enter email", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.emailId, "", new { @class = "text-danger text-left" })
+                </div>
+                <div class="col-sm-12 col-md-4 offset-md-4">
+                    @Html.EditorFor(model => model.contactNo, new { htmlAttributes = new { @class = "form-control mb-4 demoControl", placeholder = "Enter Contact Number", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.contactNo, "", new { @class = "text-danger text-left" })
+                </div>
+                <div class="col-sm-12 col-md-4 offset-md-4">
+                    <div class="g-recaptcha" data-sitekey="6Lc_938UAAAAAOk6We-yc_7Vw2aN43wyQWsDV8TJ" data-callback='onSubmit' required></div>
+                </div>
+                <div class="col-sm-12 col-md-2 offset-md-5 mt-3">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block text-uppercase bg-primary demobtn" />
+                </div>
+            </div>
+        }
+        <div id="dm" class="m-5 title-with-divider">
+            <span>or</span>
+        </div>
+
+        <div class="m-2 pb-2">
+            <a id="whatsapp-btn" target="_blank" title="Whatsapp us"
+               href="https://api.whatsapp.com/send?phone=971555614103&text=Hello,%20Give%20Me%20Further%20Information%20About%20Product.%20via%20WhatsApp%20Click%20To%20Chat">
+                <img src="~/images/soc_icon/whatsapp-btn-image.png" class="wsbtnimg img-fluid p-0" style="height: 90px; max-width: 300px; background-color: #007bff; border-radius: 25%;" />
+            </a>
+        </div>
+    </div>
+</div>
+
+@*Popup Featurs*@
+<div id="popUp" style="display:none">
+    <div>
+        <button onclick="cl1()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Features</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6>Think Restaurant Management</h6></center>
+                        <center>
+                            <p style="text-align:justify">
+                                <b>
+                                    - DINE-IN.<br />
+                                    - TABLE.<br />
+                                    - COMBINE BILL.<br />
+                                    - TRANSFER BILL.<br />
+                                    - SPLIT BILL.<br />
+                                    - CHANGE MODE.<br />
+                                    - TABLE OVER STAY TIME.<br />
+                                    - SECURTY CANCEL BILL.<br />
+                                    - TREMENDOUS REPROTS.<br />
+                                    - AUTOMETECE EMAIL.<br />
+                                    - DAILY CUSTOMER OUTSTANDING BILL PRINT.<br />
+                                    - TAKEAWAY.<br />
+                                    - DELIVERY ORDER.<br />
+                                    - CUSTOMER DETAILS.<br />
+                                    - SMS FACILITY.<br />
+                                    - DRIVER WISE SETTLEMENT & REPORTS.<br />
+                                    - CREDIT SALES.
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="popUp1" style="display:none">
+    <div>
+        <button onclick="cl1()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Features</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6>Think Retail Management</h6></center>
+                        <center>
+                            <p style="text-align:justify">
+                                <b>
+                                    - SALES.<br />
+                                    - CASH & SETTLE BY VISA, MASTER, DEBIT ETC.<br />
+                                    - BARCODE SCANE FACITY.<br />
+                                    - HOLD, CALL.<br />
+                                    - PRICE CHECK AND STOCK MUTLI BARNCH.<br />
+                                    - CREDIT SALES FACILITY.<br />
+                                    - SALES RETURN.<br />
+                                    - SECURTY FOR CANCEL BILL.<br />
+                                    - TREMENDUS REPORTS.<br />
+                                    - CLOSING AUTOMETICE EMAIL FACILITY.<br />
+                                    - CREDIT SALES OUT STANDING BILL AND REPORT.<br />
+                                    - INVENTORY.<br />
+                                    - AUTOMEC SALES AND INVENTORY TO BACKOFFICE.<br />
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="popUp2" style="display:none">
+    <div>
+        <button onclick="cl1()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Features</h4>
+                <hr />
+                <div style="float:left;width:100%;">
+                    <div style="height:100%;float:left;width:50%;">
+                        <center><h6>Think Accounting</h6></center>
+                        <center>
+                            <p style="text-align:justify;width:50%;">
+                                <b>
+                                    - SAELS.<br />
+                                    - SALES RETUREN.<br />
+                                    - PURCHASE.<br />
+                                    - PURCHASE RETURN.<br />
+                                    - STOCK IN.<br />
+                                    - PURCHASE AGAINST STOCK IN.<br />
+                                    - DELIVERY ORDER.<br />
+                                    - DELIVERY ORDER AGAISNT INVOICE.<br />
+                                    - STOCK TRANSFER.<br />
+                                    - STOCK DICLRAIITON.<br />
+                                    - DABIT NOTE.<br />
+                                    - CREDIT NOTE.<br />
+                                    - CHEQUE PRINTING.<br />
+                                    - PDC PROCCESS.<br />
+                                    - PAYEMNT VOCHER.<br />
+                                    - RECEIPT VOUCHER.<br />
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                    <div style="height:100%;float:left;width:50%;">
+                        <center><h6>REPROTS</h6></center>
+                        <center>
+                            <p style="text-align:justify;width:50%;">
+                                <b>
+                                    - STOCK REPORTS.<br />
+                                    - STOCK IN- OUT.<br />
+                                    - INVENTORY.<br />
+                                    - AGEING RPROTS.<br />
+                                    - ACCOUNTS PAYBALE.<br />
+                                    - ACCOUNTS RECEBLE.<br />
+                                    - VAT TAX REPROTS.<br />
+                                    - PROFIT & LOSS.<br />
+                                    - ITEM INVENTORY RPOFTI WISE.<br />
+                                    - STOCK AGEING REPROTS.<br />
+                                    - CUSTOMER AGEING REPORTS.<br />
+                                    - CUSTOMER LIMIT WITH DAYS AND LIMIT AMOUNT.<br />
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="popUp3" style="display:none">
+    <div>
+        <button onclick="cl1()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Features</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6>Think Laundry Management</h6></center>
+                        <center>
+                            <p style="text-align:justify">
+                                <b>
+                                    - SALES.<br />
+                                    - LAUNDRY DELIVERY DAYS WISE.
+                                    - CASH & SETTLE BY VISA, MASTER, DEBIT ETC.<br />
+                                    - HOLD FOR DELIVERY DAYS.<br />
+                                    - CALL FOR FINAL INVOICE.<br />
+                                    - PRICE CHECK.<br />
+                                    - CREDIT SALES FACILITY.<br />
+                                    - SALES RETURN.<br />
+                                    - SECURTY FOR CANCEL BILL.<br />
+                                    - TREMENDUS REPORTS.<br />
+                                    - CLOSING AUTOMETICE EMAIL FACILITY.<br />
+                                    - CREDIT SALES.<br />
+                                    - OUT STANDING BILL AND REPORT.<br />
+                                    - AUTOMEC SALES TO BACKOFFICE.<br />
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="popUp4" style="display:none">
+    <div>
+        <button onclick="cl1()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Features</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6>Think Saloon & Spa Management</h6></center>
+                        <center>
+                            <p style="text-align:justify">
+                                <b>
+                                    - INBOUND (SERVIES SALES).<br />
+                                    - SALOON CHAIR WISE SERVICE.<br />
+                                    - APPOITMENT FACLITY.<br />
+                                    - INVENTROY PRODUCT FACLITY.<br />
+                                    - SECURTY CANCEL BILL.<br />
+                                    - TREMENDOUS REPROTS.<br />
+                                    - AUTOMETECE EMAIL.<br />
+                                    - DAILY CUSTOMER OUTSTANDING BILL PRINT.<br />
+                                    - CUSTOMER DETAILS.<br />
+                                    - SMS FACILITY.<br />
+                                    - REPORTS.<br />
+                                    - CREDIT SALES.
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="popUp5" style="display:none">
+    <div>
+        <button onclick="cl1()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Features</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6>Think Car Wash</h6></center>
+                        <center>
+                            <p style="text-align:justify">
+                                <b>
+                                    - SERVICE (SALES FACILITY, CREDITE SALES FACILITY).<br />
+                                    - CAR NAME AND CAR NUMBER FACILITY.<br />
+                                    - SECURTY CANCEL BILL.<br />
+                                    - TREMENDOUS REPROTS.<br />
+                                    - AUTOMETECE EMAIL.<br />
+                                    - DAILY CUSTOMER OUTSTANDING BILL PRINT.<br />
+                                    - CUSTOMER DETAILS.<br />
+                                    - SMS FACILITY.<br />
+                                    - CREDIT SALES.<br />
+                                    - ACCOUNTS.<br />
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="popUp6" style="display:none">
+    <div>
+        <button onclick="cl1()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Features</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6>Think Meat Shop</h6></center>
+                        <center>
+                            <p style="text-align:justify">
+                                <b>
+                                    - SALES.<br />
+                                    - BARCODE SCANE FACITY.<br />
+                                    - WEIGHT MACHINE BARCODE FACILITY.<br />
+                                    - ITEM MASTER WITH IMAGE.<br />
+                                    - GROUP MASTER WITH IMAGE.<br />
+                                    - CASH & SETTLE BY VISA, MASTER, DEBIT ETC.<br />
+                                    - HOLD, CALL.<br />
+                                    - PRICE CHECK AND STOCK MUTLI BARNCH.<br />
+                                    - CREDIT SALES FACILITY.<br />
+                                    - SALES RETURN.<br />
+                                    - SECURTY FOR CANCEL BILL.<br />
+                                    - TREMENDUS REPORTS.<br />
+                                    - CLOSING AUTOMETICE EMAIL FACILITY.<br />
+                                    - CREDIT SALES OUT STANDING BILL AND REPORT.<br />
+                                    - INVENTORY.<br />
+                                    - AUTOMEC SALES AND INVENTORY TO BACKOFFICE.<br />
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="popUp7" style="display:none">
+    <div>
+        <button onclick="cl1()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Features</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6>Think Bar and Club</h6></center>
+                        <center>
+                            <p style="text-align:justify">
+                                <b>
+                                    - DINE-IN.<br />
+                                    - TABLE.<br />
+                                    - COMBINE BILL.<br />
+                                    - TRANSFER BILL.<br />
+                                    - SPLIT BILL.<br />
+                                    - CHANGE MODE.<br />
+                                    - TABLE OVER STAY TIME.<br />
+                                    - SECURTY CANCEL BILL.<br />
+                                    - TREMENDOUS REPROTS.<br />
+                                    - AUTOMETECE EMAIL.<br />
+                                    - DAILY CUSTOMER OUTSTANDING BILL PRINT.<br />
+                                    - CUSTOMER DETAILS.<br />
+                                    - SMS FACILITY.<br />
+                                    - REPORTS.<br />
+                                    - CREDIT SALES.<br />
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="popUp8" style="display:none">
+    <div>
+        <button onclick="cl1()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Features</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6>Think Tour and Tourism</h6></center>
+                        <center>
+                            <p style="text-align:justify">
+                                <b>
+                                    - VISA STATUS MODUL.<br />
+                                    - VISA REQUEST ENTRY.<br />
+                                    - ACCEPTED AND REJECTION OF VISA.<br />
+                                    - PERSON ENTRY IN COUNTRY.<br />
+                                    - VISA EXTENTION.<br />
+                                    - RENEW VISA (FROM TRANSIT TO VISIT).<br />
+                                    - PERSON LEFT THE COUNTRY.<br />
+                                    - REPORT.<br />
+                                    - PURCHASE VISA FACILITY.<br />
+                                    - SAELS INVOICE FACILITY.<br />
+                                    - PAYMENT VOUCHER RECIPT VOUCHER.<br />
+                                    - COMPLETE ACCOUNTS FACILITY.<br />
+                                    - DABIT NOTE.<br />
+                                    - CREDIT NOTE.<br />
+                                    - CHEQUE PRINTING.<br />
+                                    - PDC PROCCESS.<br />
+                                    - PAYEMNT VOCHER.<br />
+                                    - RECEIPT VOUCHER.<br />
+                                    - COMPLETE ACCOUNTS FACILITY.<br />
+                                </b>
+                            </p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section headerscripts{
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        $(document).ready(function () {
+            Promise.all($("video").map(function () {
+                return new Promise(resolve => {
+                    $(this).one("loadedmetadata", resolve);
+                });
+            })).then(() => {
+                console.log(getMaxVideoLength());
+            });
+
+            setTimeout(function () {
+                $('#popUpmain').css('display', 'block');
+            }, 5000);
+
+        });
+        function cl() {
+            $('#popUpmain').css('display', 'none');
+            $('#video1').prop('muted', true);
+        };
+    </script>
+    <script>
+        function up() {
+            $('#popUp').css('display', 'block');
+        }
+        function up1() {
+            $('#popUp1').css('display', 'block');
+        }
+        function up2() {
+            $('#popUp2').css('display', 'block');
+        }
+        function up3() {
+            $('#popUp3').css('display', 'block');
+        }
+        function up4() {
+            $('#popUp4').css('display', 'block');
+        }
+        function up5() {
+            $('#popUp5').css('display', 'block');
+        }
+        function up6() {
+            $('#popUp6').css('display', 'block');
+        }
+        function up7() {
+            $('#popUp7').css('display', 'block');
+        }
+        function up8() {
+            $('#popUp8').css('display', 'block');
+        }
+        function cl1() {
+            $('#popUp').css('display', 'none');
+            $('#popUp1').css('display', 'none');
+            $('#popUp2').css('display', 'none');
+            $('#popUp3').css('display', 'none');
+            $('#popUp4').css('display', 'none');
+            $('#popUp5').css('display', 'none');
+            $('#popUp6').css('display', 'none');
+            $('#popUp7').css('display', 'none');
+            $('#popUp8').css('display', 'none');
+        };
+    </script>
+  
+}

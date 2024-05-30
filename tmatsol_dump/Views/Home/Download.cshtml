@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Download";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <!--<!DOCTYPE html>
+    <html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!-- Add icon library -->
+    @*</head>*@
+    @*<body>*@
+    <br />
+    <h1>Think Softwares Cloud</h1>
+
+    <p>The smart choice for Restaurant Management POS :</p>
+    <a class="btn" href="~/Setup/Setup_ThikSoftRestCloudSoftware.msi"><i class="fa fa-download"></i> Download</a>
+
+    <p>Software Requirement Specification:</p>
+    @*<button class="btn" style="width:100%"><i class="fa fa-download"></i> Download</button>*@
+    <p><B>OS : </B> Windows 7/8/10/11 </p>
+    <p><B>Bit : </B> 32x, 64x </p>
+    <p><B>Storage : </B> 2 GB RAM, 10 GB Internal </p>
+    <p><B>Processer : </B> Any From 2012 to Till </p>
+    <br>
+    <img src="~/images/thinkrestaurantimg1.jpg" width="100%" />
+    <br />
+    <br />
+    <h4>Think Cloud Restaurant Management</h4>
+    - DINE-IN.<br />
+    - TABLE.<br />
+    - COMBINE BILL.<br />
+    - TRANSFER BILL.<br />
+    - SPLIT BILL.<br />
+    - CHANGE MODE.<br />
+    - TABLE OVER STAY TIME.<br />
+    - SECURTY CANCEL BILL.<br />
+    - TREMENDOUS REPROTS.<br />
+    - AUTOMETECE EMAIL.<br />
+    - DAILY CUSTOMER OUTSTANDING BILL PRINT.<br />
+    - TAKEAWAY.<br />
+    - DELIVERY ORDER.<br />
+    - CUSTOMER DETAILS.<br />
+    @*- SMS FACILITY.<br />*@
+    - DRIVER WISE SETTLEMENT & REPORTS.<br />
+    - CREDIT SALES.
+    <Br>
+    @*</body>
+        </html>*@
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .btn {
+        background-color: red;
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+        /* Darker background on mouse-over */
+        .btn:hover {
+            background-color: RoyalBlue;
+            color: white;
+        }
+</style>
+<script src="~/Web_Report/TAB/jquery.min.js"></script>
+<script>
+    (function () {
+
+        // Ideal time in seconds
+        const idleDurationSecs = 10;
+
+        // Redirect idle users to this URL
+        const redirectUrl =
+            '/Home/Index';
+
+        // Variable to hold the timeout
+        let idleTimeout;
+
+        const resetIdleTimeout = function () {
+
+            // Clears the existing timeout
+            if (idleTimeout)
+                clearTimeout(idleTimeout);
+
+            // Set a new idle timeout to load the
+            // redirectUrl after idleDurationSecs
+            idleTimeout = setTimeout(() => location.href
+                = redirectUrl, idleDurationSecs * 1000);
+        };
+
+        // Init on page load
+        resetIdleTimeout();
+
+        // Reset the idle timeout on any of
+        // the events listed below
+        ['click', 'touchstart', 'mousemove']
+            .forEach(evt => document.addEventListener(
+                evt, resetIdleTimeout, false)
+            );
+    })();
+</script> 

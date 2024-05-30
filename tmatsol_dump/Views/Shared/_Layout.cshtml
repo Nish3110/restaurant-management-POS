@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title -Think Softwares</title>
+    <!--icons-->
+    <link rel="icon" href="~/images/icon1.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")   
+    @Scripts.Render("~/bundles/jquery")    
+</head>
+<body onload="myFunction()">
+    <div id="loading"></div>
+    @*navigation bar *@
+<div>
+    <div id="topheader" style="z-index: 1003">
+        <!--Navigation Bar-->
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light d-block">
+
+            @*mobile view menu *@
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @*mobile view menu *@
+            <div class="row">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <a class="navbar-brand" href="@Url.Action("Index","Home")">
+                        <img src="~/images/logo.png" height="50%" width="100%" title="Think softwares" />
+                    </a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active-nav">
+                            <a class="nav-link" id="Index" href="@Url.Action("Index","Home")" title="Home">@*<i class="fas fa-home"></i>*@<span class="sr-only">(current)</span>HOME<div class="shine"></div></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="About" href="@Url.Action("About","Home")" title="About">@*<i class="fas fa-stream"></i>*@ABOUT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contactus" href="@Url.Action("contactus","Home")" title="Contact Us">@*<i class="fas fa-headset"></i>*@CONTACT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Updates" href="@Url.Action("Updates","Home")" title="Updates">@*<i class="fas fa-arrow-circle-down"></i>*@UPDATES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Services" href="@Url.Action("services","Home")" title="Services">@*<i class="fas fa-users-cog"></i>*@SERVICES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Gallery" href="@Url.Action("Gallery","Home")" title="Gallery">@*<i class="far fa-image"></i>*@GALLERY</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Services" href="/Home/Index#container1" title="Products">@*<i class="fas fa-boxes"></i>*@PRODUCTS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="OurExpertise" href="@Url.Action("OurExpertise","Home")" title="OurExpertise">@*<i class="fa fa-id-card" aria-hidden="true"></i>*@&nbsp;OUREXPERTISE</a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Branches" href="@Url.Action("Branches","Home")" title="Branches">@*<i class="fa fa-id-card" aria-hidden="true"></i>*@&nbsp;BRANCHES</a>
+
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="@Url.Action("contactus","Home")" title="Services" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                &nbsp;BROCHURES
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @*<a class="dropdown-item" href="~/images/TMATS-Restro.pdf" download="TMATS_Leaflet">TMATS HOSPITALITY</a>
+                <a class="dropdown-item" href="~/images/TMATS-SALOON-SPA.pdf" download="TMATS_Leaflet">TMATS SALOON & SPA</a>
+                <a class="dropdown-item" href="~/images/TMATS-Retail.pdf" download="TMATS_Leaflet">TMATS Retail</a>
+                <a class="dropdown-item" href="~/images/TMATS-Accounting.pdf" download="TMATS_Leaflet">TMATS Accounting</a>*@
+                                <a class="dropdown-item" href="~/images/TMATS-Restro.pdf" target="_blank">TMATS HOSPITALITY</a>
+                                <a class="dropdown-item" href="~/images/TMATS-SALOON-SPA.pdf" target="_blank">TMATS SALOON & SPA</a>
+                                <a class="dropdown-item" href="~/images/TMATS-Retail.pdf" target="_blank">TMATS Retail</a>
+                                <a class="dropdown-item" href="~/images/TMATS-Accounting.pdf" target="_blank">TMATS Accounting</a>
+                            </div>
+                        </li>
+                        @*<li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="@Url.Action("contactus","Home")" title="Services" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                &nbsp;Demos
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="~/Demo Videos/THINK Restro.mp4" target="_blank">TMATS HOSPITALITY</a>
+                <a class="dropdown-item" href="~/Demo Videos/THINK Saloon & SPA.mp4" target="_blank">TMATS SALOON & SPA</a>
+                <a class="dropdown-item" href="~/Demo Videos/THINK Retail.mp4" target="_blank">TMATS Retail</a>
+                <a class="dropdown-item" href="~/Demo Videos/THINK Accounting.mp4" target="_blank">TMATS Accounting</a>
+            </div>
+        </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link" id="Download" href="@Url.Action("Download","Home")" style="background-color:red;color:white;" title="Download">@*<i class="fa fa-id-card" aria-hidden="true"></i>*@&nbsp;<b>DOWNLOAD</b></a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="navbar-nav my-2 my-lg-0">
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://vat-calculator.org/vat-eau.html"><i class="fas fa-money-bill-wave"></i>&nbsp;VAT</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="Index#demo"><i class="fas fa-chalkboard-teacher"></i>&nbsp;DEMO</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    @*navigation END *@
+
+
+    @*<div class="mybody-container">*@
+    <div style="background-color:#0067B8;height:18px;width:100%;"> </div>
+
+    @RenderBody()
+    <div title="Whatsapp" class="social-media-icons fixed-bottom">
+        <a class="social-icon-link" target="_blank"
+           href="https://api.whatsapp.com/send?phone=971555614103&text=Hello,%20Give%20Me%20Further%20Information%20About%20Product.%20via%20WhatsApp%20Click%20To%20Chat">
+            <img src="~/images/soc_icon/WhatsApp-Icon1.png" class="whatsapp img-fluid"/>
+        </a>
+    </div>
+    <hr />
+    <!--FOOTER-->
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row justify-content-lg-around justify-content-md-center">
+                    <!--Company Info Section-->
+                    <div class="col-lg-3 col-md-6 footer-info text-uppercase">
+                        <div>
+                            <h3 class="mb-1 pb-0" style="border-bottom:1px solid #ff3a3a; border-radius:5%;">Think Softwares</h3>
+                            <div class="text-danger text-center mt-0 pt-0" style="font-size:80%;letter-spacing:2px;">Think POS, Think Softwares</div>
+                        </div>
+                        <p class="p-1 m-1" style="border-bottom:2px solid #000;"></p>
+                        <h4>Address:</h4>
+                        @*<p>304, Makeya Sharafi Building,<br />Besides York International Hotel,<br />Khalid Bin Waleed Road,<br />Bur Dubai,UAE&nbsp;<span class="text-danger">&hearts;</span>&nbsp;.</p>*@
+                        <p>2033, AL FALAH<br />INTERNATIONAL TRADING LLC<br /> 20th Floor<br /> The Burjuman Business Tower<br />Sheikh Zayed Street<br />Burjuman, Dubai, UAE&nbsp;<span class="text-danger">&hearts;</span>&nbsp;.</p>
+                        @*<a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1804.1695578216159!2d55.294104057978984!3d25.259175345966874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f433c1bc5f2b3%3A0x45f017c02fb79658!2sThink+Softwares!5e0!3m2!1sen!2sin!4v1544474614694"
+                                   title="Location Direction" class="btn btn-block text-center footer-btn" target="_blank">
+                                    <i class="fas fa-map-marker-alt"></i>&nbsp;Direction
+                                </a>
+                            </div>*@
+                        <div class="mapouter">
+                            <div class="gmap_canvas">
+                                <iframe width="400" height="180" id="gmap_canvas" src="https://maps.google.com/maps?q=burjuman%20business&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                <style>
+                                    .gmap_canvas {
+                                        overflow: hidden;
+                                        background: none !important;
+                                        height: 180px;
+                                        width: 400px;
+                                    }
+                                </style>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Links-->
+                    <div class="col-lg-3 col-md-6 footer-link text-uppercase">
+                        <h4> Navigation </h4>
+                        <ul>
+                            <li>
+                                <a class="" href="@Url.Action("Index","Home")">Home</a>
+                            </li>
+                            <li>
+                                <a class="" href="@Url.Action("About","Home")">About</a>
+                            </li>
+                            <li>
+                                <a class="" href="@Url.Action("contactus","Home")">Contact Us</a>
+                            </li>
+                            <li>
+                                <a class="" href="@Url.Action("services","Home")">Services</a>
+                            </li>
+                            <li>
+                                @*<a title="Back to home page" asp-controller="Home" asp-action="Index" asp-fragment="container1">URL</a>*@
+                                <a title="Back to home page" href="Index#container1">Products</a>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Contact-->
+                    <div class="col-lg-3 col-md-6 footer-contact text-uppercase">
+                        <div>
+                            <h4>Follow Us</h4>
+                            <a href="https://www.facebook.com/Al-Falah-International-Trading-Llc-693750267327405/" target="_blank" title="facebook" class="facebook"><i class="fab fa-facebook-square fa-2x"></i></a>
+                            <a href="https://www.youtube.com/channel/UCnqgFhsKqqhZJVPgRS2R9Mw/featured" target="_blank" title="youtube"><i class="fab fa-youtube fa-2x twitter"></i></a>
+                            <a href="https://www.instagram.com/thinksoftwares_dubai/" target="_blank" title="instagram"><i class="fab fa-instagram fa-2x instagram"></i></a>
+                        </div>
+                        <div>
+                            <h4>Contact Us</h4>
+                            <p>Feel Free to call Us Between 10am to 7pm GST</p>
+                            <a href="tel:+971505154103"
+                               title="Call" class="btn btn-block text-center footer-btn">
+                                <i class="fas fa-phone"></i>&nbsp;call
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--footer-bottom-->
+        <div class="rounded-bottom text-center">
+            <p class="text-uppercase">
+                <span>
+                    &copy;&nbsp;@DateTime.Now.Year &nbsp;
+                    <a href="#carousel" class="footer-bottom" title="Think Softwares">think softwares</a>
+                </span>
+
+                &nbsp;&cedil;&nbsp;
+
+                <span>
+                    <a href="#" class="footer-bottom" title="Site Map">Site Map</a>
+                </span>
+            </p>
+        </div>
+    </footer>
+</div>
+    @*</div> body tag division*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/tmatsCustomsMain.js"></script>
+    @RenderSection("scripts", required: false)
+    <script>
+        var preloader = document.getElementById('loading');
+        function myFunction() {
+            preloader.style.display = 'none';
+        }
+    </script>
+    @RenderSection("headerscripts", required: false)
+    <script>
+        jQuery(function ($) {
+            $(window).scroll(function fix_element() {
+                $('#topheader').css(
+                    $(window).scrollTop() > 100
+                        ? { 'position': 'fixed', 'top': '0px', 'background-color': '#fff', 'z-index': '2', 'width': '100%' }
+                        : { 'position': 'relative', 'top': 'auto', 'background-color': '#fff', 'width': '100%', 'z-index': '2' }
+                );
+                return fix_element;
+            }());
+        });
+    </script>
+</body>
+</html>

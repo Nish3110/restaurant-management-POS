@@ -1,0 +1,272 @@
+﻿@model Table_Cart_V2k20.Models.UserIndex
+@{
+    Layout = "~/Views/Shared/WebMenu/_Layout1.cshtml";
+    ViewBag.Title = "Welcome TMATS";
+}
+
+@*<div class="wrapper fadeInDown">
+    <div id="formContent">*@
+<!-- Tabs Titles -->
+<h2 class="active"> Welcome to TMATS </h2>
+
+<!-- Icon -->
+<div class="fadeIn first">
+    <img src="~/WebMenu/Think - Copy.png" style="width:50%;" id="icon" alt="User Icon" />
+    @*<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />*@
+</div>
+
+<!-- Login Form -->
+<form method="post">
+    @Html.DropDownListFor(m => m.Comp_Name, ViewBag.AList as SelectList, "Select Item", new { @id = "ddcompony", @class = "fadeIn second txt" })
+    @*<input type="text" id="login" class="fadeIn second" name="login" placeholder="login">*@
+    @*@Html.EditorFor(model => model.authcode, new { htmlAttributes = new { @class = "fadeIn third txt", type = "Password", autofocus = "autofocus", placeholder = "Passcode", required = "true" } })*@
+    @*<input type="text" id="password" class="fadeIn third" name="login" placeholder="password">*@
+    <input type="submit" class="fadeIn fourth" value="Start">
+
+</form>
+<!-- Remind Passowrd -->
+<div id="formFooter">
+    <h6 style="color:red;">@ViewBag.Error</h6>
+    @*<div id="LangDiv" style="display:none;"><a onclick="SetlangA();" id="langA" href="#">Arabic</a> &nbsp; <a onclick="SetlangE();" id="langE" href="#">English</a></div>*@
+</div>
+<div style="display:none">
+    <table>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td> Unique ID:</td>
+            <td><input type="text" id="fp"></td>
+        </tr>
+        <tr>
+            <td>Is Mobile:</td>
+            <td><input type="text" id="im"></td>
+        </tr>
+        <tr>
+            <td>OS:</td>
+            <td><input type="text" id="os"></td>
+        </tr>
+        <tr>
+            <td>OS Version:</td>
+            <td> <input type="text" id="osv"></td>
+        </tr>
+        <tr>
+            <td>Browser:</td>
+            <td>  <input type="text" id="brw"></td>
+        </tr>
+        <tr>
+            <td>LicenseKey:</td>
+            <td>  <input type="text" id="lk"></td>
+        </tr>
+        <tr>
+            <td>Start_date:</td>
+            <td>  <input type="text" id="sd"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+@*</div>
+    </div>*@
+@section scripts{
+    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+    <script src="~/Scripts/js/client.min.js"></script>
+    <script src="~/Scripts/js/jquery.min.js"></script>
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ClientJS/0.1.11/client.min.js"></script>*@
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            /* SecondLang();*/
+            //  FingerPrint();
+            //----back button disable ---------------
+            function disablePrev() { window.history.forward() }
+            window.onload = disablePrev();
+            window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+            //----back button disable ---------------
+
+            $('#ddcompony').ready(function () {
+                $.ajax({
+                    type: "post",
+                    url: "/RTC/GetMembers",
+                    // data: { cname: $('#txtgetid').val() },
+                    data: {},
+                    dataType: "json",
+                    traditional: true,
+                    success: function (data) {
+                        if (data.length > 0) {
+                            $('#ddcompony').html('');
+                            var options = '';
+                            //options += '<option value="Select">Select</option>';
+                            for (var i = 0; i < data.length; i++) {
+                                options += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                            }
+                            $('#ddcompony').append(options);
+                        }
+                        else {
+                            if (data.msg !== undefined) {
+                                alert(data.msg);
+                            }
+                        }
+                    }
+
+                });
+            });
+
+        });
+
+        function FingerPrint() {
+
+            var client = new ClientJS(); // Create A New Client Object
+            //var canvas = new CanvasPattern();
+
+            var fingerprint = client.getFingerprint(); // Calculate Device/Browser Fingerprint
+
+            var isMobile = client.isMobile(); // Check For Mobile
+
+            var OS = client.getOS(); // Get OS Version
+
+            var osVersion = client.getOSVersion(); // Get OS Version
+
+            var browser = client.getBrowser(); // Get Browser
+
+            var iscounter = localStorage.getItem('counter');
+
+            if (iscounter == null) {
+                localStorage.setItem('counter', 1);
+            }
+            var counter = localStorage.getItem('counter');
+
+            $.ajax({
+                type: "post",
+                //url: "/RTC/DeviceReg?fp=" + fingerprint + "!" + isMobile + "!" + OS + "!" + osVersion + "!" + browser,
+                url: "/Login/DeviceReg?fp=" + fingerprint + "&im=" + isMobile + "&os=" + OS + "&osv=" + osVersion + "&br=" + browser + "&counter=" + counter,
+                //data: JSON.stringify({ XmlParms: "cartdata" }),
+                data: {},
+                dataType: "json",
+                traditional: true,
+                success: function (json) {
+                    if (json.isRedirect) {
+                        window.location.href = json.redirectUrl;
+                    }
+                }
+            });
+            //$('#fp').attr("value", fingerprint);
+            //$('#im').attr("value", isMobile);
+            //$('#os').attr("value", OS);
+            //$('#osv').attr("value", osVersion);
+            //$('#brw').attr("value", browser);
+        }
+        //function loader() {
+        //    var preloader = document.getElementById('loading');
+        //      preloader.style.display = 'block';
+        //}
+    </script>
+  
+
+    @*Is Avil Language-------------------------------------------*@
+    <script>
+        function SecondLang() {
+            $.ajax({
+                type: "get",
+                url: "/Login/SecondLang",
+                data: {},
+                dataType: "json",
+                traditional: true,
+                success: function (json) {
+
+                    if (json.lang == "Arabic") {
+                        //alert(json.lang);
+                        $('#LangDiv').css('display', 'block');
+                        var x = localStorage.getItem("Lang");
+                        if (x == "") {
+                            localStorage.setItem("Lang", "English");
+                        }
+                        var y = localStorage.getItem("Lang");
+                        if (y == "Arabic") {
+                            $("#langA").css("color", "RED");
+                        }
+                        else {
+                            $("#langE").css("color", "RED");
+                        }
+
+
+                    }
+                }
+            });
+
+        }
+    </script>
+    @*Set Language To Arebic-------------------------------------------*@
+    <script>
+        function SetlangA() {
+            var text = $('#langA').text();
+
+            var x = localStorage.getItem("Lang");
+            if (x == text) {
+                alert("Already Set Arabic")
+            }
+            else {
+                localStorage.setItem("Lang", text);
+                $("#langA").css("color", "RED");
+                $("#langE").css("color", "Blue");
+            }
+
+        }
+        function SetlangE() {
+            var text = $('#langE').text();
+
+            var x = localStorage.getItem("Lang");
+            if (x == text) {
+                alert("Already Set English")
+            }
+            else {
+                localStorage.setItem("Lang", text);
+                $("#langE").css("color", "RED");
+                $("#langA").css("color", "Blue");
+            }
+        }
+    </script>
+    <style>
+        .txt {
+            background-color: #f6f6f6;
+            border: none;
+            color: #0d0d0d;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 5px;
+            width: 85%;
+            border: 2px solid #f6f6f6;
+            -webkit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            -ms-transition: all 0.5s ease-in-out;
+            -o-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+            .txt:focus {
+                background-color: #fff;
+                border-bottom: 2px solid #5fbae9;
+            }
+
+            .txt::placeholder {
+                color: #cccccc;
+            }
+    </style>
+
+}
+
+
+
+

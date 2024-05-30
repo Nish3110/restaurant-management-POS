@@ -1,0 +1,83 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Think Softwares";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <!--icons-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="cover">
+    <header class="cover-header">
+        <div class="nav navbar navbar-expand-md cover-content" role="navigation" >
+            <div class="d-flex flex-row flex-fill  align-self-baseline">
+                <div class="cover flex-item navbar-brand text-center"><img src="~/images/think logo.jpeg" style="max-width:100px; max-height:80px;" title="Think Softwares" class="img-fluid ml-auto"/></div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button> 
+                <div class="collapse navbar-collapse navbar-dark" id="navbarSupportedContent">
+                   <ul class="navbar-nav flex-item d-inline-flex">
+                       <li class="nav-item cover active">
+                           <a class="nav-link" href="@Url.Action("Index","Home")"><i class="fas fa-home menu-header-text"></i><span class="">&nbsp;Home</span><span class="sr-only">(current)</span></a>
+                       </li>
+                       <li class="nav-item cover">
+                           <a class="nav-link" href="@Url.Action("About","Home")"><i class="fas fa-stream menu-header-text"></i>&nbsp;About</a>
+                       </li>
+                       <li class="nav-item cover dropdown">
+                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-boxes menu-header-text"></i><span class="">&nbsp;Products</span></a>
+                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                               <div class="dropdown-header">Accounting, Inventory and ERP</div>
+                               <a class="dropdown-item" href="#">TMATS Accounting</a>
+                               <a class="dropdown-item" href="#">TMATS Inventory</a>
+                               <a class="dropdown-item" href="#">TMATS Total</a>
+                               <div class="dropdown-divider"></div>
+                               <div class="dropdown-header">Point of Sale (POS)</div>
+                               <a class="dropdown-item" href="#">Point of Sale Restaurant</a>
+                               <a class="dropdown-item" href="#">Point of Sale Retail</a>
+                               <div class="dropdown-divider"></div>
+                               <div class="dropdown-header">Think Total</div>
+                               <a class="dropdown-item" href="#">Restaurant Management</a>
+                               <a class="dropdown-item" href="#">Retail Management</a>
+                           </div>
+                       </li>
+                       <li class="nav-item cover">
+                           <a class="nav-link" href="@Url.Action("contactus","Home")"><i class="fas fa-headset menu-header-text"></i>&nbsp;Contact us</a>
+                       </li>
+                       <li class="nav-item cover">
+                           <a class="nav-link" href="@Url.Action("About","Home")"><i class="fas fa-user-tie menu-header-text"></i>&nbsp;Our Clients</a>
+                       </li>
+                       <li class="nav-item cover">
+                           <a class="nav-link" href="@Url.Action("About","Home")"><i class="far fa-comments menu-header-text"></i>&nbsp;Feedback&nbsp;&frasl;&nbsp;Suggestions</a>
+                       </li>
+                   </ul>
+               </div>
+            </div>
+        </div>
+    </header>
+    <section class="about-section">
+        <div class="container d-flex">
+            <div class="flex-md-row flex-sm-column">
+                <div class="flex-item" id="divimgabout">
+                    <img id="imgabout" src="" title="Think Softwares" role="img"/>
+                </div>
+                <div class="flex-item" id="divcontentabout">
+
+                </div>
+            </div>
+        </div>
+    </section>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/customJS");
+    @RenderSection("scripts", required: false)*@
+</body>
+</html>
+

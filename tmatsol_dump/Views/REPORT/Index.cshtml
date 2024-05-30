@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="icon" href="~/images/icon.png" />
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .bgimg {
+            background-image: url('../../Web_Report/Images/bgm_r.jpg');
+            height: 100%;
+            width: 100%;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+            color: black;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 25px;
+        }
+
+        .topleft {
+            position: absolute;
+            top: 0;
+            left: 16px;
+        }
+
+        .bottomleft {
+            position: absolute;
+            bottom: 0;
+            left: 16px;
+        }
+
+        .middle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        hr {
+            margin: auto;
+            width: 40%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+
+    </div>
+    <div class="bgimg">
+        <div class="topleft">
+            <h2>Report Utility</h2>
+            <p><a href="@Url.Action("Index","Home")"><img src="../../images/think logo.jpeg" title="Think Softwares" style="height:20%; width:20%;" /></a></p>
+        </div>
+        <div class="middle">
+            @*<h4>Our website is under construction, We'll be here soon with our new website.</h4>*@
+            <h4>For Registraion :</h4>
+            <p>Please Contact to :<i class="fas fa-user-tie"></i> <b>Dharmesh Shah</b> <hr><br /><b><i class="fas fa-mobile-alt"></i>&nbsp;+971 50 515 4103<br /><i class="fab fa-whatsapp"></i>&nbsp;+971 55 561 4103<br /><i class="fas fa-envelope-open-text"></i>&nbsp;dcshah@eim.ae</b></p>
+            <hr>
+       
+            <p id="demo" style="font-size:50px"></p>
+        </div>
+        <div class="bottomleft">
+            <p>Return To Home &nbsp;<a href="@Url.Action("Index","Home")" style="text-decoration:none;border:1px solid black;color:darkslateblue;">Click Here</a></p>
+            @*<p>Set Local Value &nbsp;<a href="@Url.Action("SetLocal","Report")" style="text-decoration:none;border:1px solid black;color:darkslateblue;">Store Value</a></p>
+            <p>Clear Local Value &nbsp;<a href="@Url.Action("ClearLocal","Report")" style="text-decoration:none;border:1px solid black;color:darkslateblue;">Remove Value</a></p>*@
+        </div>
+    </div>
+      
+</body>
+</html>

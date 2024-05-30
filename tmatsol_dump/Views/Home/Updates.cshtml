@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Updates";
+}
+<hr/>
+    <h4 class="text-center text-uppercase">UPDATES</h4>
+    <hr />
+<div class="row justify-content-around text-center">
+    <div class="col-md-3 col-sm product-w-shadow UpdateCell" id="tmatsModalTrigger">
+        <img src="~/images/think logo.jpeg" title="Think Softwares |TMATS Software|Inventory Management Software |Accounting and Inventory Maangement Software" class="img-fluid productimg" role="img" />
+        <div><b>Think-TMATS-Accounting | Think-TMATS-Inventory | Think-TMATS-Total</b></div>
+        <div class="text-left"><span>Version</span>&nbsp;:&nbsp;<span></span></div>
+        <div class="text-left"><span>Upload Date</span>&nbsp;:&nbsp;<span></span></div>
+        <div class="btn-group">
+            <button id="infobtn" class="btn btn-outline-info" role="dialog" data-target="#tmatsModal" data-toggle="modal" onclick="@Url.Action("coming_soon", "Home", "")">More Info</button>
+            <a id="downloadbtn" title="Download" value="Download" class="btn btn-outline-success" role="button" href=@Url.Action("downloads", "Home", new { filename = "TMATS_MULTI.rar" })>Download</a>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm product-w-shadow UpdateCell" id="restModalTrigger">
+        <img src="~/images/restaurant.png" title="Restaurant Software|Restaurant Management Total Software" class="img-fluid productimg" role="img" />
+        <div><b>Think Restaurant | Think Restaurant Management Total</b></div>
+        <div class="text-left"><span>Version</span>&nbsp;:&nbsp;<span></span></div>
+        <div class="text-left"><span>Upload Date</span>&nbsp;:&nbsp;<span></span></div>
+        <div class="btn-group">
+            <button id="infobtn" class="btn btn-outline-info" role="dialog" data-target="#restModal" data-toggle="modal" onclick="@Url.Action("coming_soon", "Home", "")">More Info</button>
+            <a id="downloadbtn" title="Download" class="btn btn-outline-success" role="button" href="@Url.Action("downloads", "Home", new { filename = "POS_RESTAURANT.rar" })">Download</a>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm product-w-shadow UpdateCell" id="retailTrigger">
+        <img src="~/images/retail.png" title="Retail Software | Think Retail Software| Think Retail Managment Total Software" class="img-fluid productimg" role="img" />
+        <div><b>Think Retail | Think Retail with Accounting | Think Retail Managment Total</b></div>
+        <div class="text-left"><span>Version</span>&nbsp;:&nbsp;<span></span></div>
+        <div class="text-left"><span>Upload Date</span>&nbsp;:&nbsp;<span></span></div>
+        <div class="btn-group">
+            <button id="infobtn" class="btn btn-outline-info" role="dialog" data-target="#retailModal" data-toggle="modal" onclick="@Url.Action("coming_soon", "Home", "")">More Info</button>
+            <a id="downloadbtn" title="Download" class="btn btn-outline-success text-success" role="button" onclick="@Url.Action("downloads", "Home", new { filename = "POS_RETAIL.rar" })">Download</a>
+        </div>
+    </div>
+</div>
+<!--modal-->
+<!--TMATS-->
+<div id="tmatsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tmatsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-start">
+                    <div class="flex-item">
+                        <img src="~/images/think logo.jpeg" title="Think-TMATS-Accounting | Think-TMATS-Inventory | Think-TMATS-Total" class="img-fluid productimg" role="img" />
+                    </div>
+                    <div class="flex-item flex-column">
+                        <div><b>Think-TMATS-Accounting | Think-TMATS-Inventory | Think-TMATS-Total</b></div>
+                        <div><span>Version</span>&nbsp;:&nbsp;<span>@ViewBag.VersionTmats</span></div>
+                        <div><span>Upload Date</span>&nbsp;:&nbsp;<span>@ViewBag.VersionTmats</span></div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border:none;">
+                    <div class="row mr-auto">
+                        <button id="downloadThinkRest" class="btn btn-outline-success" role="button" onclick="@Url.Action("downloads", "Home", new { filename = "TMATS_MULTI.rar" })">Download</button>
+                    </div>
+                    <div class="row ml-auto">
+                        <button id="infoThinkRest" class="btn btn-outline-info disabled" role="button" onclick="@Url.Action("coming_soon", "Home", "")">More Info</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--RESTAURANT-->
+<div id="restModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="restModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-start">
+                    <div class="flex-item">
+                        <img src="~/images/restaurant.png" title="Think Restaurant | Think Restaurant Management Total" class="img-fluid productimg" role="img" />
+                    </div>
+                    <div class="flex-item flex-column">
+                        <div><b>Think Restaurant | Think Restaurant Management Total</b></div>
+                        <div><span>Version</span>&nbsp;:&nbsp;<span>@ViewBag.VersionTmats</span></div>
+                        <div><span>Upload Date</span>&nbsp;:&nbsp;<span>@ViewBag.VersionTmats</span></div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border:none;">
+                    <div class="row mr-auto">
+                        <button id="downloadThinkRest" class="btn btn-outline-success" role="button" onclick="@Url.Action("downloads", "Home", new { filename = "POS_RESTAURANT.rar" })">Download</button>
+                    </div>
+                    <div class="row ml-auto">
+                        <button id="downloadThinkRest" class="btn btn-outline-info disabled" role="button" onclick="@Url.Action("coming_soon", "Home", "")">More Info</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Retail-->
+<div id="retailModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="retailModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-start">
+                    <div class="flex-item">
+                        <img src="~/images/retail.png" title="Think Retail | Think Retail with Accounting | Think Retail Managment Total" class="img-fluid productimg" role="img" />
+                    </div>
+                    <div class="flex-item flex-column">
+                        <div><b>Think Retail | Think Retail with Accounting | Think Retail Managment Total</b></div>
+                        <div class="flex-item"><span>Version</span>&nbsp;:&nbsp;<span>@ViewBag.VersionRetail</span></div>
+                        <div><span>Upload Date</span>&nbsp;:&nbsp;<span>@ViewBag.VersionRetail</span></div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border:none;">
+                    <div class="row mr-auto">
+                        <button id="downloadThinkRest" class="btn btn-outline-success" role="button" onclick="@Url.Action("downloads", "Home", new{ filename="POS_RETAIL.rar"})">Download</button>
+                    </div>
+                    <div class="row ml-auto">
+                        <button id="downloadThinkRest" class="btn btn-outline-info disabled" role="button" onclick="@Url.Action("coming_soon","Home","")">More Info</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+

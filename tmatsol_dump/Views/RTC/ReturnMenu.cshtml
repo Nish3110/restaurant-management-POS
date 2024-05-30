@@ -1,0 +1,2571 @@
+﻿@using System.Configuration;
+@{
+    String currency_Code = "AED";
+    if (ConfigurationManager.AppSettings["Currency_code"] != null)
+    {
+        currency_Code = ConfigurationManager.AppSettings["Currency_code"].ToString();
+    }
+}
+@{
+    ViewBag.Title = "TEST";
+    Layout = "~/Views/Shared/_Layout_M.cshtml";
+}
+<div style="width:100%;">
+
+    <div id="preloading" style="display :none;">
+        @*<img src="~/Images/loader.gif" alt="Loader" style="width :100%;height:100vh;" />*@
+    </div>
+    @*-------------------TOP-----------------------*@
+    <div class="topnav" id="myTopnav">
+        <div id="topeng">
+            @*<input type="button" id="btnfsrc" value="[]" onclick="btnChrome_onclick();" />*@
+            <a href="#home" class="active" id="hideshow" onclick="myFunction()">SHOW</a>
+            <a href="#bn" id="billnote" onclick="openbillnote();">Bill Note</a>
+            <a href="#bn1">@Session["BillNote"]</a>
+            <a href="#oir" id="itemremark" onclick="showitemremark();">Open Item Remark</a>
+            <a href="#rmk" id="-2" onclick="Submenu(this.id);selectval(this.value);">Remark</a>
+            <a href="#cm" id="model1" data-toggle="modal" data-target="#exampleModal">Change MODE</a>
+            <a href="@Url.Action("Mode", "RTC")" id="btnMode">MODE</a>
+            <a href="@Url.Action("Menu", "RTC")" style="background-color:forestgreen;color:azure;" id="Retunmodebtn">Normal Mode</a>
+            <a href="#p" id="btnprnBill" onclick="prn();">PRINT</a>
+            @*<a href="#r" id="btnprnReceipt" onclick="prn_receipt();">RECEIPT</a>
+                <a href="#bp" id="btnprnimg" onclick="prn_img();">Bill PRINT</a>*@
+            <a><b>View Bill :</b></a>
+            <a id="btnViewBill" onclick=" ViewBill();">@Session["Old_ref_no"]</a>
+            <a href="#cc" id="btnch">Change Caller</a>
+            <a href="@Url.Action("BillPrint", "RTC")" id="btnBill">Bills</a>
+            <a href="javascript:void(0);" class="icon" onclick="mynavFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+        <div id="toparbc" style="display:none;">
+            <a href="#home1" class="active" id="hideshowA" onclick="myFunction1()">SHOW</a>
+            <a href="#bn11" id="billnote" onclick="openbillnote();">Bill Note</a>
+            <a href="#bn10">@Session["BillNote"]</a>
+            <a href="#oir1" id="itemremark" onclick="showitemremark();">فتح ملاحظة البند</a>
+            <a href="#rmk1" id="-2" onclick="Submenu(this.id);selectval(this.value);">ملاحظة</a>
+            <a href="#cm1" id="model1" data-toggle="modal" data-target="#exampleModal">غير الطريقة</a>
+            <a href="@Url.Action("Mode", "RTC")" id="btnMode">الوضع</a>
+            <a href="@Url.Action("Menu", "RTC")" style="background-color:brown;color:azure;" id="Retunmodebtn">الوضع العادي</a>
+            <a href="#p1" id="btnprnBill" onclick="prn();">مطبعة</a>
+            @*<a href="#r1" id="btnprnReceipt" onclick="prn_receipt();">الإيصال</a>
+                <a href="#bp1" id="btnprnimg" onclick="prn_img();">مطبعة أل فاتورة</a>*@
+            <a><b>عرض الفاتورة :</b></a>
+            <a id="btnViewBill" onclick=" ViewBill();">@Session["Old_ref_no"]</a>
+            <a href="#cc1" id="btnchA">تغيير المتصل</a>
+            <a href="@Url.Action("BillPrint", "RTC")" id="btnBill">الفواتير</a>
+            <a href="javascript:void(0);" class="icon" onclick="mynavFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+    @*-------------------Top------------------------*@
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="nav nav-tabs menu-list" id="menu-list" style="border-bottom:none" role="tablist">
+                @*English Header*@
+                <div id="Header_eng">
+                    <div id="myDIV" class="cls table-responsive">
+                        <table>
+                            @*<tr>
+                                    <td> <a id="btnprnBill" class="btn btn-default cls" style="font-size:small;" onclick=" prn();">PRINT</a></td>
+                                </tr>*@
+                            <tr>
+                                <td> <h6 class="cls" style="color:white;"><b>Selected Table :</b></h6></td>
+                                <td>  <input class="cls" type="text" value="@Session["TableId"]" disabled /></td>
+                                <td> <h6 class="cls" style="color:white;"><b>Selected Group :</b></h6></td>
+                                <td> <input class="cls" type="text" id="selector" value="@Session["FirstMenu"]" disabled /></td>
+                                <td>  <h6 class="cls" style="color:white;"><b>Selected Mode :</b></h6></td>
+                                <td> <input class="cls" type="text" id="selector1" value="@Session["Mode"]" disabled /></td>
+                            </tr>
+                            <tr>
+                                <td> <h6 class="cls" style="color:white;"><b>Selected User :</b></h6></td>
+                                <td><input class="cls" type="text" id="selector2" value="@Session["UserType"]" disabled /></td>
+                                <td> <h6 class="cls" style="color:white;"><b>Selected Caller :</b></h6></td>
+                                <td> <input class="cls" type="text" id="selector" value="@Session["Caller"]" disabled /></td>
+                                <td> <h6 class="cls" style="color:white;"><b>PAX :</b></h6></td>
+                                <td><input class="cls" type="text" id="pax" value="@Session["PAX"]" disabled /><a id="editpax" class="btn btn-default cls" @*href="@Url.Action("PAX", "RTC")"*@ onclick="editPAX();">Edit</a></td>
+
+                                <!-- <td id="DemoCounter">@*<h1> @ViewBag.SaveError</h1>*@<label style="color:yellow;">Bills :@*<input type="text" id="counter" size="2" style="color:tomato" disabled />*@<input type="text" id="SCounter" size="2" value="@Session["Session_Counter"]" style="color:tomato" disabled />Time / </label><label style="color:yellow;"> @Session["MaXCount"] </label>  <a class="cls" href="@Url.Action("index2", "RTC")" style="background-color:#f44336;color:white;font-size:small;">Get License</a></td>
+                                <td style="color:white;"></td> -->
+                            </tr>
+                            <tr>
+                                <td id="DemoCounter"><label style="color:yellow;">Bills :<input type="text" id="SCounter" size="2" value="@Session["Session_Counter"]" style="color:yellow" disabled />Time / @Session["MaXCount"]</label><label style="color:yellow;"></label>@*<a class="btn btn-danger cls" href="@Url.Action("index2", "RTC")">Get License</a>*@</td>
+                                <!--<td style="color:white;">Bill : <a id="btnViewBill" class="btn btn-default cls" @*href="@Url.Action("BillPrint", "RTC")"*@ onclick=" ViewBill();">@Session["Old_ref_no"]</a></td>-->
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                @*ARABIC HEADER*@
+                <div id="Header_arbc" style="display:none;">
+
+                    <div id="myDIV1" class="cls table-responsive">
+                        <table>
+                            @*<tr>
+                                    <td> <a id="btnprnBill" class="btn btn-default cls" style="font-size:small;" onclick=" prn();">PRINT</a></td>
+                                </tr>*@
+                            <tr>
+                                <td> <h6 class="cls" style="color:white;"><b>الجدول المختار :</b></h6></td>
+                                <td>  <input class="cls" type="text" value="@Session["TableId"]" disabled /></td>
+                                <td> <h6 class="cls" style="color:white;"><b>مجموعة مختارة :</b></h6></td>
+                                <td> <input class="cls" type="text" id="selector" value="@Session["FirstMenu"]" disabled /></td>
+                                <td>  <h6 class="cls" style="color:white;"><b>الوضع المحدد :</b></h6></td>
+                                <td> <input class="cls" type="text" id="selector1" value="@Session["Mode"]" disabled /></td>
+                            </tr>
+                            <tr>
+                                <td> <h6 class="cls" style="color:white;"><b>المستخدم المحدد :</b></h6></td>
+                                <td><input class="cls" type="text" id="selector2" value="@Session["UserType"]" disabled /></td>
+                                <td> <h6 class="cls" style="color:white;"><b>المتصل المحدد :</b></h6></td>
+                                <td> <input class="cls" type="text" id="selector" value="@Session["Caller"]" disabled /></td>
+                                <td> <h6 class="cls" style="color:white;"><b>باكس :</b></h6></td>
+                                <td><input class="cls" type="text" id="pax" value="@Session["PAX"]" disabled /><a id="editpax" class="btn btn-default cls" @*href="@Url.Action("PAX", "RTC")"*@ onclick="editPAX();">Edit</a></td>
+
+                                <!-- <td id="DemoCounter">@*<h1> @ViewBag.SaveError</h1>*@<label style="color:yellow;">Bills :@*<input type="text" id="counter" size="2" style="color:tomato" disabled />*@<input type="text" id="SCounter" size="2" value="@Session["Session_Counter"]" style="color:tomato" disabled />Time / </label><label style="color:yellow;"> @Session["MaXCount"] </label>  <a class="cls" href="@Url.Action("index2", "RTC")" style="background-color:#f44336;color:white;font-size:small;">Get License</a></td>
+                                <td style="color:white;"></td> -->
+                            </tr>
+                            <tr>
+                                <td id="DemoCounter"><label style="color:yellow;">Bills :<input type="text" id="SCounter" size="2" value="@Session["Session_Counter"]" style="color:yellow" disabled />Time / @Session["MaXCount"]</label><label style="color:yellow;"></label>@*<a class="btn btn-danger cls" href="@Url.Action("index2", "RTC")">Get License</a>*@</td>
+                                <!--<td style="color:white;">Bill : <a id="btnViewBill" class="btn btn-default cls" @*href="@Url.Action("BillPrint", "RTC")"*@ onclick=" ViewBill();">@Session["Old_ref_no"]</a></td>-->
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            @*<div class="row">
+                    <div class="col-md-12">
+                        <div class="product-bit-title text-center">
+                            <h2>Shop</h2>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+    <div @*id="navmenu"*@ class="scrollmenu" role="presentation">
+        <div id="navmenu" class="scrollmenu" role="presentation">
+            @*<button type="button" class="btn btn-danger" href="#1" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true">{{m.Name}}</button>*@
+        </div>
+        <!--   <div class="mainmenu-area">
+                 <div class="container">
+                     <div class="row">
+                           <div class="navbar-header">
+                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                     <span class="sr-only">Toggle navigation</span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                 </button>
+             </div>
+             <div class="navbar-collapse collapse">
+                 <ul id="navmenu" class="nav navbar-nav">
+                     @*<li class="active"><a href="index.html">Home</a></li>
+                                         <li><a href="shop.html">Shop page</a></li>
+                         <li><a href="single-product.html">Single product</a></li>
+                         <li><a href="cart.html">Cart</a></li>
+                         <li><a href="checkout.html">Checkout</a></li>
+                         <li><a href="#">Category</a></li>
+                         <li><a href="#">Others</a></li>
+                         <li><a href="#">Contact</a></li>*@
+                 </ul>
+             </div>
+
+
+        </div>
+                </div>
+            </div>  -->
+        @*<button type="button" class="btn btn-danger" href="#1" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true">{{m.Name}}</button>*@
+    </div>
+    <div id="menu-details">
+
+        <div>
+            <div class="row">
+                <div class="container">
+
+                    <input type="text" style="display :inline;" id="searchKeyWord"
+                           placeholder="Enter your menu item" pattern="[A-Za-z ]" title="Only alphabets and space are allowed" required />
+                    <input type="hidden" id="parentID" />
+                    <div id="cartcount" style="display :inline;">
+                        @*<a href="cart.html" id="open_cart">Cart - <span>100</span> <i class="fa fa-shopping-cart"/></a>*@
+                        <button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;" href="#1">Cart Items : 0</button>
+                        <button type="button" class="btn btn-lg btn-success cart_show" id="open_cart1" style="width:170px;float:right;display:none;" href="#1">عناصر عربة التسوق : 0</button>
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="cls2">
+            @*<div class="single-product-area cls2">*@
+            <div class="zigzag-bottom"></div>
+            <div class="container">
+
+                <div class="row" id="fillmenu">
+                    @*  <div class="col-md-3 col-sm-6">
+                            <div class="single-shop-product">
+                                <div class="product-upper">
+                                    <img src="img/product-4.jpg" alt="">
+                                </div>
+                                <h2><a href="#">Apple new mac book 2015 March :P</a></h2>
+                                <div class="product-carousel-price">
+                                    <ins>$899.00</ins> <del>$999.00</del>
+                                </div>
+
+                                <div class="product-option-shop">
+                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="https://www.freshdesignweb.com/canvas/shop/?add-to-cart=70">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*-------------------Cart---------*@
+    @*<div class="col-sm-offset-7 col-sm-5" id="cart-details" style="display:none;text-align:right">*@
+    <div class="col-sm-offset-1" id="cart-details" style="display:none;text-align:right">
+        <div class="panel panel-default" style="text-align:left">
+            <div id="CartHeadEng">
+                <div class="panel-heading"><b>Cart Summary</b> &nbsp; &nbsp;<button type="button" class="btn btn-success cart_show" id="back_menu" style="display:none;" href="#1">Back to Menu</button>  </div>
+            </div>
+            <div id="CartHeadArbc" style="display:none;">
+                <div class="panel-heading"><b>ملخص العربة</b> &nbsp; &nbsp;<button type="button" class="btn btn-success cart_show" id="back_menu1" style="display:none;" href="#1">عودة</button> </div>
+            </div>
+
+            <div id="cartdetails" class="panel-body">
+                <div class="list-group" style="height:290px;overflow:auto">
+                    <table class="fillcartitem table-responsive" id="fillcartitem">
+                    </table>
+                </div>
+                <div>
+                    <table>
+                        <tr class="list-group-item">
+                            <td></td>
+                            <td class="text-center"></td>
+                            <td class="text-center">
+                                <b>Total Amount:</b>
+                            </td>
+                            <td class="text-center" id="total">
+                            </td>
+                        </tr>
+                        <tr class="list-group-item" id="Cart_btn_Eng">
+                            <td colspan="2" style="padding:5px;">
+                                <button type="button" id="btn-sbt" class="btn btn-success btn-number" onclick="insert()" disabled>
+                                    @*data-toggle="modal" data-target="#exampleModal2">*@
+                                    Submit Order
+                                </button>
+                            </td>
+                            <td colspan="2">
+                                <button type="button" id="btn-cnl" class="btn btn-danger btn-number" href="#1" onclick="clearcart()" disabled>
+                                    Cancel Order
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        <tr class="list-group-item" id="Cart_btn_Arbc" style="display:none;">
+                            <td colspan="2" style="padding:5px;">
+                                <button type="button" id="btn-sbt1" class="btn btn-success btn-number" onclick="insert()" disabled>
+                                    @*data-toggle="modal" data-target="#exampleModal2">*@
+                                    إرسال
+                                </button>
+                            </td>
+                            <td colspan="2">
+                                <button type="button" id="btn-cnl1" class="btn btn-danger btn-number" href="#1" onclick="clearcart()" disabled>
+                                    يلغي
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    @*-------------------Cart---------*@
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Change Mode</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*<div class="homepage-menu-area" style="background: rgba(0, 0, 0, 0.3)">*@
+                    <div class="homepage-menu-area" style="background: rgba(0, 0, 0, 0)">
+
+                        <div class="container" style="width:100%">
+                            <div class="row">
+                                <div class="total-menu-area">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <form method="post">
+                                            <div id="Tab" style="text-align:center">
+
+                                                @*For English*@
+
+                                                <div id="eng">
+                                                    <button type="button" class="tb" value="DINE IN" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px;width: 100%;max-width: 180px; box-sizing: border-box;" id="1" onclick="chgm(this.value)">
+                                                        <img src="~/Content/Ecom/img/icons/dining art.png" height="150px" width="190px" />
+                                                        DINE IN
+                                                    </button>
+
+                                                    @if (System.Configuration.ConfigurationManager.AppSettings["AllowTakeAway"].ToString() == "Yes")
+                                                    {
+                                                        <button type="button" class="tb" value="TAKE AWAY" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px;width: 100%;max-width: 180px; box-sizing: border-box;" id="2" onclick="chgm(this.value)">
+                                                            <img src="~/Content/Ecom/img/icons/tak away.png" height="150px" width="190px" />
+                                                            TAKE AWAY
+                                                        </button>
+                                                    }
+
+                                                    @if (System.Configuration.ConfigurationManager.AppSettings["AllowDelivery"].ToString() == "Yes")
+                                                    {
+                                                        <button type="button" class="tb" value="DELIVERY" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px;width: 100%;max-width: 180px; box-sizing: border-box;" id="3" onclick="chgm(this.value)">
+                                                            <img src="~/Content/Ecom/img/icons/delivery copy.png" height="150px" width="190px" />
+                                                            DELIVERY
+                                                        </button>
+                                                    }
+
+                                                    @if (System.Configuration.ConfigurationManager.AppSettings["AllowCorporate"].ToString() == "Yes")
+                                                    {
+                                                        <button type="button" class="tb" value="CORPORATE" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px;width: 100%;max-width: 180px; box-sizing: border-box;" id="4" onclick="chgm(this.value)">
+                                                            <img src="~/Content/Ecom/img/icons/corporate copy.png" height="150px" width="190px" />
+                                                            CORPORATE
+                                                        </button>
+                                                    }
+                                                </div>
+                                                @*For Arabic*@
+                                                <div id="arbc" style="display:none;">
+                                                    <button type="submit" value="DINE IN" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 20px;width: 100%;max-width: 180px; box-sizing: border-box;" id="1" onclick="chgm(this.value)">
+                                                        <img src="~/Content/Ecom/img/icons/dining art.png" />
+                                                        طلبات داخلية
+                                                    </button>
+
+                                                    @if (System.Configuration.ConfigurationManager.AppSettings["AllowTakeAway"].ToString() == "Yes")
+                                                    {
+                                                        <button type="submit" value="TAKE AWAY" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 20px;width: 100%;max-width: 180px; box-sizing: border-box;" id="2" onclick="chgm(this.value)">
+                                                            <img src="~/Content/Ecom/img/icons/tak away.png" />
+                                                            استقبال
+                                                        </button>
+                                                    }
+
+                                                    @if (System.Configuration.ConfigurationManager.AppSettings["AllowDelivery"].ToString() == "Yes")
+                                                    {
+                                                        <button type="submit" value="DELIVERY" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 20px;width: 100%;max-width: 180px; box-sizing: border-box;" id="3" onclick="chgm(this.value)">
+                                                            <img src="~/Content/Ecom/img/icons/delivery copy.png" />
+                                                            توصيلات خارجية
+                                                        </button>
+                                                    }
+
+                                                    @if (System.Configuration.ConfigurationManager.AppSettings["AllowCorporate"].ToString() == "Yes")
+                                                    {
+                                                        <button type="submit" value="CORPORATE" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 20px;width: 100%;max-width: 180px; box-sizing: border-box;" id="4" onclick="chgm(this.value)">
+                                                            <img src="~/Content/Ecom/img/icons/corporate copy.png" />
+                                                            طلبات خاصة
+                                                        </button>
+                                                    }
+                                                </div>
+
+
+
+
+
+                                                @*<input type="submit" class="tb" style="background-color: dodgerblue ;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="DINE IN" id="1" onclick="chgm(this.value)" />
+                                                    <input type="submit" class="tb" style="background-color: dodgerblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="TAKE AWAY" id="2" onclick="chgm(this.value)" />
+                                                    <input type="submit" class="tb" style="background-color: dodgerblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="DELIVERY" id="3" onclick="chgm(this.value)" />
+                                                    <input type="submit" class="tb" style="background-color: dodgerblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="CORPORATE" id="4" onclick="chgm(this.value)" />*@
+                                            </div>
+
+                                            @*@Html.HiddenFor(model => model.modetype, new { id = "mid" })*@
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+    <!--model-->
+    <!--View Bill Details-->
+
+    <div style="display:none;" id="ViewBill">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">View Bill</h3>
+                    <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*<div class="homepage-menu-area" style="background: white;">*@
+                    <div class="scrollmenu">
+                        <div class="container" style="width:100%">
+                            <div class="row">
+                                <div class="total-menu-area">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <form method="post">
+                                            <div style="text-align:center">
+                                                <table style="color:black;">
+                                                    <tr style="font-size:small;color:black;">
+                                                        <th>Entered NAME</th>
+                                                        <th>NAME</th>
+                                                        <th>Qty</th>
+                                                        <th>Rate</th>
+                                                        <th>Amount</th>
+                                                        <th>KOTNO</th>
+                                                        <th>Punc_D_Time</th>
+                                                        <th>Code</th>
+                                                        @*<th>userID</th>*@
+                                                        <th>UserName</th>
+                                                        @*<th>StationID</th>*@
+                                                        <th>StationNAME</th>
+                                                        @*<th>ItemID</th>
+                                                            <th>ComboID</th>
+                                                            <th>IMEI1_NO</th>
+                                                            <th>IMEI2_NO</th>*@
+                                                        <th>Item_Return_Remark</th>
+                                                        @*<th>Unique_ID</th>*@
+                                                        <th>Rate_WOT</th>
+                                                        <th>TAX1_RAmt</th>
+                                                        <th>TAX2_RAmt</th>
+                                                        <th>TAX_Price_Mode</th>
+                                                        <th>TAX1_Per</th>
+                                                        @*<th>TAX2_Per</th>
+                                                            <th>MC_Per</th>
+                                                            <th>MC_AMT</th>
+                                                            <th>SC_Per</th>
+                                                            <th>SC_AMT</th>*@
+                                                    </tr>
+                                                    <tbody id="Tab_1" style="color:black;">
+                                                        @*<tr>
+                                                                <td>January</td>
+                                                                <td>$100</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>February</td>
+                                                                <td>$80</td>
+                                                            </tr>*@
+                                                    </tbody>
+
+                                                </table>
+                                                <div>
+                                                    <table>
+                                                        <hr />
+                                                        <tr id="BillFtr">
+                                                            @*<td>Gross Value :</td>
+                                                                <td>Discount(-) :</td>
+                                                                <td>VAT Amount :</td>
+                                                                <td>Net Value:</td>*@
+
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--View Bill Details-->
+    <!--ADD open item-->
+
+    <div style="display:none;" id="openitem">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Add Item / Remark</h3>
+                    <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*<div class="homepage-menu-area" style="background: white;">*@
+                    <div class="scrollmenu">
+                        <div class="container" style="width:100%">
+                            <div class="row">
+                                <div class="total-menu-area">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <form>
+                                            <div style="text-align:center">
+                                                <table style="color:black;">
+                                                    <tr style="font-size:small;color:black;">
+                                                        <td>NAME :</td>
+                                                        <td><input type="text" id="txtitemname" , class="form-control" style="width:50%;" autofocus required></td>
+                                                    </tr>
+                                                    @*<tbody id="Tab" style="color:black;">*@
+                                                    <tbody style="color:black;">
+                                                        <tr>
+                                                            @*<td>January</td>
+                                                                <td>$100</td>*@
+                                                            <td>Rate :</td>
+                                                            <td>
+                                                                <input type="text" id="txtitemrate" class="form-control" style="width:50%;" name="rate" required>
+                                                            </td>
+                                                            @*<td><center>    @Html.EditorFor(model => model.ITEM_DESC, new { htmlAttributes = new { id = "txtitemname", @class = "form-control", autofocus = "autofocus", required = "true", @style = "width:50%;" } })</center> </td>
+                                                                <td><center>    @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { id = "txtitemrate", @class = "form-control", required = "true", @style = "width:35%;" } })</center></td>*@
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                                <input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="Submit" onclick="AddtoCartOpen();" />
+
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--Return Item Remark-->
+    <div style="display:none;" id="returnitemdiv">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Return Item Remark</h3>
+                    <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*<div class="homepage-menu-area" style="background: white;">*@
+                    <div class="scrollmenu">
+                        <div class="container" style="width:100%">
+                            <div class="row">
+                                <div class="total-menu-area">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <form>
+                                            <div style="text-align:center">
+                                                <table style="color:black;">
+                                                    <tr style="font-size:small;color:black;">
+
+                                                        <td>Return Remark :</td>
+                                                        <td><input type="text" id="txtReturnRemark" , class="form-control" style="width:50%;" autofocus required></td>
+                                                    </tr>
+                                                    <input type="hidden" id="txtReturnItemid" />
+                                                    @*<tbody id="Tab" style="color:black;">*@
+
+                                                </table>
+                                                <input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="Submit" onclick="AddtoCart();" />
+
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*-----Bill Note-------*@
+    <!--Return Item Remark-->
+    <div style="display:none;" id="billnotediv">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Bill Note</h3>
+                    <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*<div class="homepage-menu-area" style="background: white;">*@
+                    <div class="scrollmenu">
+                        <div class="container" style="width:100%">
+                            <div class="row">
+                                <div class="total-menu-area">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <form>
+                                            <div style="text-align:center">
+                                                <table style="color:black;">
+                                                    <tr style="font-size:small;color:black;">
+
+                                                        <td>Bill Note :</td>
+                                                        <td><input type="text" id="txtbillnote" class="form-control" style="width:50%;" autofocus required></td>
+                                                    </tr>
+                                                    @*<input type="hidden" id="txtReturnItemid" />*@
+                                                    @*<tbody id="Tab" style="color:black;">*@
+
+                                                </table>
+                                                <input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="Submit" onclick="Storebillnote()" />
+
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*-----IMAGES-----*@
+    <div style="display:none;" id="Imgdisplaydiv">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">IMAGES</h3>
+                    <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*<div class="homepage-menu-area" style="background: white;">*@
+                    <div class="scrollmenu">
+                        <div class="container" style="width:100%">
+                            <div class="row">
+                                <div class="total-menu-area">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <form>
+                                            <div id="ImgFullsize" style="text-align:center">
+
+                                            </div>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--ADD open item-->
+
+@section scripts{
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ClientJS/0.1.11/client.min.js"></script>*@
+    <script src="~/Scripts/js/sweetalert.min.js"></script>
+    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/js/client.min.js"></script>
+    <script src="~/Scripts/js/jquery.min.js"></script>
+
+    <script>
+
+        //Menu
+        $(document).ready(function () {
+            lanSel();
+            updateLS();
+            Cartcount();
+            //Dishplay();
+            SSubmenu();
+            hidecounter();
+            //-------------------hide detail bar------------
+                var xx_start = document.getElementById("myDIV");
+                xx_start.style.display = "none";
+                $('#hideshow').text('SHOW');
+                $('#hideshow').css('background-color', '#006400');
+
+                xx_start = document.getElementById("myDIV1");
+                xx_start.style.display = "none";
+                $('#hideshowA').text('SHOW');
+                $('#hideshowA').css('background-color', '#006400');
+
+            //-------------------hide detail bar------------
+
+            //Count();
+            // $('#email').click(function () {
+            //function sendE() {
+            //    $.ajax({
+            //        type: "post",
+            //        url: "/RTC/SendEmail",
+            //        data: { receiver: $('#receiver').val() },
+            //        dataType: "json",
+            //        traditional: true,
+            //        success: function (json) {
+            //            if (json.isRedirect) {
+            //                alert('email send successfully!!!');
+            //                window.location.href = json.redirectUrl;
+            //            }
+            //            else {
+            //                alert('email not sended!!!');
+            //                window.location.reload;
+            //            }
+            //        }
+            //    });
+            //    //});
+            //}
+            $('#btnch').click(function () {
+
+                $.ajax({
+                    type: "post",
+                    url: "/RTC/changecaller",
+                    data: { cname: $('#selector3').val() },
+                    dataType: "json",
+                    traditional: true,
+                    success: function (json) {
+                        if (json.isRedirect) {
+                            window.location.href = json.redirectUrl;
+                        }
+                    }
+                    //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+                });
+            });
+            //--------------------------------------------------------------
+            //$('#selector3').ready(function () {
+            //$('#btnch').click(function () {
+            //    $('#selector').css('display', 'none');
+            //      $('#selector3').css('display', 'block');
+            //    $.ajax({
+            //        type: "post",
+            //        url: "/RTC/GetMembers",
+            //        data: { cname: $('#selector1').val() },
+            //        dataType: "json",
+            //        traditional: true,
+            //        success: function (data) {
+            //            if (data.length > 0) {
+            //                $('#selector3').html('');
+            //                var options = '';
+            //                options += '<option value="Select Default">Select Default</option>';
+            //                for (var i = 0; i < data.length; i++) {
+            //                    options += '<option value="' + data[i].FName + '">' + data[i].CallerID + '</option>';
+            //                }
+            //                $('#selector3').append(options);
+            //            }
+            //        }
+
+            //    });
+            // });
+            //$('#selector3').change(function () {
+            //    $.ajax({
+            //        type: "post",
+            //        url: "/RTC/updsessionval",
+            //        data: { cname: $('#selector3').val() },
+            //        dataType: "json",
+            //        traditional: true,
+            //        success: function (data) {
+            //            //if (data.length > 0) {
+            //            //    $('#selector3').html('');
+            //            //    var options = '';
+            //            //    //options += '<option value="Select">Select</option>';
+            //            //    for (var i = 0; i < data.length; i++) {
+            //            //        options += '<option value="' + data[i].FName + '">' + data[i].CallerID + '</option>';
+            //            //    }
+            //            //    $('#selector3').append(options);
+            //            }
+            //        //}
+            //    });
+            //});
+
+
+            //--------------------------------------------------------------
+            //search--------------------------------------------------------------------------------
+            $("#searchKeyWord").on("keyup", function () {
+
+                var value = $(this).val().toLowerCase();
+                $("#mytable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            //cart---------------------------------------------------------------------------------
+            $('.cart_show').click(function () {
+                //$('#open_cart').click(function () {
+
+                $('#navmenu').fadeToggle();
+                $('#menu-details').fadeToggle(500); $('#cart-details').fadeToggle(500);
+                $('#menu-list').fadeToggle(1000);
+                $('#cart_show').fadeToggle();
+                $('#back_menu').fadeToggle();
+                $('#back_menu1').fadeToggle();
+
+
+
+            });
+            //master menu--------------------------------------------------------------------
+            $.ajax({
+                type: "get",
+                url: "/RTC/GetMstMenu",
+                data: JSON.stringify({ XmlParms: "menu" }),
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.length > 0) {
+                        $('#navmenu').html('');
+                        //  var options = '';
+                        var option = '';
+                        options = '<input type="submit" class="menuclassA" style="background-color: transparent;border: 2px solid maroon;color: maroon;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;font-weight:bolder;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="All" id="-1" onclick="Submenu(this.id);selectval(this.value);"/>';
+
+                        //option = '<li><a class="active" href="#" id="-1" onclick="Submenu(this.id);selectval(this.value);">Shop page</a></li>';
+                        // options += '<input type="submit" class="menuclass" style="background-color: #ADD8E6;border: none;color: Black;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="Remark" id="-2" onclick="Submenu(this.id);selectval(this.value);"/>';
+                        for (var i = 0; i < data.length; i++) {
+                            // options += '<input type="submit" class="menuclass" style="background-color: #00ced1;border: none;color: white;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="' + data[i].GRP_NAME + '" id="' + data[i].GRP_CD + '" onclick="Submenu(this.id);selectval(this.value);"/>';
+                            var x = localStorage.getItem("Lang");
+                            if (x == "Arabic") {
+                                if ($.trim(data[i].GRP_SNAME_SL) != '') {
+                                    options += '<input type="submit" class="menuclass" style="background-color: maroon;border:  2px solid red;color: white;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="' + data[i].GRP_SNAME_SL + '" id="' + data[i].GRP_CD + '" onclick="Submenu(this.id);selectval(this.value);"/>';
+                                }
+                                else {
+                                    options += '<input type="submit" class="menuclass" style="background-color: maroon;border:  2px solid red;color: white;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="' + data[i].GRP_NAME + '" id="' + data[i].GRP_CD + '" onclick="Submenu(this.id);selectval(this.value);"/>';
+                                }
+                            }
+                            else {
+                                options += '<input type="submit" class="menuclass" style="background-color: maroon;border:  2px solid red;color: white;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="' + data[i].GRP_NAME + '" id="' + data[i].GRP_CD + '" onclick="Submenu(this.id);selectval(this.value);"/>';
+                            }
+                        }
+                        $('#navmenu').append(options);
+
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+            window.addEventListener("load", SSubmenu, false);
+            //----back button disable ---------------
+            function disablePrev() { window.history.forward() }
+            window.onload = disablePrev();
+            window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+            //----back button disable ---------------
+        });
+
+          //Languege Selection
+               function lanSel() {
+                    var x = localStorage.getItem("Lang");
+                    if (x == "Arabic") {
+
+                        $('#arbc').css('display', 'block');
+                        $('#eng').css('display', 'none');
+
+
+                        //Cart_btn_Arbc,Cart_btn_Eng
+                        $('#Cart_btn_Arbc').css('display', 'block');
+                        $('#Cart_btn_Eng').css('display', 'none');
+
+
+                        //Header_arbc,Header_eng
+                        $('#Header_arbc').css('display', 'block');
+                        $('#Header_eng').css('display', 'none');
+
+                        $('#toparbc').css('display', 'block');
+                        $('#topeng').css('display', 'none');
+
+                        //CartHeadArbc,CartHeadEng
+                        $('#CartHeadArbc').css('display', 'block');
+                        $('#CartHeadEng').css('display', 'none');
+
+                        //open_cart,open_cart1
+                        $('#open_cart1').css('display', 'block');
+                        $('#open_cart').css('display', 'none');
+
+                    }
+
+                    else {
+                              $('#open_cart1').css('display', 'none');
+
+                    }
+                }
+        function showitemremark() {
+            //
+            document.getElementById("txtitemrate").value = 0.00;
+            //id="openitem";
+            $.ajax({
+                type: "get",
+                url: "/RTC/OpenItemRemark",
+                data: JSON.stringify({ XmlParms: "menu" }),
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.IsOpen) {
+                        $('#openitem').css('display', 'block');
+
+                    }
+
+
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+            //OpenItemRemark
+        }
+        //------------------------Return Item Remark------------------------------------------------------
+         function AddReturnRemark(id) {
+            //
+             document.getElementById("txtReturnItemid").value = id;
+
+             $('#returnitemdiv').css('display', 'block');
+              document.getElementById('txtReturnRemark').focus();
+        }
+        function cl() {
+            $('#ViewBill').css('display', 'none');
+            $('#openitem').css('display', 'none');
+            $('#returnitemdiv').css('display', 'none');
+            $('#billnotediv').css('display', 'none');
+            $('#Imgdisplaydiv').css('display','none')
+        };
+        function editPAX() {
+              var bill_id = $("#btnViewBill").text();
+
+            if (bill_id !== "New Bill")
+            {
+
+                // var btnpax = $('#editpax').text();
+                var pax = $('#pax').val();
+                var x = document.getElementById("editpax");
+                var y = document.getElementById("pax");
+
+                //if (btnpax=="Update") {
+                if (x.text == "Update") {
+
+                    $.ajax({
+                        type: "post",
+                        url: "/RTC/InsertPAX/?pax=" + pax + "&isUpd=true",
+                        //  data: { id:id, XmlParms: "count"},
+                        data: {},
+                        //data: JSON.stringify({ XmlParms: "count" }),
+                        dataType: "json",
+                        traditional: true,
+                        success: function (data) {
+
+                            //if (data.isRedirect) {
+                            //    window.location.href = data.redirectUrl;
+                            //}
+                        }
+                        //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+                    });
+
+                }
+                var x = document.getElementById("editpax");
+
+                if (x.text === "Edit") {
+
+                    y.disabled = false;
+                    $('#pax').css('color', 'black');
+
+
+                    $('#editpax').prop('text', 'Update');
+                    $('#editpax').css('background-color', 'green');
+                    $('#editpax').css('color', 'white');
+                } else {
+                    y.disabled = true;
+                    $('#pax').css('color', 'white');
+                    $('#editpax').prop('text', 'Edit');
+                    $('#editpax').css('background-color', 'white');
+                    $('#editpax').css('color', 'black');
+                }
+
+            }
+
+
+        }
+          //--------------------------------Full Src------------------------------
+        function btnChrome_onclick() {
+            document.documentElement.webkitRequestFullScreen();
+            //$("#btnfsrc").prop("","");
+            $("#btnfsrc").hide();
+        }
+        function updateLS() {
+             $.ajax({
+                type: "get",
+                url: "/RTC/PassOrUpdateLocalStorage",
+                //data: { receiver: $('#receiver').val() },
+                data: {},
+                dataType: "json",
+                traditional: true,
+                 success: function (json) {
+                     var a = json.Counter;
+                     if (a == undefined) {
+                         var a = $("#SCounter").val();
+                         localStorage.setItem('counter', a);
+                     }
+                     else {
+                           localStorage.setItem('counter',a);
+                     }
+
+                 }
+
+            });
+        }
+        //function outdate() {
+        //    $.ajax({
+        //        type: "post",
+        //        url: "/RTC/logout",
+        //        //data: { receiver: $('#receiver').val() },
+        //        data: {},
+        //        dataType: "json",
+        //        traditional: true,
+        //        success: function (json) { }
+        //    });
+        //}
+        function selectval(value) {
+            document.getElementById("selector").value = value;
+
+        }
+        //function sendE() {
+        $("#form11").submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "post",
+                url: "/RTC/SendEmail",
+                data: { receiver: $('#receiver').val() },
+                dataType: "json",
+                traditional: true,
+                success: function (json) {
+                    alert(json.message);
+                    location.reload();
+                    //-----------------------------
+                    location.href = json.redirectUrl;
+                    //if (json.isRedirect) {
+                    //    alert('email send successfully!!!');
+                    //    window.location.href = json.redirectUrl;
+                    //}
+                    //else {
+                    //    alert('email not sended!!!');
+                    //    window.location.reload;
+
+                    //}
+                 },
+                error: function (json) {
+                    alert(json.message);
+                  location.reload();
+                }
+
+            });
+            //});
+        //}
+            });
+        //start--
+        function chgm(value) {
+
+            $.ajax({
+                type: "post",
+                url: "/RTC/Mode1",
+                data: { val: value },
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+
+                    if (data.isRedirect) {
+                        window.location.href = data.redirectUrl;
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+        function SSubmenu() {
+            //document.getElementById("mid").value = 00011;
+            $.ajax({
+                type: "post",
+                //url: "/RTC/DefaultMenuItem",
+                url: "/RTC/GetMenuItem",
+                //url: "/RTC/Menu",
+                //data: { grp_cd: '99999' },
+                data: { grp_cd: '-1' },
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                      var x = localStorage.getItem("Lang");
+                    if (data.length > 0) {
+                        $('#fillmenu').html('');
+                        var fill = '';
+
+                         for (var i = 0; i < data.length; i++) {
+                            //  options += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+
+
+                            fill +=
+                                '<table id="mytable" class="col-md-3 col-sm-6">' +
+                                '<tr class="single-shop-product">' +
+                                '<td>';
+
+                            //---------------------------------------------------------------
+                            //var imgpath = '/Images/products/' + data[i].ITEM_CD + '.jpeg';
+                            //var http = new XMLHttpRequest();
+
+                            //http.open('HEAD', imgpath, false);
+                            //http.send();
+
+                            ////return http.status != 404;
+                            //if (http.status != 404) {
+                            //    fill +=
+                            //    '<div class="product-upper">' +
+                            //    //'<img id="' + data[i].ITEM_CD + '" style="height:150px;width:150px;" src="/Images/products/' + data[i].ITEM_CD + '.jpeg" alt="">' +
+                            //    '<img id="' + data[i].ITEM_CD + '" style="height:150px;width:150px;" src="/Images/products/' + data[i].ITEM_CD + '.jpeg" alt="" onclick="displayIMG(this.id)">' +
+                            //    '</div>';
+                            //}
+                             //Pictures\Items
+                             if (data[i].Image_Path != null && data[i].Image_Path != '') {
+                                fill +=
+                                '<div class="product-upper">' +
+                                //'<img id="' + data[i].ITEM_CD + '" style="height:150px;width:150px;" src="/Images/products/' + data[i].ITEM_CD + '.jpeg" alt="">' +
+                               '<img id="' + data[i].Image_Path + '" style="height:150px;width:150px;" src="' + data[i].Image_Path + '" alt="" onclick="displayIMG(this.id)"  >' +
+                                '</div>';
+                            }
+                            //-----------------------------------------------------------------
+
+                          // Check Language Iteam Name--------
+                            if (x == "Arabic") {
+                                if ($.trim(data[i].ITEM_DESC_SL) != '') {
+                                    fill += '<h2><b>' + data[i].ITEM_DESC_SL + '</b></h2>';
+                                }
+                                else {
+                                    fill += '<h2><b>' + data[i].ITEM_DESC + '</b></h2>';
+                                }
+                            }
+                            else {
+                                fill += '<h2><b>' + data[i].ITEM_DESC + '</b></h2>';
+                            }
+                          // Check Language Iteam Name--------
+                             
+                            fill +=
+                                '<div class="product-carousel-price">' +
+                                //'<ins>AED ' + data[i].SALE_PRICE + '</ins>' +
+                                '<ins>'+'@currency_Code'+' ' + data[i].SALE_PRICE + '</ins>' +
+                                '</div>' +
+                                '<div class="product-option-shop">';
+
+                            // Check Language Add to cart button--------
+                            if (x == "Arabic") {
+                                fill += '<button id="' + data[i].ITEM_CD + '" onclick="AddReturnRemark(this.id)" class="addtocartstyle" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">ناقص عربة</button>';
+                            }
+                            else {
+                                fill += '<button id="' + data[i].ITEM_CD + '" onclick="AddReturnRemark(this.id)" class="addtocartstyle" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">Minus Cart</button>';
+                            }
+                            // Check Language Add to cart button--------
+
+                            fill +=
+                                    '</div>' +
+                                    //    '</div>' +
+                                    //'</div>' +
+                                    '</td>' +
+                                    '</tr>' +
+                                    '</table>';
+
+                         }
+                        $('#fillmenu').append(fill);
+                    }
+                    else {
+                         $('#fillmenu').html('');
+                         var fill = '<center><h3 style="color:red;">No Record Found !!!</h3></center>';
+                         $('#fillmenu').append(fill);
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+         //displayIMG-------------------------------------------------------------------------
+        function displayIMG(id) {
+
+            var fill = '';
+            $('#ImgFullsize').html('');
+           // fill='<img id="' + id + '" style="height:400px;width:400px;" src="/Images/products/' + id + '.jpeg" alt=""/>';
+            //fill='<img id="' + id + '" style="height:400px;width:400px;" src="/Pictures/items/' + id + '.jpeg" alt=""/>';
+            fill='<img id="' + id + '" style="height:400px;width:400px;" src="' + id + '" alt=""/>';
+            $('#ImgFullsize').append(fill);
+             $('#Imgdisplaydiv').css('display', 'block');
+
+        }
+        //Menu Item--------------------------------------------------------------------------
+        function Submenu(id) {
+            //  document.getElementById("mid").value = id;
+            //-------------------hide detail bar------------
+                var xx_start = document.getElementById("myDIV");
+                xx_start.style.display = "none";
+                $('#hideshow').text('SHOW');
+                $('#hideshow').css('background-color', '#006400');
+
+                xx_start = document.getElementById("myDIV1");
+                xx_start.style.display = "none";
+                $('#hideshowA').text('SHOW');
+                $('#hideshowA').css('background-color', '#006400');
+
+            //-------------------hide detail bar------------
+
+
+
+            $.ajax({
+                type: "post",
+                url: "/RTC/GetMenuItem",
+                data: { grp_cd: id },
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.length > 0) {
+                        $('#fillmenu').html('');
+                        var fill = '';
+
+
+                       for (var i = 0; i < data.length; i++) {
+                            //  options += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                            var x = localStorage.getItem("Lang");
+
+                            if (data[i].TYPE_OF_ITEM === "GROUP") {
+                                fill +=
+                                    '<table id="mytable" class="col-md-3 col-sm-6">' +
+                                    '<tr class="single-shop-product">' +
+                                    '<td>';
+
+                                if (x == "Arabic") {
+                                    if ($.trim(data[i].ITEM_DESC_SL) != '') {
+
+                                        fill +=
+                                            '<h2>' + data[i].ITEM_DESC_SL + '</h2>' +
+                                            '<div class="product-option-shop">' +
+                                            '<button type="button" id="' + data[i].ITEM_CD + '" class="add_to_cart_button" style="background-color:navy; font-size: 16px;" onclick="Submenu(this.id);">التالي</button>' +
+                                            '</div>' +
+                                            '</td>' +
+                                            '</tr>' +
+                                            '</table>';
+                                    }
+                                    else {
+                                        fill +=
+                                            '<h2>' + data[i].ITEM_DESC + '</h2>' +
+                                            '<div class="product-option-shop">' +
+                                        '<button type="button" id="' + data[i].ITEM_CD + '" class="Nextstyle" style="background-color:navy; font-size: 16px;" onclick="Submenu(this.id);">التالي</button>' +
+                                            '</div>' +
+                                            '</td>' +
+                                            '</tr>' +
+                                            '</table>';
+                                    }
+                                }
+                                else {
+                                    fill +=
+                                    '<h2>' + data[i].ITEM_DESC + '</h2>' +
+                                    '<div class="product-option-shop">' +
+                                    '<button type="button" id="' + data[i].ITEM_CD + '" class="Nextstyle" style="background-color:navy; font-size: 16px;" onclick="Submenu(this.id);">Next</button>' +
+                                    '</div>' +
+                                    '</td>' +
+                                    '</tr>' +
+                                    '</table>';
+                                }
+
+                            }
+                            else {
+
+                            fill +=
+                                '<table id="mytable" class="col-md-3 col-sm-6">' +
+                                '<tr class="single-shop-product">' +
+                                '<td>';
+
+                             //---------------------------------------------------------------
+                            //var imgpath = '/Images/products/' + data[i].ITEM_CD + '.jpeg';
+                            //var http = new XMLHttpRequest();
+
+                            //http.open('HEAD', imgpath, false);
+                            //http.send();
+
+                            ////return http.status != 404;
+                            //if (http.status != 404) {
+                            //    fill +=
+                            //    '<div class="product-upper">' +
+                            //    //'<img id="' + data[i].ITEM_CD + '" style="height:150px;width:150px;" src="/Images/products/' + data[i].ITEM_CD + '.jpeg" alt="">' +
+                            //    '<img id="' + data[i].ITEM_CD + '" style="height:150px;width:150px;" src="/Images/products/' + data[i].ITEM_CD + '.jpeg" alt="" onclick="displayIMG(this.id)">' +
+                            //    '</div>';
+                            //}
+                                //Pictures\Items
+                             if (data[i].Image_Path != null && data[i].Image_Path != '') {
+                                fill +=
+                                '<div class="product-upper">' +
+                                //'<img id="' + data[i].ITEM_CD + '" style="height:150px;width:150px;" src="/Images/products/' + data[i].ITEM_CD + '.jpeg" alt="">' +
+                                '<img id="' + data[i].Image_Path + '" style="height:150px;width:150px;" src="' + data[i].Image_Path + '" alt="" onclick="displayIMG(this.id)"  >' +
+                                '</div>';
+                            }
+                            //-----------------------------------------------------------------
+                          // Check Language Iteam Name--------
+                            if (x == "Arabic") {
+                                if ($.trim(data[i].ITEM_DESC_SL) != '') {
+                                    fill += '<h2><b>' + data[i].ITEM_DESC_SL + '</b></h2>';
+                                }
+                                else {
+                                    fill += '<h2><b>' + data[i].ITEM_DESC + '</b></h2>';
+                                }
+                            }
+                            else {
+                                fill += '<h2><b>' + data[i].ITEM_DESC + '</b></h2>';
+                            }
+                          // Check Language Iteam Name--------
+
+                            fill +=
+                                '<div class="product-carousel-price">' +
+                                //'<ins>AED ' + data[i].SALE_PRICE + '</ins>' +                                    
+                                '<ins>' +'@currency_Code'+' ' + data[i].SALE_PRICE + '</ins>' +
+                                '</div>' +
+                                '<div class="product-option-shop">';
+
+                            // Check Language Add to cart button--------
+                            if (x == "Arabic") {
+                                fill += '<button id="' + data[i].ITEM_CD + '" onclick="AddReturnRemark(this.id)" class="addtocartstyle" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">ناقص عربة</button>';
+                            }
+                            else {
+                                fill += '<button id="' + data[i].ITEM_CD + '" onclick="AddReturnRemark(this.id)" class="addtocartstyle" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">Minus Cart</button>';
+                            }
+                            // Check Language Add to cart button--------
+
+                            fill +=
+                                    '</div>' +
+                                    //    '</div>' +
+                                    //'</div>' +
+                                    '</td>' +
+                                    '</tr>' +
+                                    '</table>';
+
+                            }
+                        }
+                        $('#fillmenu').append(fill);
+                        // document.getElementById("selector").value = id;
+
+                    }
+                    else {
+                         $('#fillmenu').html('');
+                         var fill = '<center><h3 style="color:red;">No Record Found !!!</h3></center>';
+                         $('#fillmenu').append(fill);
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+
+        //Add to cart---------------------------------------------------------
+        //function AddtoCart(id)
+        function AddtoCart()
+        {
+            var x = localStorage.getItem("Lang");
+            var id=$("#txtReturnItemid").val();
+            var txtReturnRemark = $("#txtReturnRemark").val();
+            $.ajax({
+                type: "post",
+                url: "/RTC/ReturnCART?id="+id+"&remark="+txtReturnRemark+"&lang="+x,
+                data: { },
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    //alert(data.IsOpen);
+                    //if (data.IsOpen!=null) {
+                    //    if (data.IsOpen) {
+                    //        //open div
+                    //         $('#openitem').css('display', 'block');
+                    //         return;
+                    //    }
+                    //}
+                    $('#cartcount').html('');
+                    $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+                    $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart1" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">عناصر عربة التسوق : ' + data.lineCollection.length + '</button>');
+                    lanSel();
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+        function AddtoCartOpen() {
+            //txtitemname txtitemrate
+            var itemname = $('#txtitemname').val();
+            var rate=$('#txtitemrate').val();
+
+            $.ajax({
+                type: "post",
+                url: "/RTC/AddOpenitem?itemname="+  itemname +"&rate=" + rate,
+               // data: { id: id, },
+                data: {  },
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    //alert(data.IsOpen);
+                    //if (data.IsOpen!=null) {
+                    //    if (data.IsOpen) {
+                    //        //open div
+                    //         $('#openitem').css('display', 'block');
+                    //         return;
+                    //    }
+                    //}
+                    $('#cartcount').html('');
+                    $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+                       $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart1" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">عناصر عربة التسوق : ' + data.lineCollection.length + '</button>');
+                    lanSel();
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+
+        //function Dishplay() {
+        //    var count = localStorage.getItem('counter');
+
+        //    var max=$('#MaXCount').val();
+        //    //alert($('#MaXCount').val());
+
+        //    if (parseInt(count) > parseInt(max)) {
+        //        var nval = parseInt(max) + 1;
+        //        localStorage.setItem('counter',nval );
+        //        count = max;
+        //    }
+        //    document.getElementById("counter").value=count;
+        //}
+        function Cartcount() {
+            $.ajax({
+                type: "get",
+                url: "/RTC/CART_COUNT",
+                data: JSON.stringify({ XmlParms: "count" }),
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $('#cartcount').html('');
+                    $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+                       $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart1" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">عناصر عربة التسوق : ' + data.lineCollection.length + '</button>');
+                    lanSel();
+                }
+
+            });
+        }
+        //ShowCart-------------------------------------------------------------------------------------
+
+        function Removeqty(id) {
+            $.ajax({
+                type: "get",
+                url: "/RTC/MinusItemCART?id=" + id,
+                data: JSON.stringify({ XmlParms: "count" }),
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.lineCollection.length > 0) {
+                        $("#fillcartitem").html('');
+                        $('#cartcount').html('');
+                        $("#total").html('');
+
+
+                         var bt = document.getElementById('btn-sbt');
+                        var bt1 = document.getElementById('btn-cnl');
+
+                        bt.disabled = false;
+                        bt1.disabled = false;
+
+                          var t = document.getElementById('btn-sbt1');
+                        var t1 = document.getElementById('btn-cnl1');
+
+                        t.disabled = false;
+                        t1.disabled = false;
+
+                        var total = 0.0;
+                        var Fill = '';
+                            Fill =
+                                '<tr>' +
+                                '<th style="min-width: 135px;max-width: 135px;">ITEM</th>' +
+                                '<th style="min-width: 46px;max-width: 46px;">RATE</th>' +
+                                '<th>QTY</th>' +
+                                '</tr>' +
+                                '<tr>';
+                        for (var i = 0; i < data.lineCollection.length; i++) {
+                            $('#cartcount').html('');
+                            $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+                               $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart1" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">عناصر عربة التسوق : ' + data.lineCollection.length + '</button>');
+                    lanSel();
+                            total += data.lineCollection[i].Product.Price * data.lineCollection[i].Qnautity;
+                            Fill +='<td style="min-width: 135px;max-width: 135px;">';
+
+                                if ($.trim(data.lineCollection[i].Product.Item_Description_SL) != '') {
+                                Fill +=    '<h4>' + data.lineCollection[i].Product.Item_Description_SL + '</h4>';
+                                }
+                                else {
+                                    Fill += '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>';
+                                }
+
+                            Fill += '</td>' +
+                                   '<td style="min-width: 46px;max-width: 46px;">' +
+                                '' + data.lineCollection[i].Product.Price + '' +
+                                '</td>' +
+                                '<td style="width:35%;">' +
+                                '<div class="input-group">' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number" href="#1" onclick="Minusqty(this.id)">' +
+                                '  -' +
+                                '</button>' +
+                                '</span>' +
+                                '<div class="start" >' +
+                                '<input type="number" style="text-align: center;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Qnautity + '"  disabled="disabled">' +
+                                '</div>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1" onclick="Addqty(this.id)">' +
+                                '  +' +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+                                'x' +
+                                '</button>' +
+                                '</span>' +
+                                '</td>' +
+                                '</tr>'
+                        }
+                        $("#fillcartitem").append(Fill);
+                        $("#total").append(total);
+
+                    }
+                    else {
+                        $("#fillcartitem").html('');
+                        $("#fillcartitem").append('');
+
+                        $('#cartcount').html('');
+                        $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">Cart Items : 0 </button>');
+                           $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart1" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()"> عناصر عربة التسوق : 0</button>');
+                    lanSel();
+                        $("#total").html('');
+                        $("#total").append('00.00');
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+
+        function Addqty(id) {
+            $.ajax({
+                type: "get",
+              //url: "/RTC/AddCART?id=" + id,
+                url: "/RTC/AddCARTqty?id=" + id,
+                data: JSON.stringify({ XmlParms: "count" }),
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.lineCollection.length > 0) {
+                        $("#fillcartitem").html('');
+                        $("#total").html('');
+                        var total = 0.0;
+                        var Fill = '';
+                        Fill =
+                                '<tr>' +
+                                '<th style="min-width: 135px;max-width: 135px;">ITEM</th>' +
+                                '<th style="min-width: 46px;max-width: 46px;">RATE</th>' +
+                                '<th>QTY</th>' +
+                                '</tr>' +
+                                '<tr>';
+
+                        for (var i = 0; i < data.lineCollection.length; i++) {
+                            total += data.lineCollection[i].Product.Price * data.lineCollection[i].Qnautity;
+                            Fill +='<td style="min-width: 135px;max-width: 135px;">';
+
+                                if ($.trim(data.lineCollection[i].Product.Item_Description_SL) != '') {
+                                Fill +=    '<h4>' + data.lineCollection[i].Product.Item_Description_SL + '</h4>';
+                                }
+                                else {
+                                    Fill += '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>';
+                                }
+
+                            Fill += '</td>' +
+                                   '<td style="min-width: 46px;max-width: 46px;">' +
+                                '' + data.lineCollection[i].Product.Price + '' +
+                                '</td>' +
+                                '<td style="width:35%;">' +
+                                '<div class="input-group">' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number" href="#1" onclick="Minusqty(this.id)">' +
+                                '  -' +
+                                '</button>' +
+                                '</span>' +
+                                '<div class="start" >' +
+                                '<input type="number" style="text-align: center;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Qnautity + '" disabled="disabled">' +
+                                '</div>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1" onclick="Addqty(this.id)">' +
+                                '  +' +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+                                'x' +
+                                '</button>' +
+                                '</span>' +
+                                '</td>' +
+                                '</tr>'
+                        }
+                        $("#fillcartitem").append(Fill);
+                        $("#total").append(total);
+
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+
+        function Minusqty(id) {
+            $.ajax({
+                type: "get",
+                url: "/RTC/ReturnMinus/?id=" + id,
+                //  data: { id:id, XmlParms: "count"},
+                data: JSON.stringify({ XmlParms: "count" }),
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.lineCollection.length > 0) {
+                        $("#fillcartitem").html('');
+                        $("#total").html('');
+                        var total = 0.0;
+                         var Fill = '';
+                        Fill =
+                                '<tr>' +
+                                '<th style = "min-width: 135px;max-width: 135px;">ITEM</th>' +
+                                '<th style="min-width: 46px;max-width: 46px;">RATE</th>' +
+                                '<th>QTY</th>' +
+                                '</tr>' +
+                                '<tr>';
+
+                        for (var i = 0; i < data.lineCollection.length; i++) {
+                            total += data.lineCollection[i].Product.Price * data.lineCollection[i].Qnautity;
+                            Fill += '<td style = "min-width: 135px;max-width: 135px;">';
+
+                                if ($.trim(data.lineCollection[i].Product.Item_Description_SL) != '') {
+                                Fill +=    '<h4>' + data.lineCollection[i].Product.Item_Description_SL + '</h4>';
+                                }
+                                else {
+                                    Fill += '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>';
+                                }
+
+                            Fill += '</td>' +
+                                   '<td style="min-width: 46px;max-width: 46px;">' +
+                                '' + data.lineCollection[i].Product.Price + '' +
+                                '</td>' +
+                                '<td style="width:35%;">' +
+                                '<div class="input-group">' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number" href="#1" onclick="Minusqty(this.id)">' +
+                                '  -' +
+                                '</button>' +
+                                '</span>' +
+                                '<div class="start" >' +
+                                '<input type="number" style="text-align: center;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Qnautity + '" disabled="disabled">' +
+                                '</div>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1" onclick="Addqty(this.id)">' +
+                                '  +' +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+                                'x' +
+                                '</button>' +
+                                '</span>' +
+                                '</td>' +
+                                '</tr>'
+                        }
+                        $("#fillcartitem").append(Fill);
+                        $("#total").append(total);
+
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+        function ShowCartItem() {
+            $.ajax({
+                type: "get",
+                url: "/RTC/ShowCARTitem",
+                data: JSON.stringify({ XmlParms: "JsonData" }),
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.lineCollection.length > 0) {
+                        $("#fillcartitem").html('');
+                        $("#total").html('');
+
+                        var bt = document.getElementById('btn-sbt');
+                        var bt1 = document.getElementById('btn-cnl');
+
+                        bt.disabled = false;
+                        bt1.disabled = false;
+
+                          var t = document.getElementById('btn-sbt1');
+                        var t1 = document.getElementById('btn-cnl1');
+
+                        t.disabled = false;
+                        t1.disabled = false;
+
+                        var total = 0.0;
+                        var Fill = '';
+                        Fill =
+                                '<tr>' +
+                                '<th style="min-width: 135px;max-width: 135px;">ITEM</th>' +
+                                '<th style="min-width: 46px;max-width: 46px;">RATE</th>' +
+                                '<th>QTY</th>' +
+                                '</tr>' +
+                                '<tr>';
+                        for (var i = 0; i < data.lineCollection.length; i++) {
+                            //total += data.lineCollection[i].Product.Price * data.lineCollection[i].Product.Qnautity;
+                            total += data.lineCollection[i].Product.Price * data.lineCollection[i].Qnautity;
+                            Fill +='<td style="min-width: 135px;max-width: 135px;">';
+
+                                if ($.trim(data.lineCollection[i].Product.Item_Description_SL) != '') {
+                                Fill +=    '<h4>' + data.lineCollection[i].Product.Item_Description_SL + '</h4>';
+                                }
+                                else {
+                                    Fill += '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>';
+                                }
+
+                            Fill += '</td>' +
+                                   '<td style="min-width: 46px;max-width: 46px;">' +
+                                '' + data.lineCollection[i].Product.Price + '' +
+                                '</td>' +
+                                '<td style="width:35%;">' +
+                                '<div class="input-group">' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number" href="#1" onclick="Minusqty(this.id)">' +
+                                '  -' +
+                                '</button>' +
+                                '</span>' +
+                                '<div class="start" >' +
+                                '<input type="number" style="text-align: center;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Qnautity + '" disabled="disabled">' +
+                                '</div>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1" onclick="Addqty(this.id)">' +
+                                '  +' +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+                                'x' +
+                                '</button>' +
+                                '</span>' +
+                                '</td>' +
+                                '</tr>'
+                        }
+                        $("#fillcartitem").append(Fill);
+                        $("#total").append(total);
+                           $('#navmenu').fadeToggle();
+                        $('#menu-details').fadeToggle(500); $('#cart-details').fadeToggle(500);
+                        $('#menu-list').fadeToggle(1000);
+                        $('#cart_show').fadeToggle();
+                        $('#back_menu').fadeToggle();
+                        $('#back_menu1').fadeToggle();
+
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+        //---------------------only remove-------------
+        //function ShowCartItem() {
+        //    $.ajax({
+        //        type: "get",
+        //        url: "/RTC/ShowCARTitem",
+        //        data: JSON.stringify({ XmlParms: "JsonData" }),
+        //        dataType: "json",
+        //        traditional: true,
+        //        success: function (data) {
+        //            if (data.lineCollection.length > 0) {
+        //                $("#fillcartitem").html('');
+        //                $("#total").html('');
+
+        //                var bt = document.getElementById('btn-sbt');
+        //                var bt1 = document.getElementById('btn-cnl');
+
+        //                bt.disabled = false;
+        //                bt1.disabled = false;
+
+        //                var total = 0.0;
+        //                var Fill = '';
+        //                Fill =
+        //                        '<tr>' +
+        //                        '<th>ITEM</th>' +
+        //                        '<th>RATE</th>' +
+        //                        '<th>QTY</th>' +
+        //                        '</tr>' +
+        //                        '<tr>';
+        //                for (var i = 0; i < data.lineCollection.length; i++) {
+        //                    total += data.lineCollection[i].Product.Price * data.lineCollection[i].Product.Qnautity;
+
+        //                    Fill +=
+        //                        '<td>' +
+        //                        '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>' +
+        //                        '</td>' +
+        //                        '<td>' +
+        //                        '' + data.lineCollection[i].Product.Price + '' +
+        //                        '</td>' +
+        //                        '<td>' +
+        //                        '<input type="number" style="float:left;width:40px;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Product.Qnautity + '" min="1" maxlength="3" size="1" disabled="disabled">' +
+        //                        '<span class="input-group-btn">' +
+        //                        '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+        //                        'x' +
+        //                        '</button>' +
+        //                        '</span>' +
+        //                        '</td>' +
+        //                        '</tr>'
+        //                }
+        //                $("#fillcartitem").append(Fill);
+        //                $("#total").append(total);
+        //                   $('#navmenu').fadeToggle();
+        //                $('#menu-details').fadeToggle(500); $('#cart-details').fadeToggle(500);
+        //                $('#menu-list').fadeToggle(1000);
+        //                $('#cart_show').fadeToggle();
+        //                $('#back_menu').fadeToggle();
+        //            }
+        //        }
+        //    });
+        //}
+
+
+        function clearcart() {
+            swal({
+                title: "Are you sure?",
+                text: "Once Clear, you will not be able to recover this Order!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Your Order has been Cancle!", {
+                            icsson: "success",
+                        });
+                        //--------------
+                        $.ajax({
+                            type: "post",
+                            url: "/RTC/NullCARTitem",
+                            data: JSON.stringify({ XmlParms: "cartdata" }),
+                            dataType: "json",
+                            traditional: true,
+                            success: function (data) {
+                            }
+                            //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+                        });
+                        $("#fillcartitem").html('');
+                        $("#fillcartitem").append('');
+                        $("#total").html('');
+                        $("#total").append('00.00');
+                        $('#cartcount').html('');
+                        $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">Cart Items : 0 </button>');
+                           $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart1" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()"> عناصر عربة التسوق : 0</button>');
+                    lanSel();
+                        $('#menu-details').fadeToggle(500);
+                        $('#cart-details').fadeToggle(500);
+                        $('#menu-list').fadeToggle(1000);
+                        $('#cart_show').fadeToggle();
+                        $('#back_menu').fadeToggle();
+                          $('#back_menu1').fadeToggle();
+                        $('#navmenu').fadeToggle();
+                        //---------------
+                    } else {
+                        swal("Your Order is safe!");
+                    }
+                });
+
+        }
+        function hidecounter() {
+            $.ajax({
+                type: "get",
+                url: "/RTC/hideCounter",
+                data: {null:null},
+                dataType: "json",
+                traditional: true,
+                success: function (response) {
+                    if (response.success) {
+                            $('#DemoCounter').css('display', 'none');
+                    }
+                }
+
+            });
+        }
+        function Count() {
+             $.ajax({
+                type: "post",
+                url: "/RTC/updatelocalstoragevalue",
+                data: {null:null},
+                dataType: "json",
+                traditional: true,
+                success: function (response) {
+                    var a = response.Counter;
+                     localStorage.setItem('counter',a);
+                 }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+            //var a = localStorage.getItem('counter');
+            //if (a >= 0) {
+            //    var b = parseInt(a) + 1;
+            //    localStorage.setItem('counter', b);
+            //    var v = localStorage.getItem('counter');
+            //    document.getElementById("counter").value = v;
+            //}
+            //else {
+            //       localStorage.setItem('counter', 0);
+            //}
+
+        }
+        function prn() {
+            var id = $("#btnViewBill").text();
+
+            if (id !== "New Bill") {
+                $.ajax({
+                    type: "post",
+                    //url: "/RTC/prn?id=" + id,
+                    //url: "/RTC/Dprint",
+                    url:"/RTC/SetBillprt",
+                    data: { id: id },/*JSON.stringify({ XmlParms: "data" }),*/
+                    dataType: "json",
+                    traditional: true,
+                    success: function (data) {
+                        if (data.isRedirect) {
+                            alert(data.X_Return);
+                            window.location.href = data.redirectUrl;
+                        }
+                        if (data.msg !== undefined) {
+                            alert(data.msg);
+                        }
+                    }
+                    //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+                });
+            }
+
+        }
+        function insert() {
+            swal({
+                title: "Are you want to confirm this Order?",
+                text: "Once Submitted, you will not be able to Cancel the Order!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                         $("#preloading").show();
+                        //swal("Poof! Your Order file has been Submited!", {
+                        //    icon: "success",
+                        //});
+                        //-----------------------
+        @*data-toggle="modal" data-target="#exampleModal2">*@
+
+                        //var client = new ClientJS(); // Create A New Client Object
+                        // var fingerprint = client.getFingerprint(); // Calculate Device/Browser Fingerprint
+                        updateLS();
+                        var counter = localStorage.getItem('counter');
+
+
+                        $.ajax({
+                            type: "post",
+                            //url: "/RTC/Insert?fingerprint="+fingerprint,
+                            url: "/RTC/Insert?counter="+counter,
+                            data: JSON.stringify({ XmlParms: "cartdata" }),
+                            dataType: "json",
+                            traditional: true,
+                            success: function (response) {
+                                if (response.success) {
+                                    //swal("Poof! Your Order file has been Submited!", {
+                                    //    icon: "success",
+                                    //});
+                                    if (counter >= response.maxlimit) {
+                                        if (response.isRedirect) {
+                                            window.location.href = response.redirectUrl;
+                                        }
+                                    }
+                                     Count();
+
+                                    $("#fillcartitem").html('');
+
+                                    $("#fillcartitem").append('');
+
+                                    $("#total").html('');
+
+                                    $("#total").append('00.00');
+
+                                    $('#cartcount').html('');
+
+
+                                    $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()">Cart Items : 0 </button>');
+
+                                       $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart1" style="width:170px;float:right;" href="#1" onclick="ShowCartItem()"> عناصر عربة التسوق : 0</button>');
+                    lanSel();
+                                    $('#menu-details').fadeToggle(500);
+
+                                    $('#cart-details').fadeToggle(500);
+
+                                    $('#menu-list').fadeToggle(1000);
+
+                                    $('#cart_show').fadeToggle();
+
+                                    $('#back_menu').fadeToggle();
+
+                                      $('#back_menu1').fadeToggle();
+
+                                    $('#navmenu').fadeToggle();
+
+
+                                     //---LOADER close
+                                    $("#preloading").hide();
+                                   //------redirect to table
+                                    if (response.isRedirect) {
+                                              alert("Your Order file has been Submited!");
+                                            window.location.href = response.redirectUrl;
+                                    }
+
+                                    //------redirect to table
+                                    //jQuery.noConflict();
+                                    //$('#exampleModal2').modal('show');
+
+                                }
+                                else {
+                                    //alert('error');
+
+                                    alert(response.message);
+                                    if (response.isRedirect) {
+                                            window.location.href = response.redirectUrl;
+                                    }
+                                    //location.reload();
+                                }
+                            },
+                             error: function (response) {
+                                 alert(response.message);
+
+                                 location.reload();
+                            }
+                        });
+
+
+                        //$("#fillcartitem").html('');
+                        //$("#fillcartitem").append('');
+                        //$("#total").html('');
+                        //$("#total").append('00.00');
+                        //$('#cartcount').html('');
+                        //$("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px" href="#1" onclick="ShowCartItem()">Cart Items : 0 </button>');
+                        //$('#menu-details').fadeToggle(500);
+                        //$('#cart-details').fadeToggle(500);
+                        //$('#menu-list').fadeToggle(1000);
+                        //$('#cart_show').fadeToggle();
+                        //$('#back_menu').fadeToggle();
+                        //$('#navmenu').fadeToggle();
+
+
+                        //-----------------------
+
+                    } else {
+
+                        swal("Your Order is Pending!");
+
+                    }
+                });
+
+
+        }
+           //bill note
+          function openbillnote() {
+
+             $('#billnotediv').css('display', 'block');
+              document.getElementById('txtbillnote').focus();
+        }
+        function Storebillnote() {
+            var bntxt = $("#txtbillnote").val();
+             $.ajax({
+                 type: "post",
+                 url: "/RTC/Storebillnote/",
+                 data: { blnote: bntxt },
+                 dataType: "json",
+                 traditional: true,
+                 success: function (Json) {
+
+                      $('#billnotediv').css('display', 'none');
+                 }
+                 //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+             });
+
+        }
+        //---------------------------------------------------------
+        function modelpopup() {
+            swal({
+                html: "<input type=<form method=\"post\">" +
+
+                    //" <div id=\"Tab\" style=\" text-align:center\">" +
+                    "  <input type=\"submit\" class=\"tb\" style=\"background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;\" value=\"DINE IN\" id=\"1\" onclick=\"m(this.value)\" />" +
+                    " <input type=\"submit\" class=\"tb\" style=\"background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;\" value=\"TAKE AWAY\" id=\"2\" onclick=\"m(this.value)\"/>" +
+                    " <input type=\"submit\" class=\"tb\" style=\"background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;\" value=\"DELIVERY\" id=\"3\" onclick=\"m(this.value)\"/>" +
+                    //" </div>" +
+
+
+                    "</form>",
+                button: false,
+            });
+        }
+        function ViewBill() {
+            var bill_id = $("#btnViewBill").text();
+
+            if (bill_id === "New Bill") {
+                //nothing
+                alert('No Item Found!!!');
+            }
+            else {
+                 $.ajax({
+                type: "post",
+                url: "/RTC/ViewCurrentBill/",
+                data: {id:bill_id},
+                dataType: "json",
+                traditional: true,
+                     success: function (Json) {
+
+                          if (Json.length > 0) {
+                        $('#Tab_1').html('');
+                              var options = '';
+                                var options2 = '';
+
+                              for (var i = 0; i < Json.length; i++) {
+                                  //ViewBill
+                                  $('#ViewBill').css('display', 'block');
+                                  options += '<tr>' +
+                                      '<td>' + Json[i].Entered_Name + '</td>' +
+                                      '<td>' + Json[i].Name + '</td>' +
+                                      '<td>' + Json[i].Qty + '</td>' +
+                                      '<td>' + Json[i].Rate + '</td>' +
+                                      '<td>' + Json[i].Amount + '</td>' +
+                                      '<td>' + Json[i].KOTNO + '</td>' +
+                                      '<td>' + Json[i].Punc_D_Time + '</td>' +
+                                      '<td>' + Json[i].Code + '</td>' +
+                                      //'<td>' + Json[i].userID + '</td>' +
+                                      '<td>' + Json[i].UserName + '</td>' +
+                                      //'<td>' + Json[i].StationID + '</td>' +
+                                      '<td>' + Json[i].StationNAME + '</td>' +
+                                      //'<td>' + Json[i].ItemID + '</td>' +
+                                      //'<td>' + Json[i].ComboID + '</td>' +
+                                      //'<td>' + Json[i].IMEI1_NO + '</td>' +
+                                      //'<td>' + Json[i].IMEI2_NO + '</td>' +
+                                      '<td>' + Json[i].Item_Return_Remark + '</td>' +
+                                      //'<td>' + Json[i].Unique_ID + '</td>' +
+                                      '<td>' + Json[i].Rate_WOT + '</td>' +
+                                      '<td>' + Json[i].TAX1_RAmt + '</td>' +
+                                      '<td>' + Json[i].TAX2_RAmt + '</td>' +
+                                      '<td>' + Json[i].TAX_Price_Mode + '</td>' +
+                                      '<td>' + Json[i].TAX1_Per + '</td>' +
+                                      //'<td>' + Json[i].TAX2_Per + '</td>' +
+                                      //'<td>' + Json[i].MC_AMT + '</td>' +
+                                      //'<td>' + Json[i].MC_Per + '</td>' +
+                                      //'<td>' + Json[i].SC_Per + '</td>' +
+                                      //'<td>' + Json[i].SC_AMT + '</td>' +
+                                      '</tr>';
+
+                                  options2 =
+                                      '<td><b>Gross Value :' + Json[i].Gross_Amount + '</b></td>' +
+                                      '<td><b>Discount(-) :' + Json[i].Discount_Amount + '</b></td>' +
+                                      '<td><b>VAT Amount : ' + Json[i].Tax_Amount + '</b></td>' +
+                                      '<td><b>Net Value: ' + Json[i].Net_Amount + '</b></td>';
+                              }
+                              $('#Tab_1').append(options);
+                              $('#BillFtr').append(options2);
+                    }
+                     }
+                     //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+
+            }
+        }
+    </script>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myDIV");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                //$('#hideshow').val() = "HIDE";
+                $('#hideshow').text('HIDE');
+                $('#hideshow').css('background-color', '#FF0000');
+            } else {
+                x.style.display = "none";
+                $('#hideshow').text('SHOW');
+                $('#hideshow').css('background-color', '#006400');
+            }
+
+        }
+        function myFunction1() {
+            var x = document.getElementById("myDIV1");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                //$('#hideshow').val() = "HIDE";
+                $('#hideshowA').text('HIDE');
+                $('#hideshowA').css('background-color', '#FF0000');
+            } else {
+                x.style.display = "none";
+                $('#hideshowA').text('SHOW');
+                $('#hideshowA').css('background-color', '#006400');
+            }
+
+        }
+
+    </script>
+    <style>
+        @@media only screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+                table thead {
+                    display: none;
+                }
+
+                table tr {
+                    margin-bottom: 10px;
+                    display: block;
+                }
+
+                table td {
+                    display: block;
+                    text-align: left;
+                    font-size: 13px;
+                }
+
+                    table td:last-child {
+                        border-bottom: 0;
+                    }
+
+                    table td:before {
+                        content: attr(data-label);
+                        float: left;
+                        text-transform: uppercase;
+                        font-weight: bold;
+                        margin-right: 20px;
+                    }
+        }
+    </style>
+    <style>
+        .scrollmenu {
+            background-color: transparent;
+            overflow: auto;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .cls {
+            display: inline;
+        }
+
+        .cls2 {
+            /*height:300px;*/
+            max-height: 820px;
+            min-height: 500px;
+            width: 100%;
+            overflow-y: scroll;
+        }
+
+        .menuclassA:active {
+            background-color: yellow !important;
+            color: maroon !important;
+        }
+
+        .menuclassA:hover {
+            background-color: yellow !important;
+            color: maroon !important;
+        }
+
+        .menuclass:active {
+            background-color: transparent !important;
+            color: maroon !important;
+        }
+
+        .menuclass:hover {
+            background-color: transparent !important;
+            color: maroon !important;
+        }
+        /*Add to cart*/
+        .addtocartstyle {
+            position: relative;
+            color: rgba(255,255,255,1);
+            text-decoration: none;
+            background-color: black;
+            font-family: 'Arial Black';
+            font-weight: 100;
+            /*display: block;*/
+            padding: 4px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            -webkit-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            -moz-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            margin: auto;
+            width: 160px;
+            text-align: center;
+            -webkit-transition: all .1s ease;
+            -moz-transition: all .1s ease;
+            -ms-transition: all .1s ease;
+            -o-transition: all .1s ease;
+            transition: all .1s ease;
+        }
+
+            .addtocartstyle:active {
+                -webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                position: relative;
+                top: 6px;
+            }
+        /*Next*/
+        .Nextstyle {
+            position: relative;
+            color: rgba(255,255,255,1);
+            text-decoration: none;
+            background-color: navy;
+            font-family: 'Arial Black';
+            font-weight: 100;
+            /*display: block;*/
+            padding: 4px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            -webkit-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            -moz-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            margin: auto;
+            width: 160px;
+            text-align: center;
+            -webkit-transition: all .1s ease;
+            -moz-transition: all .1s ease;
+            -ms-transition: all .1s ease;
+            -o-transition: all .1s ease;
+            transition: all .1s ease;
+        }
+
+            .Nextstyle:active {
+                -webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                position: relative;
+                top: 6px;
+            }
+    </style>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            width: 100%;
+        }
+
+        td, th {
+            text-align: left;
+            padding: 4px;
+        }
+    </style>
+    <style>
+        #preloading {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            /*background: transparent url(../images/loader.gif) no-repeat center;*/
+            background: white url(../images/loader.gif) no-repeat center;
+            z-index: 1002;
+        }
+    </style>
+    <style>
+        #fillcartitem {
+            width: 100%;
+        }
+
+            #fillcartitem td, #fillcartitem th {
+                padding: 4px;
+                display: table-cell;
+            }
+
+            #fillcartitem tr:nth-child(even) {
+            }
+
+            #fillcartitem tr:hover {
+                background-color: #ddd;
+            }
+
+            #fillcartitem th {
+                padding-top: 4px;
+                padding-bottom: 4px;
+                text-align: left;
+                color: black;
+            }
+    </style>
+    @*-----------------TOP--------------*@
+    <style>
+        .topnav {
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+            .topnav a {
+                float: left;
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 8px 10px;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+                .topnav a:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+                .topnav a.active {
+                    background-color: dodgerblue;
+                    color: white;
+                }
+
+            .topnav .icon {
+                display: none;
+            }
+
+        @@media screen and (max-width: 600px) {
+            .topnav a:not(:first-child) {
+                display: none;
+            }
+
+            .topnav a.icon {
+                float: right;
+                display: block;
+            }
+        }
+
+        @@media screen and (max-width: 600px) {
+            .topnav.responsive {
+                position: relative;
+            }
+
+                .topnav.responsive .icon {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+
+                .topnav.responsive a {
+                    float: none;
+                    display: block;
+                    text-align: left;
+                }
+        }
+    </style>
+    <script>
+        function mynavFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
+    @*-----------------TOP--------------*@
+}

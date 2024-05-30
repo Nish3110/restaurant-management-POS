@@ -1,0 +1,422 @@
+﻿@*@{
+        Layout = null;
+    }
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <script src="~/Scripts/js/client.min.js"></script>
+        <script src="~/Scripts/js/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width" />
+        <title>AvailableBills</title>
+    </head>
+    <body>
+        <div id="Tab">
+
+        </div>
+
+
+        <script>
+            $(document).ready(function () {
+                //$("#searchKeyWord").on("keyup", function () {
+
+                //    var value = $(this).val().toLowerCase();
+                //    $("#Tab tr").filter(function () {
+                //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                //    });
+                //});
+
+                $.ajax({
+                    type: "get",
+                    url: "/RTC/GetOldBillList",
+                    data: JSON.stringify({ XmlParms: "data" }),
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        if (data.length > 0) {
+                            $('#Tab').html('');
+                            var options = '<input type="submit" class="tb" style="background-color: green;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="New Bill" id="1" onclick="m(this.value)"/>';
+
+                            for (var i = 0; i < data.length; i++) {
+                                options +='<input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="' + data[i].ref_no + '" id="' + data[i].ref_no + '" onclick="m(this.value)"/>';
+
+                            }
+                            $('#Tab').append(options);
+                        }
+                    }
+
+                });
+                //----back button disable ---------------
+                function disablePrev() { window.history.forward() }
+                window.onload = disablePrev();
+                window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+                //----back button disable ---------------
+            });
+            //function m(id) {
+            //    document.getElementById("cid").value = id;
+            //}
+        </script>
+
+    </body>
+    </html>*@
+@model tmatsol_dump.Models.Web_Report.Old_Bill_Rec
+@{
+    ViewBag.Title = "Available Bills";
+    Layout = "~/Views/Shared/_Layout(WebReport).cshtml";
+}
+
+<center><p>Please Select the bill First.</p></center>
+<div>
+
+    <form method="post">
+        <div id="Tab">
+
+        </div>
+
+        @Html.HiddenFor(model => model.ref_no, new { id = "cid" })
+        <input type="hidden" id="TableId" value=@Session["TableId"].ToString() />
+    </form>
+
+
+</div>
+
+<!--View Bill Details-->
+
+<div style="display:none;background-color:white;" id="ViewBill">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">View Bill</h3>
+                <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" >
+                @*<div class="homepage-menu-area" style="background: white;">*@
+                <div class="scrollmenu">
+                    <div>
+                        <div class="row">
+                            <div class="total-menu-area">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    <form method="post">
+                                        <div style="text-align:center">
+                                            <table>
+                                                <tr id="Billhead">
+                                                    
+                                                </tr>
+                                            </table>
+                                            <table style="background-color:white; color:black;">
+                                                <tr style="font-size:small;color:black;">
+                                                    <th>Entered NAME</th>
+                                                    <th>NAME</th>
+                                                    <th>Qty</th>
+                                                    <th>Rate</th>
+                                                    <th>Amount</th>
+                                                    <th>KOTNO</th>
+                                                    <th>Punc_D_Time</th>
+                                                    <th>Code</th>
+                                                    <th>userID</th>
+                                                    <th>UserName</th>
+                                                    <th>StationID</th>
+                                                    <th>StationNAME</th>
+                                                    <th>ItemID</th>
+                                                    <th>ComboID</th>
+                                                    <th>IMEI1_NO</th>
+                                                    <th>IMEI2_NO</th>
+                                                    <th>Item_Return_Remark</th>
+                                                    <th>Unique_ID</th>
+                                                    <th>Rate_WOT</th>
+                                                    <th>TAX1_RAmt</th>
+                                                    <th>TAX2_RAmt</th>
+                                                    <th>TAX_Price_Mode</th>
+                                                    <th>TAX1_Per</th>
+                                                    <th>TAX2_Per</th>
+                                                    <th>MC_Per</th>
+                                                    <th>MC_AMT</th>
+                                                    <th>SC_Per</th>
+                                                    <th>SC_AMT</th>
+                                                </tr>
+                                                <tbody id="Tab_1" style="color:black;">
+                                                    @*<tr>
+                                                            <td>January</td>
+                                                            <td>$100</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>February</td>
+                                                            <td>$80</td>
+                                                        </tr>*@
+                                                </tbody>
+
+                                            </table>
+                                            <div>
+                                                <table>
+                                                    <tr id="BillFtr">
+                                                        @*<td>Gross Value :</td>
+                                                            <td>Discount(-) :</td>
+                                                            <td>VAT Amount :</td>
+                                                            <td>Net Value:</td>*@
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+</div>
+<!--View Bill Details-->
+<!--
+<div class="homepage-menu-area" style="background: rgba(0, 0, 0, 0.3)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="section-area">
+                    <h3 style="color: #ffa939;">e-Restaurant</h3>
+
+                </div>
+            </div>
+        </div>
+        @*<div class="searchbar">
+                <input type="text" id="searchKeyWord"
+                       placeholder="Enter your menu item" pattern="[A-Za-z ]" title="Only alphabets and space are allowed" required />
+                <input type="hidden" id="parentID" />
+            </div>*@
+        <div class="row">
+            <div class="total-menu-area">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    <form method="post">
+                        <div id="Tab">
+
+                        </div>
+
+       @*                 @Html.HiddenFor(model => model.ref_no, new { id = "cid" })  *@
+                    </form>
+                </div>
+            </div>
+        </div>
+        @*<input type="hidden" id="tid" value="" />*@
+
+    </div>
+</div>
+    -->
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ClientJS/0.1.11/client.min.js"></script>*@
+<script src="~/Web_Report/Scripts/jquery-3.1.1.js"></script>
+<script src="~/Web_Report/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+<!--BODY-->
+<!-- Bootstrap core JavaScript-->
+<script src="~/Web_Report/Content/vendor/jquery/jquery.min.js"></script>
+<script src="~/Web_Report/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="~/Web_Report/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="~/Web_Report/Content/js/sb-admin-2.min.js"></script>
+<!-- Page level plugins -->
+<script src="~/Web_Report/Content/vendor/chart.js/Chart.min.js"></script>
+<!-- Page level custom scripts -->
+
+
+<script src="~/Web_Report/Content/js/demo/chart-area-demo.js"></script>
+@*<script src="~/Web_Report/Content/js/demo/chart-area-demo.js"></script>*@
+@*<script src="~/Content/js/demo/chart-pie-demo.js"></script>*@
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+<!--BODY-->
+
+<script>
+    $(document).ready(function () {
+
+           var Str = document.getElementById("TableId").value;
+          document.cookie = "TableId="+Str+";expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+        //$("#searchKeyWord").on("keyup", function () {
+
+        //    var value = $(this).val().toLowerCase();
+        //    $("#Tab tr").filter(function () {
+        //        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //    });
+        //});
+
+        $.ajax({
+            type: "get",
+            url: "/Report/GetOldBillList",
+            data: JSON.stringify({ XmlParms: "data" }),
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                if (data.length > 0) {
+                    $('#Tab').html('');
+                    var options = '';
+
+                    var vcolor;
+                    for (var i = 0; i < data.length; i++) {
+
+                        vcolor = 'yellow';
+                        if (data[i].Print_Seq_Number_Bill > 0) {
+                            vcolor = '#8bc34a ';
+                        }
+                        //white-space: normal;
+                        //text-align: left;
+                        //width: 6ch;
+
+                        //options += '<input type="submit" class="tb" style="background-color: ' + vcolor + ';border: 2px solid black;color: Black;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="' + data[i].ref_no +'&nbsp['+ data[i].Bill_Note +']' + '" id="' + data[i].ref_no + '" onclick="m(this.id)"/>';
+                        options += '<button type="button" class="tb" style="background-color: ' + vcolor + ';border: 2px solid black;color: Black;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" id="' + data[i].ref_no + '" onclick="ViewBill(this.id)"> ' + data[i].ref_no + '<br/>' + data[i].Bill_Note + ' </button>';
+
+                    }
+                    $('#Tab').append(options);
+                }
+                else {
+                    if (data.isRedirect) {
+                        window.location.href = data.redirectUrl;
+                    }
+                }
+            }
+
+        });
+        //----back button disable ---------------
+        function disablePrev() { window.history.forward() }
+        window.onload = disablePrev();
+        window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+        //----back button disable ---------------
+    });
+    function m(id) {
+        document.getElementById("cid").value = id;
+    }
+    function cl() {
+          $('#ViewBill').css('display', 'none');
+    }
+    function ViewBill(id) {
+        $.ajax({
+            type: "post",
+            url: "/Report/ViewCurrentBill/",
+            data: { id: id },
+            datatype: "json",
+            traditional: true,
+            success: function (Json) {
+
+                if (Json.length > 0) {
+                    $('#Tab_1').html('');
+                    var options = '';
+                    var options2 = '';
+
+                    for (var i = 0; i < Json.length; i++) {
+                        //ViewBill
+                        $('#ViewBill').css('display', 'block');
+                         
+                        options += '<tr>' +
+                            '<td>' + Json[i].Entered_Name + '</td>' +
+                            '<td>' + Json[i].Name + '</td>' +
+                            '<td>' + Json[i].Qty + '</td>' +
+                            '<td>' + Json[i].Rate + '</td>' +
+                            '<td>' + Json[i].Amount + '</td>' +
+                            '<td>' + Json[i].KOTNO + '</td>' +
+                            '<td>' + Json[i].Punc_D_Time + '</td>' +
+                            '<td>' + Json[i].Code + '</td>' +
+                            '<td>' + Json[i].userID + '</td>' +
+                            '<td>' + Json[i].UserName + '</td>' +
+                            '<td>' + Json[i].StationID + '</td>' +
+                            '<td>' + Json[i].StationNAME + '</td>' +
+                            '<td>' + Json[i].ItemID + '</td>' +
+                            '<td>' + Json[i].ComboID + '</td>' +
+                            '<td>' + Json[i].IMEI1_NO + '</td>' +
+                            '<td>' + Json[i].IMEI2_NO + '</td>' +
+                            '<td>' + Json[i].Item_Return_Remark + '</td>' +
+                            '<td>' + Json[i].Unique_ID + '</td>' +
+                            '<td>' + Json[i].Rate_WOT + '</td>' +
+                            '<td>' + Json[i].TAX1_RAmt + '</td>' +
+                            '<td>' + Json[i].TAX2_RAmt + '</td>' +
+                            '<td>' + Json[i].TAX_Price_Mode + '</td>' +
+                            '<td>' + Json[i].TAX1_Per + '</td>' +
+                            '<td>' + Json[i].TAX2_Per + '</td>' +
+                            '<td>' + Json[i].MC_Per + '</td>' +
+                            '<td>' + Json[i].MC_AMT + '</td>' +
+                            '<td>' + Json[i].SC_Per + '</td>' +
+                            '<td>' + Json[i].SC_AMT + '</td>' +
+                            '</tr>';
+
+                        options2 =
+                            '<td><b>Gross Value :' + Json[i].Gross_Amount + '</b></td>' +
+                            '<td><b>Discount(-) :' + Json[i].Discount_Amount + '</b></td>' +
+                            '<td><b>VAT Amount : ' + Json[i].Tax_Amount + '</b></td>' +
+                            '<td><b>Net Value: ' + Json[i].Net_Amount + '</b></td>';
+
+                        options3 =
+                            '<td><b style="color:black">TABLE :</b> ' + Json[i].Table_Name + '</td>' +
+                            '<td><b style="color:black">CUSTOMER NAME :</b> ' + Json[i].Customer_Name + '</td>' +
+                            '<td><b style="color:black">CONTACT :</b> ' + Json[i].Mobile + '</td>';
+
+                    }
+                    $('#Tab_1').append(options);
+                    $('#BillFtr').append(options2);
+                    $('#Billhead').append(options3);
+                }
+            }
+        });
+    }
+</script>
+<style>
+    @@media only screen and (max-width: 600px) {
+        #ViewBill {
+            /*background-color: #F3F3F3;*/
+            background-color: transparent;
+            background-size: cover;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 1001;
+            /*overflow-y: auto;*/
+            width: 100%;
+            height: 70px;
+        }
+
+        .scrollmenu {
+            background-color: transparent;
+            overflow-x: auto;
+            overflow-y: auto;
+            white-space: nowrap;
+            width: 100%;
+            height: 50px;
+        }
+    }
+
+    /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+    #ViewBill {
+        /*background-color: #F3F3F3;*/
+        background-color: transparent;
+        background-size: cover;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        z-index: 1001;
+        /*overflow-y: auto;*/
+        width: 100%;
+        height: 600px;        
+    }
+    .scrollmenu {
+            background-color: transparent;
+            overflow-x : auto;
+            overflow-y : auto;
+            white-space: nowrap;
+            width: 100%;
+            height: 500px; 
+        }
+</style>

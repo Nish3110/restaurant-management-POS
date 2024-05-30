@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/Content/My/myLogin.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.title</title>
+</head>
+<body>
+    <div id="loading"></div>
+    @*<div class=" container "><img src="~/Images/Think - Copy.png" style="width:20%;"/></div>*@
+
+    <div class="wrapper fadeInDown">
+        <h4 style="color:yellow;font-size:medium;">@Session["SelectedCompany"]</h4>
+        <a class="btn btn-danger cls" href="@Url.Action("DeviceInfo", "Login")" style="font-size:small;color:orangered;" onclick="outdate()">Logout</a>
+        <div id="formContent">
+            @RenderBody()
+        </div>
+        <footer style="color:black;text-align:center">
+            &copy; @DateTime.Now.Year - My Restaurant Cart Application V1.0[04-Sep-23]
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+    <script>
+        document.onreadystatechange = function () {
+            var state = document.readyState
+            if (state == 'interactive') {
+                document.getElementById('contents').style.visibility = "hidden";
+            } else if (state == 'complete') {
+                setTimeout(function () {
+                    document.getElementById('interactive');
+                    document.getElementById('loading').style.visibility = "hidden";
+                    document.getElementById('contents').style.visibility = "visible";
+                    document.getElementById('authcode').focus();
+                }, 1000);
+            }
+        }
+        function outdate() {
+            $.ajax({
+                type: "post",
+                url: "/RTC/logout",
+                //data: { receiver: $('#receiver').val() },
+                data: {},
+                dataType: "json",
+                traditional: true,
+                success: function (json) { }
+              
+            });
+        }
+
+    </script>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+
+</body>
+</html>

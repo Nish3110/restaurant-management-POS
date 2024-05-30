@@ -1,0 +1,47 @@
+﻿@*@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Demo Request</h5>
+                <a class="nav-link" id="Index" href="@Url.Action("Index","Home")" title="Home">HOME<div class="shine"></div></a>
+            </div>
+            <div class="modal-body d-flex flex-column">
+                <div>
+                    <p class="text-capitalize text-center">
+                        <h3>&nbsp;@TempData["a"]</h3>
+                    </p>
+                </div>
+                <div>
+                    <p class="text-capitalize">
+                        <a href="tel:+971505154103"
+                           title="Location Direction" target="_blank" class="btn btn-block text-center btn-outline-primary">
+                            <i class="fas fa-phone"></i>&nbsp;call
+                        </a>
+                        <br />
+                        <a href="https://api.whatsapp.com/send?phone=971555614103&text=Hello,%20Give%20Me%20Further%20Information%20About%20Product.%20via%20WhatsApp%20Click%20To%20Chat"
+                           title="Location Direction" target="_blank" class="btn btn-block text-center btn-outline-success">
+                            <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
+                        </a>
+                        <br />
+                        <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1804.1695578216159!2d55.294104057978984!3d25.259175345966874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f433c1bc5f2b3%3A0x45f017c02fb79658!2sThink+Softwares!5e0!3m2!1sen!2sin!4v1544474614694"
+                           title="Location Direction" class="btn btn-block text-center footer-btn" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i>&nbsp;Direction
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#Modal').modal();
+        });
+    </script>
+}

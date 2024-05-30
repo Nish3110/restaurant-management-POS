@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        $(document).ready(function () {
+            alertTest();
+        });
+    </script>
+
+
+    <script>
+   function alertTest() {
+       //  alert("The URL of this page is: " + window.location.href);     
+       localStorage.setItem('id', "123");
+       localStorage.setItem('id', "@ViewData["ID"]");
+       window.location.replace("@ViewData["URL"]");
+      }
+    </script>
+
+</body>
+</html>

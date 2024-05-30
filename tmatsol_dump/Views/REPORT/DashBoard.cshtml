@@ -1,0 +1,606 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout(WebReport).cshtml";
+
+}
+<!-- HEAD-->
+<style>
+        /*div#loading {
+        display: none;
+        text-align: center;
+        margin-top: -30px;
+        font-size: 40px;
+    }*/
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            background: transparent url(../images/t.gif) no-repeat center;
+            z-index: 1002;
+        }
+</style>
+
+
+<link href="~/Web_Report/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="~/Web_Report/Content/css/sb-admin-2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+<!-- HEAD-->
+<!-- Content Row -->
+@*<h1> @ViewBag.Error </h1>*@
+<div id="loading">
+
+</div>
+<!--<div class="row">-->
+<!-- Earnings (Monthly) Card Example -->
+<!--<div class="col-xl-3 col-md-6 mb-4">
+<div class="card border-left-primary shadow h-100 py-2">
+    <div class="card-body">
+        <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800" id="Earnings">Model.Earnings</div>
+            </div>
+            <div class="col-auto">
+                <i class="fas fa-money-bill fa-2x text-gray-300"></i>
+            </div>
+        </div>
+    </div>
+</div>
+</div>-->
+<!-- Running Bills -->
+<!--<div class="col-xl-3 col-md-6 mb-4">
+<div class="card border-left-warning1 shadow h-100 py-2">
+    <div class="card-body">
+        <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Running Orders</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800" id="RunningOrders">Model.RunningSaleAmount</div>
+            </div>
+            <div class="col-auto">
+                <i class="fas fa-coins fa-2x text-gray-300"></i>
+            </div>
+        </div>
+    </div>
+</div>
+</div>-->
+<!-- Running Bills -->
+<!--<div class="col-xl-3 col-md-6 mb-4">
+<div class="card border-left-warning2 shadow h-100 py-2">
+    <div class="card-body">
+        <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800" id="Total">Model.Total</div>
+            </div>
+            <div class="col-auto">
+                <i class="fas fa-calculator fa-2x text-gray-300"></i>
+            </div>
+        </div>
+    </div>
+</div>
+</div>-->
+<!-- Earnings (Monthly) Card Example -->
+<!--<div class="col-xl-3 col-md-6 mb-4">
+<div class="card border-left-success shadow h-100 py-2">
+    <div class="card-body">
+        <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Expenes</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800" id="Expenses">Model.Expenses</div>
+            </div>
+            <div class="col-auto">
+                <i class="fas fa-book-open fa-2x text-gray-300"></i>
+            </div>
+        </div>
+    </div>
+</div>
+</div>-->
+<!-- Earnings (Monthly) Card Example -->
+<!--<div class="col-xl-3 col-md-6 mb-4">
+<div class="card border-left-info shadow h-100 py-2">
+    <div class="card-body">
+        <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Orders</div>
+                <div class="row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="TotalOrders">Model.TotalOrders</div>
+                    </div>
+                    <div class="col">
+                        <div class="progress progress-sm mr-2">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+            </div>
+        </div>
+    </div>
+</div>
+</div>-->
+<!-- Pending Requests Card Example -->
+<!--<div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Cancelled Orders</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="CancelOrders">Model.CancelOrders</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<!-- Content Row -->
+<div style="color:transparent"></div>
+<div class="row">
+    <div class="col-xl-6 col-md-6 mb-4">
+        <div class="row">
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="Earnings"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-money-bill fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Running Bills -->
+            <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-warning1 shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Running Orders</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="RunningOrders"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-coins fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Running Bills -->
+            <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-warning2 shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="Total"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calculator fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Earnings(Monthly) Card Example -->
+            <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Expenes</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="Expenses"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-book-open fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Earnings(Monthly) Card Example -->
+            <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Orders</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="TotalOrders"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Cancelled Orders</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="CancelOrders"></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-6 mb-4" id="Html1">
+        @*<h6 style="color:black"><b> Cashier :</b> Admin</h6>
+        <h6 style="color:black"><b> In DT :</b> 06-Sept-2022 9.00 am</h6>
+        <hr />
+        <h5 style="color:black"><b> Running Order</b></h5>
+        <hr />
+        <h6 style="color:black"><b> Dinein : </b>150.00</h6>
+        <h6 style="color:black"><b> Takeaway : </b>100.00</h6>
+        <h6 style="color:black"><b> Delivery : </b>59.00</h6>
+        <h6 style="color:black"><b> Corporate : </b>0.00</h6>
+        <h6 style="color:black"><b> Drive Th. : </b>0.00</h6>*@
+    </div>
+</div>
+
+<div class="row">
+    <!-- Area Chart -->
+    @*<div class="col-xl-12 col-lg-7">*@
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">Earnings Overview</h6>
+                <div class="btn-group" role="group" aria-label="Basic example" id="btngrp">
+                    <button type="button" class="btn btn-secondary" id="7">Week</button>
+                    <button type="button" class="btn btn-secondary" id="30">Month</button>
+                    <button type="button" class="btn btn-secondary" id="6">Half Yearly</button>
+                    <button type="button" class="btn btn-secondary" id="12">Yearly</button>
+                    @*<button type="button" class="btn btn-secondary" id="24">2 Years</button>*@
+                </div>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="chart-area" id="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                </div>
+            </div>
+
+            <!--Card Body -->
+            @*<div class="card-body">
+                    <div class="chart-area" id="chart-area">
+                        <canvas id="myAreaChart"></canvas>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+    <!-- Pie Chart -->
+    @*<div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Direct
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Social
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> Referral
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+</div>
+
+<div>
+    <input type="hidden" id="getval" value="@Session["CUSTID"].ToString()" />
+    <input type="hidden" id="From_dt" value="@Session["From_dt"].ToString()" />
+    <input type="hidden" id="To_dt" value="@Session["To_dt"].ToString()" />
+    <input type="hidden" id="To_dtVal" value="@Session["To_dtVal"].ToString()" />
+    <input type="hidden" id="DaysRemaining" value="@Session["DaysRemaining"]" />
+    <input type="hidden" id="Comp_Name" value="@Session["Comp_Name"].ToString()" />
+    <input type="hidden" id="User" value="@Session["User"].ToString()" />
+</div>
+
+<!--BODY-->
+<!-- Bootstrap core JavaScript-->
+<script src="~/Web_Report/Content/vendor/jquery/jquery.min.js"></script>
+<script src="~/Web_Report/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="~/Web_Report/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!--Custom scripts for all pages-->
+<script src="~/Web_Report/Content/js/sb-admin-2.min.js"></script>
+<!--Page level plugins-->
+<script src="~/Web_Report/Content/vendor/chart.js/Chart.min.js"></script>
+<!--Page level custom scripts-->
+
+
+<script src="~/Web_Report/Content/js/demo/chart-area-demo.js"></script>
+@*<script src="~/Web_Report/Content/js/demo/chart-area-demo.js"></script>*@
+@*<script src="~/Content/js/demo/chart-pie-demo.js"></script>*@
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+<!--BODY-->
+<script>
+    $(document).ready(function () {
+        Assing_reAssing();
+        Page_Refresh();
+        GenerateChart(7);
+
+        $("#btngrp").on("click", "button", function (event) {
+            preloader.style.display = 'block';
+            //alert(this.id);
+            //destoryChart();
+            var sNumberofDay = parseInt(this.id);
+            GenerateChart(sNumberofDay);
+
+        });
+        function Assing_reAssing() {
+            var Str = document.getElementById("getval").value;
+            var From_dt = document.getElementById("From_dt").value;
+            var To_dt = document.getElementById("To_dt").value;
+            var To_dtVal = document.getElementById("To_dtVal").value;
+            var DaysRemaining = document.getElementById("DaysRemaining").value;
+            var Comp_Name = document.getElementById("Comp_Name").value;
+            var User = document.getElementById("User").value;
+            //debugger;
+
+            document.cookie = "id=" + Str + ";expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+            document.cookie = "From_dt=" + From_dt + ";expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+            document.cookie = "To_dt=" + To_dt + ";expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+            document.cookie = "To_dtVal=" + To_dtVal + ";expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+            document.cookie = "DaysRemaining=" + DaysRemaining + ";expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+            document.cookie = "Comp_Name=" + Comp_Name + ";expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+            document.cookie = "User=" + User + ";expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+            document.cookie = "TABLE_GRP_CD=none;expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+            document.cookie = "TableId=none;expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+        }
+
+    })
+    function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    var preloader = document.getElementById('loading');
+
+    //window.onbeforeunload = function (event) {
+    //    return confirm("Confirm refresh");
+    //};
+    setInterval(function () {
+        Page_Refresh();
+    }, 30000);//evry 20 sec....
+
+    function Page_Refresh() {
+        var Custid = getCookie("id");
+        var CustName = getCookie("Comp_Name");
+
+        $.ajax({
+            type: "get",
+            url: "/REPORT/DashBoard_RELOAD",
+            data: { 'Custid': Custid, 'CustName': CustName },
+            dataType: "json",
+            traditional: true,
+            success: function (mydata) {
+
+                var obj = JSON.parse(mydata);
+                $("#TotalOrders").html("");
+                $("#Earnings").html("");
+                $("#Expenses").html("");
+                $("#CancelOrders").html("");
+                $("#RunningOrders").html("");
+                $("#Total").html("");
+                $("#Html1").html("");
+               
+                obj.ReportResult_Dataset.ReportResult_Table.forEach(myFunctionLevel1);
+
+                var Dinein , Takeaway , Delivery , Corporate , Drive_Th ;
+
+                function myFunctionLevel1(item) {
+                    if (item.Action_Name == "Total Earning") {
+                        $("#Earnings").text(Number(item.Action_Amount).toFixed(2));
+                    }
+                    else if (item.Action_Name == "Total Runnig invoice Amt") {
+                        $("#RunningOrders").text(Number(item.Action_Amount).toFixed(2));
+                    }
+                    else if (item.Action_Name == "Total Expense Amt") {
+                        $("#Expenses").text(Number(item.Action_Amount).toFixed(2));
+                    }
+                    else if (item.Action_Name == "Total Orders") {
+                        $("#TotalOrders").text(Number(item.Action_Amount).toFixed(2));
+                    }
+                    else if (item.Action_Name == "Total Void Items") {
+                        $("#CancelOrders").text(Number(item.Action_Amount).toFixed(2));
+                    }
+                    else if (item.Action_Name == "Running DieIn Amt") {                       
+                        Dinein = item.Action_Amount;                       
+                    }
+                    else if (item.Action_Name == "Running TakeAway Amt") {
+                        Takeaway=item.Action_Amount;
+                    }
+                    else if (item.Action_Name == "Running Delivery Amt") {
+                        Delivery=item.Action_Amount;
+                    }
+                    else if (item.Action_Name == "Running Corporate Amt") {
+                        Corporate=item.Action_Amount;
+                    }
+                    else if (item.Action_Name == "Running DriveThrough Amt") {
+                        Drive_Th = item.Action_Amount;
+                    }
+                }
+                var a1 = document.getElementById("Earnings");
+                var b1 = document.getElementById("RunningOrders");
+
+                var a = a1.innerHTML;
+                var b = b1.innerHTML;
+                var c = Number(a) + Number(b);
+
+                $("#Total").text(Number(c).toFixed(2));
+                //debugger;
+                //-----------------Html---------------------------
+                var X_HTML="";
+                var X_HTML2 = "";
+                if (obj.CIOData !== null) {
+                    X_HTML += "<table style='color:black;font-size: 12px;'>";
+                    X_HTML += "<tr><th>Cashier</th><th>In DT , Out DT</th></tr>";
+
+                    obj.ReportResult_Dataset.ReportResult_Table_CIO.forEach(myFunction);
+                    function myFunction(item) {                       
+                        X_HTML += "<tr>";
+                        X_HTML += "<td>" + item.Action_Name + "</td>";
+                        X_HTML += "<td>" + item.Action_Result + "</td>";
+                        X_HTML += "</tr>";
+                    }                   
+                    X_HTML += "</table>";
+                }
+
+                X_HTML += "<hr/>";
+                X_HTML += "<h5 style='color:black'><b> Running Order</b></h5>";
+                X_HTML += "<hr/>";             
+                X_HTML += "<h6 style='color:black'><b> Dinein : </b>" + Number(Dinein).toFixed(2) + "</h6>";
+                X_HTML += "<h6 style='color:black'><b> Takeaway : </b>" + Number(Takeaway).toFixed(2) + "</h6>";
+                X_HTML += "<h6 style='color:black'><b> Delivery : </b>" + Number(Delivery).toFixed(2) + "</h6>";
+                X_HTML += "<h6 style='color:black'><b> Corporate : </b>" + Number(Corporate).toFixed(2) + "</h6>";
+                X_HTML += "<h6 style='color:black'><b> Drive Th. : </b>" + Number(Drive_Th).toFixed(2) + "</h6>";
+                
+                //if (obj.Day_Last_Invoice_Detail!=="") {
+                //    X_HTML += "<h6 style='color:black'><b> Day Last Invoice Detail(Number,DateTime) : </b>" + obj.Day_Last_Invoice_Detail + "</h6>";
+                //}
+                //if (obj.ToDayLast_Sync_DT !== null) {
+                //    X_HTML += "<h6 style='color:black'><b> Last Sync : </b>" + obj.ToDayLast_Sync_DT + "</h6>";
+                //}
+                //-----------------Html---------------------------
+                $("#Html1").append(X_HTML);
+            }
+        });
+    }
+    function Page_RefreshXold() {
+        var Custid = getCookie("id");
+        var CustName = getCookie("Comp_Name");
+
+        $.ajax({
+            type: "get",
+            url: "/REPORT/DashBoard_RELOAD",
+            data: { 'Custid': Custid, 'CustName': CustName },
+            dataType: "json",
+            traditional: true,
+            success: function (mydata) {
+
+                var obj = JSON.parse(mydata);
+                $("#TotalOrders").html("");
+                $("#Earnings").html("");
+                $("#Expenses").html("");
+                $("#CancelOrders").html("");
+                $("#RunningOrders").html("");
+                $("#Total").html("");
+                $("#Html1").html("");
+                debugger;
+                $("#TotalOrders").text(Number(obj.TotalOrders).toFixed(2));
+                $("#Earnings").text(Number(obj.Earnings).toFixed(2));
+                $("#Expenses").text(Number(obj.Expenses).toFixed(2));
+                $("#CancelOrders").text(Number(obj.CancelOrders).toFixed(2));
+                $("#RunningOrders").text(Number(obj.RunningSaleAmount).toFixed(2));
+                $("#Total").text(Number(obj.Total).toFixed(2));
+
+                //-----------------Html---------------------------
+                var X_HTML = "";
+                if (obj.CIOData !== null) {
+                    X_HTML += "<table style='color:black;font-size: 12px;'>";
+                    X_HTML += "<tr><th>Cashier</th><th>In DT</th><th>Out DT</th></tr>";
+
+                    obj.CIOData.forEach(myFunction);
+
+                    function myFunction(item) {
+                        X_HTML += "<tr>";
+                        X_HTML += "<td>" + item.Cashier + "</td>";
+                        X_HTML += "<td>" + item.In_DT + "</td>";
+                        X_HTML += "<td>" + item.Out_DT + "</td>";
+                        X_HTML += "</tr>";
+                    }
+                    X_HTML += "</table>";
+                }
+                X_HTML += "<hr/>";
+                X_HTML += "<h5 style='color:black'><b> Running Order</b></h5>";
+                X_HTML += "<hr/>";
+
+                X_HTML += "<h6 style='color:black'><b> Dinein : </b>" + Number(obj.Dinein).toFixed(2) + "</h6>";
+                X_HTML += "<h6 style='color:black'><b> Takeaway : </b>" + Number(obj.Takeaway).toFixed(2) + "</h6>";
+                X_HTML += "<h6 style='color:black'><b> Delivery : </b>" + Number(obj.Delivery).toFixed(2) + "</h6>";
+                X_HTML += "<h6 style='color:black'><b> Corporate : </b>" + Number(obj.Corporate).toFixed(2) + "</h6>";
+                X_HTML += "<h6 style='color:black'><b> Drive Th. : </b>" + Number(obj.Drive_Th).toFixed(2) + "</h6>";
+
+                if (obj.Day_Last_Invoice_Detail !== "") {
+                    X_HTML += "<h6 style='color:black'><b> Day Last Invoice Detail(Number,DateTime) : </b>" + obj.Day_Last_Invoice_Detail + "</h6>";
+                }
+                if (obj.ToDayLast_Sync_DT !== null) {
+                    X_HTML += "<h6 style='color:black'><b> Last Sync : </b>" + obj.ToDayLast_Sync_DT + "</h6>";
+                }
+                //-----------------Html---------------------------
+                $("#Html1").append(X_HTML);
+            }
+        });
+    }
+</script>

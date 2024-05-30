@@ -1,0 +1,67 @@
+﻿body {
+    font-family: Calibri;
+}
+
+.btn-export {
+    padding: 5px;
+    font-size: 30px;
+    margin-right: 5px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    background: #e4dede;
+    border: none;
+}
+
+    .btn-export:hover {
+        color: white !important;
+        background: green;
+    }
+
+    .btn-export.excel, .btn-export.csv {
+        color: green;
+    }
+
+    .btn-export.pdf {
+        color: #d43a3a;
+    }
+
+        .btn-export.pdf:hover {
+            background: #d43a3a;
+        }
+
+.filters {
+}
+
+    .filters label {
+        font-size: 22px;
+    }
+
+    .filters input, .filters select {
+        margin-right: 30px;
+    }
+
+        .filters select#reportType {
+            padding: 3px 6px;
+            font-size: 20px;
+        }
+
+        .filters input#fetchReport {
+            font-size: 21px;
+        }
+
+    .filters input {
+        width: 170px;
+        margin-right: 30px;
+        font-size: 19px;
+        text-align: center;
+    }
+
+.dt-buttons {
+    padding-top: 20px;
+}
+
+
+table td, table th {
+    font-size: 20px;
+}

@@ -1,0 +1,115 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Sales Summary";
+    Layout = "~/Views/Shared/_Layout(blank).cshtml";
+}
+<div style="overflow-x: auto;">
+    @if (Model.Rows.Count > 0)
+    {
+        <table class="table table-hover" id="display">
+            <thead>
+                @*<tr><th>Company Name :</th><th>@Request.Cookies["Comp_Name"].Value</th></tr>*@
+
+                <tr>
+                    @{var temp = "";}
+                    @{var a = 0;}
+                    @foreach (System.Data.DataColumn col in Model.Columns)
+                    {
+                        { temp = (Model.Columns[a].DataType).FullName; }
+                        a++;
+
+                        if (temp != "System.String")
+                        {
+                            <th style="text-align:right">@col.Caption</th>
+                        }
+                        else
+                        {
+                            <th>@col.Caption</th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{var i = 0; }
+                @foreach (System.Data.DataRow row in Model.Rows)
+                {
+                    <tr>
+                        @{var t = 0;}
+                        @foreach (var cell in row.ItemArray)
+                        {
+                            { temp = (Model.Columns[t].DataType).FullName; }
+
+                            i++;
+                            t++;
+
+                            if (temp == "System.String")
+                            {
+                                <td>@cell.ToString()</td>
+                            }
+                            if (temp == "System.Int32")
+                            {
+                                <td align="right">@string.Format("{0:N0}", cell) </td>
+                            }
+                            if (temp == "System.Decimal" || temp == "System.Double")
+                            {
+                                <td align="right">@string.Format("{0:N2}", cell) </td>
+                            }
+                            if (temp == "System.DateTime")
+                            {
+                                <td>@cell.ToString()</td>
+                            }
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <center><h6 style="color:red">No Data Found !!!!</h6></center>
+    }
+
+</div>
+
+<script type="text/javascript">
+    var rpttype = '@ViewBag.ReportType';
+    console.log("report type: " + rpttype);
+
+    $('#display').DataTable({
+        "pagingType": "full_numbers",
+        "order": [],
+        "iDisplayLength": 50,
+        //"iDisplayLength": 5,
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                "extend": 'excelHtml5',
+                "messageTop": rpttype,
+                "text": 'Excel', "className": 'btn-export'
+            },
+            {
+                "extend": 'csvHtml5',
+                "messageTop": rpttype,
+                "text": 'CSV', "className": 'btn-export'
+            },
+            {
+                "extend": 'pdfHtml5',
+                "messageTop": rpttype,
+                "text": 'PDF', "className": 'btn-export'
+            }
+        ]
+
+    });
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+
+<!--BODY-->

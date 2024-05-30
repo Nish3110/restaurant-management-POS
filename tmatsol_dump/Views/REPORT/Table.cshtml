@@ -1,0 +1,335 @@
+﻿@model tmatsol_dump.Models.Web_Report.FI_Table_Master
+@{
+    ViewBag.Title = "Table";
+    Layout = null;
+    //Layout = "~/Views/Shared/_Layout(WebReport).cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from www.freshdesignweb.com/demo/template/ustora/shop.htm by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Mar 2021 12:25:48 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap -->
+
+    <link href="~/Web_Report/TAB/Ecom/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+
+    <link href="~/Web_Report/TAB/Ecom/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link href="~/Web_Report/TAB/Ecom/css/owl.carousel.css" rel="stylesheet" />
+    <link href="~/Web_Report/TAB/Ecom/style.css" rel="stylesheet" />
+    <link href="~/Web_Report/TAB/Ecom/css/responsive.css" rel="stylesheet" />
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+
+                @*<center><p>Please Select the Table First.</p></center>*@
+                <a class="btn btn-warning" href="~/REPORT/DashBoard" style="font:x-large;">Back</a>
+                <div>
+                    <div id="Mode" class="scrollmenu">
+
+                    </div>
+
+                    @Html.HiddenFor(model => model.Table_Grp_cd, new { id = "cid" })
+                    <hr />
+                    <form method="post">
+                        @*<div id="Tab" style="position:relative; width: 100%;">*@
+                        <div id="Tab" class="scrollmenu11">
+                        </div>
+                        @Html.HiddenFor(model => model.Table_no, new { id = "tid" })
+                    </form>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div>
+        <input type="hidden" id="TABLE_GRP_CD" value=@Session["TABLE_GRP_CD"].ToString() />
+    </div>
+</body>
+</html>
+<!--<div class="homepage-menu-area" style="background: rgba(0, 0, 0, 0.3)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="section-area">
+                    <h3  style="color: #ffa939;">e-Restaurant</h3>
+                    <p  style="color: white;">Please Select the Table First.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="total-menu-area">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    <form method="post">
+                        <div id="Tab">
+
+                        </div>
+
+                     @*   @Html.HiddenFor(model => model.Table_no, new { id = "tid" })  *@
+                    </form>
+                </div>
+            </div>
+        </div>
+        @*<input type="hidden" id="tid" value="" />*@
+
+    </div>
+</div>-->
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ClientJS/0.1.11/client.min.js"></script>*@
+@*<link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/js/client.min.js"></script>
+    <script src="~/Scripts/js/jquery.min.js"></script>*@
+
+<link href="~/Web_Report/TAB/bootstrap.css" rel="stylesheet" />
+<script src="~/Web_Report/TAB/client.min.js"></script>
+<script src="~/Web_Report/TAB/jquery.min.js"></script>
+<link href="~/Web_Report/TAB/responsive.css" rel="stylesheet" />
+
+<script src="~/Web_Report/TAB/Ecom/js/bootstrap.min.js"></script>
+<script src="~/Web_Report/TAB/Ecom/js/owl.carousel.min.js"></script>
+<script src="~/Web_Report/TAB/Ecom/js/jquery.sticky.js"></script>
+<script src="~/Web_Report/TAB/Ecom/js/jquery.easing.1.3.min.js"></script>
+<script src="~/Web_Report/TAB/Ecom/js/main.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        var Str = document.getElementById("TABLE_GRP_CD").value;
+        document.cookie = "TABLE_GRP_CD=" + Str + ";expires=Fri, 31 Dec 2100 12:00:00 UTC;path=/";
+
+        var refresher = setInterval(function () {
+            PageRefresh();
+            ref();
+        }, 30000);//evry 20 sec....
+
+        function PageRefresh() {
+            $.ajax({
+                type: "get",
+                url: "/REPORT/PageRefresh",
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.R_fresh == false) {
+                        alert("R_fresh request False !!!!!")
+                    }
+                }
+            });
+        }
+        FillPage();
+
+        //----back button disable ---------------
+        function disablePrev() { window.history.forward() }
+        window.onload = disablePrev();
+        window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+        //----back button disable ---------------
+    });
+     function ref() {
+        
+        var cid = $("#cid").val();
+         if (cid=="") {
+             cid = "1";
+         }
+        $.ajax({
+            type: "post",
+            url: "/Report/GetmodebaseTable?Mid=" + cid,
+            data: {},/*JSON.stringify({ XmlParms: "data" }),*/
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                if (data.length > 0) {
+                    $('#Tab').html('');
+                    var options = '';
+                    var vcolor;
+                    for (var i = 0; i < data.length; i++) {
+
+                        vcolor = 'white ';
+                        if (data[i].Table_no == data[i].Table_Occupuied) {
+                            vcolor = '#f4c2c2 ';
+                        }
+
+                        if (data[i].Bill_Printed > 0) {
+                            vcolor = '#8bc34a';
+                        }
+                        options += '<input type="submit" class="tb" style="background-color: ' + vcolor + ';border: 2px solid black;color: Black;margin:5px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px; width: 100%;max-width:80px; box-sizing: border-box;left:' + data[i].Pos_X + 'px; top:' + data[i].Pos_Y + 'px; position:absolute;" value="' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+
+                    }
+                    //options += '<input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="TABLE ' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+                    // options += '<input type="submit" class="tb" style="background-color: ' + data[i].color + ';border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px; width: 100%;max-width: 120px; box-sizing: border-box;" value="' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+                    //options += '<input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="' + data.list[i].Table_no + '" id="' + data.list[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+
+
+                }
+                $('#Tab').append(options);
+            }
+
+
+        });
+
+    }
+    function FillPage() {
+        GetMode();
+        $.ajax({
+            type: "get",
+            url: "/Report/GetTables",
+            data: {},/*JSON.stringify({ XmlParms: "data" }),*/
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                if (data.length > 0) {
+                    $('#Tab').html('');
+                    var options = '';
+                    var vcolor;
+
+                    for (var i = 0; i < data.length; i++) {
+
+                        vcolor = 'white ';
+                        if (data[i].Table_no == data[i].Table_Occupuied) {
+                            vcolor = '#f4c2c2 ';
+                        }
+
+                        if (data[i].Bill_Printed > 0) {
+                            vcolor = '#8bc34a';
+                        }
+                        options += '<input type="submit" class="tb" style="background-color: ' + vcolor + ';border: 2px solid black;color: Black;margin:5px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px; width: 100%;max-width:80px; box-sizing: border-box;left:' + data[i].Pos_X + 'px; top:' + data[i].Pos_Y + 'px; position:absolute;" value="' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+
+                        //options += '<input type="submit" class="tb" style="background-color: ' + vcolor + ';border: 2px solid black;color: Black;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px; width: 100%;max-width: 120px; box-sizing: border-box;" value="' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+                        //options += '<input type="submit" class="tb" style="background-color: ' + vcolor + ';border: 2px solid black;color: Black;margin:5px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px; width: 100%;max-width:80px; box-sizing: border-box;left:' + data[i].Pos_X + 'px; top:' + data[i].Pos_Y + 'px; position:absolute;" value="' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+
+                    }
+                    //options += '<input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="TABLE ' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+                    // options += '<input type="submit" class="tb" style="background-color: ' + data[i].color + ';border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px; width: 100%;max-width: 120px; box-sizing: border-box;" value="' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+                    //options += '<input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="' + data.list[i].Table_no + '" id="' + data.list[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+
+                }
+                $('#Tab').append(options);
+
+            }
+
+
+        });
+    }
+
+    function m(value) {
+        document.getElementById("tid").value = value;
+    }
+
+    function my(id) {
+        //GetmodebaseTable
+        document.getElementById("cid").value = id;
+        // alert(id);
+        $.ajax({
+            type: "post",
+            url: "/Report/GetmodebaseTable?Mid=" + id,
+            data: {},/*JSON.stringify({ XmlParms: "data" }),*/
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                if (data.length > 0) {
+                    $('#Tab').html('');
+                    var options = '';
+                    var vcolor;
+                    for (var i = 0; i < data.length; i++) {
+
+                        vcolor = 'white ';
+                        if (data[i].Table_no == data[i].Table_Occupuied) {
+                            vcolor = '#f4c2c2 ';
+                        }
+
+                        if (data[i].Bill_Printed > 0) {
+                            vcolor = '#8bc34a';
+                        }
+                        options += '<input type="submit" class="tb" style="background-color: ' + vcolor + ';border: 2px solid black;color: Black;margin:5px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px; width: 100%;max-width:80px; box-sizing: border-box;left:' + data[i].Pos_X + 'px; top:' + data[i].Pos_Y + 'px; position:absolute;" value="' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+
+                    }
+                    //options += '<input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="TABLE ' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+                    // options += '<input type="submit" class="tb" style="background-color: ' + data[i].color + ';border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px; width: 100%;max-width: 120px; box-sizing: border-box;" value="' + data[i].Table_no + '" id="' + data[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+                    //options += '<input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="' + data.list[i].Table_no + '" id="' + data.list[i].Fi_Table_Template_Master_sr_no + '" onclick="m(this.value)"/>';
+
+
+                }
+                $('#Tab').append(options);
+            }
+
+
+        });
+
+    }
+
+    function GetMode() {
+        $.ajax({
+            type: "get",
+            url: "/Report/GetDineINmode",
+            data: JSON.stringify({ XmlParms: "data" }),
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                if (data.length > 0) {
+                    $('#Mode').html('');
+                    options = '';
+                    for (var i = 0; i < data.length; i++) {
+                        options += '<input type="submit" class="tb" style="background-color: nevy;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="' + data[i].ModeTypeStr + '" id="' + data[i].ref_no + '" onclick="my(this.id)"/>';
+                    }
+
+                }
+                $('#Mode').append(options);
+                //else {
+                //    if (data.isRedirect) {
+                //        window.location.href = data.redirectUrl;
+                //    }
+                //}
+            }
+
+        });
+
+    }
+</script>
+
+<style>
+    .scrollmenu {
+        background-color: transparent;
+        overflow: auto;
+        white-space: nowrap;
+        width: 100%;
+    }
+
+    .scrollmenu11 {
+        position: absolute;
+        background-color: transparent;
+        overflow: inherit;
+        white-space: nowrap;
+        width: 100%;
+    }
+    /*input[type=submit] {
+                   margin: 40px 20px;
+            cursor: pointer;
+                  }*/
+</style>

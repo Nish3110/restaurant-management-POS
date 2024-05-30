@@ -1,0 +1,189 @@
+﻿@*<!DOCTYPE html>
+    <html>
+    <head></head>
+    <body>
+        <link rel="stylesheet" type="text/css" href="~/Content/StyleSheet1.css" media="print" />
+        <input id="btn" type="button" value="Print Img" onclick="pform()" />
+        <span id="rtn">@ViewBag.Return</span>
+        @Html.Raw(Session["htmlstring"].ToString())
+
+        <script type="text/javascript">
+
+            window.onload = function () {
+                //pform();
+                var scriptTag = document.createElement("script");
+                scriptTag.src = "~/Content/My/jquery.min.js";
+                document.getElementsByTagName("head")[0].appendChild(scriptTag);
+                //location.href = document.getElementById('rtn').innerHTML;
+                document.getElementById('btn').click();
+
+            }
+            function pform() {
+                var divContents = document.getElementById("Acv").innerHTML;
+                var a = window.open('', '', 'height=500, width=500');
+                a.document.write('<html>');
+                a.document.write('<head>');
+
+                var scriptTag = document.createElement("script");
+                scriptTag.src = "~/Content/My/jquery.min.js";
+                a.document.write(scriptTag.innerHTML);
+
+                a.document.write('</head>');
+                a.document.write('<body>');
+                a.document.write(divContents);
+                a.document.write('</body></html>');
+                a.document.write('<style>');
+                a.document.write('@@page {   size: 110mm;    margin: unset;} @@media print {body {       margin:unset;    }    img{width:280%;  margin:unset;    }}');
+                //a.document.write('@@page {   size: 80mm; margin: unset;} @@media print {body {margin:unset;}    img{width:100%;  margin:unset;}}');
+                a.document.write('</style>');
+                a.document.close();
+                a.print();
+                debugger;
+            }
+        </script>
+    </body>
+    </html>*@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .menu {
+            float: left;
+            width: 20%;
+            text-align: center;
+        }
+
+            .menu a {
+                background-color: navy;
+                padding: 8px;
+                margin-top: 7px;
+                display: block;
+                width: 100%;
+                color: white;
+            }
+
+        .main {
+            float: left;
+            width: 60%;
+            padding: 0 20px;
+        }
+
+        .right {
+            background-color: navy;
+            float: left;
+            width: 20%;
+            padding: 15px;
+            margin-top: 7px;
+            text-align: center;
+        }
+
+        @@media only screen and (max-width: 620px) {
+            /* For mobile phones: */
+            .menu, .main, .right {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body style="font-family:Verdana;color:white;">
+    <link rel="stylesheet" type="text/css" href="~/Content/StyleSheet1.css" media="print" />
+
+    @*<div style="background-color:black;padding:15px;text-align:center;">
+            <h1>Bill Print</h1>
+        </div>*@
+
+    <div style="overflow:auto">
+        <div class="menu">
+            <a href="#" style="background-color:orangered" class="btn btn-success" onclick="pform()">PRINT</a>
+            <a href="@ViewBag.Return" class="btn btn-danger" id="bck">BACK</a>
+            @*<a href="#" class="btn btn-warning"></a>*@
+            @*<a href="#" class="btn btn-danger">Link 4</a>*@
+        </div>
+
+        <div class="main">
+            @Html.Raw(Session["htmlstring"].ToString())
+        </div>
+
+        <div class="right">
+            <h2>About</h2>
+            @*<span id="rtn">@ViewBag.Return</span>*@
+            <p>Think Softwares Bill Print</p>
+        </div>
+    </div>
+
+    <div style="background-color:black;text-align:center;padding:10px;margin-top:7px;">@DateTime.Now.Year - My Restaurant Cart Application V1.0[04-Sep-23] </div>
+
+</body>
+</html>
+<script type="text/javascript">
+
+    window.onload = function () {
+        //pform();
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "~/Content/My/jquery.min.js";
+        document.getElementsByTagName("head")[0].appendChild(scriptTag);
+        //location.href = document.getElementById('rtn').innerHTML;
+    }
+    function pform() {
+        //done ok
+        //var divContents = document.getElementById("Acv").innerHTML;
+        //window.document.write('<html>');
+        //window.document.write('<body>');
+        //window.document.write(divContents);
+        //window.document.write('</body>');
+        //window.document.write('</html>');
+        //window.document.close();
+        //window.print();
+        //window.close();
+        //end done
+
+        ///var divContents = document.getElementById("Acv").innerHTML;
+        ///window.document.write('<html>');
+        ///window.document.write('<body>');
+        ///window.document.write(divContents);
+        ///window.document.write('</body>');
+        ///window.document.write('</html>');
+        ///window.document.print();
+        ///window.document.close();
+
+        //location.href = '/RTC/Menu';
+
+        var divContents = document.getElementById("Acv").innerHTML;
+        var myWindow = window.open('', '', 'width=800,height=800');
+        myWindow.document.write(divContents);
+        myWindow.print();
+
+        myWindow.document.close();
+        myWindow.focus();
+
+        myWindow.onafterprint = function () { setTimeout(function () { myWindow.close(); location.href = '/RTC/Menu'; }, 500); }
+
+
+        //var ddocument.write('<head>');ivContents = document.getElementById("mainimg").innerHTML;
+        //var divContents = document.getElementById("mainimg").src;
+        //var a = window.open('', '', 'height=500, width=500');
+        //a.document.write('<html>');
+        //a.document.write('<head>');
+
+        //var scriptTag = document.createElement("script");
+        //scriptTag.src = "~/Content/My/jquery.min.js";
+        //a.document.write(scriptTag.innerHTML);
+
+        //a.document.write('</head>');
+        //a.document.write('<body>');
+        //a.document.write(divContents);
+        //a.document.write('</body></html>');
+        //a.document.write('<style>');
+        //a.document.write('@@page {   size: 110mm;    margin: unset;} @@media print {body {       margin:unset;    }    img{width:280%;  margin:unset;    }}');
+        //a.document.write('@@page {   size: 80mm; margin: unset;} @@media print {body {margin:unset;}    img{width:100%;  margin:unset;}}');
+        //a.document.write('</style>');
+        //a.document.close();
+        //a.print();
+        //a.document.close();
+    }
+</script>

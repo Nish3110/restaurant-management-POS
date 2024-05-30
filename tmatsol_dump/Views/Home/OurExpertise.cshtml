@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "OurExpertise";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section headerscripts{
+
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        function up() {
+            $('#popUp').css('display', 'block');
+        }
+        function up1() {
+            $('#popUp1').css('display', 'block');
+        }
+        function up2() {
+            $('#popUp2').css('display', 'block');
+        }
+        function cl() {
+            $('#popUp').css('display', 'none');
+            $('#popUp1').css('display', 'none');
+            $('#popUp2').css('display', 'none');
+        };
+    </script>
+}
+<style>
+    /*#img1, #img2, #img3 {
+    border-radius: 75px;
+    background: #0067B8;
+    padding: 10px;
+    height:70%;
+    width:100%;
+      }*/
+    img:hover {
+        filter: (100%);
+        transform: scale(1.1);
+    }
+</style>
+<hr />
+<h4 class="text-center text-uppercase">Our Expertise</h4>
+<hr />
+
+<section id="services" class="container">
+
+    <!--Deck1-->
+    <div class="card-deck justify-content-around">
+        <div class="card">
+            <img id="img1" class="card-img-top" height="65%" width="35%" src="~/images/team/t1.jpg" />
+
+            <div class="card-body">
+                <h5 class="card-title"><b>Managing Director</b><br /> <br /><i class="fas fa-user-tie"></i> Dharmesh Shah</h5><p><b><i class="fas fa-mobile-alt"></i> &nbsp;+971 50 515 4103 &nbsp;<br /><i class="fab fa-whatsapp"></i>&nbsp;+971 55 561 4103<br /> <i class="fas fa-envelope-open-text"></i>&nbsp;dcshah@eim.ae</b></p>
+                @*<h5 class="card-title"><b>Managing Director</b><br /> <br /><i class="fas fa-user-tie"></i> Dharmesh Shah<br /><i class="fas fa-mobile-alt"></i> &nbsp;+971 55 561 4103<br /> <i class="fas fa-envelope-open-text"></i>&nbsp;dcshah@eim.ae</h5>*@
+                <p class="card-text"></p>
+                <a href="#popUp" onclick="up()">Read the Bio ></a>
+
+            </div>
+
+        </div>
+        <div class="card">
+            <img id="img2" class="card-img-top" height="65%" width="35%" src="~/images/team/sam3.jpeg" />
+
+            <div class="card-body">
+                <h5 class="card-title"><b>Support Engineer</b><br /> <br /><i class="fas fa-user-tie"></i> SAM</h5><p><b><i class="fas fa-mobile-alt"></i> &nbsp;+971 56 409 5060<br /> <i class="fas fa-envelope-open-text"></i>&nbsp;sam@tmatsol.com</b></p>
+                @*<h5 class="card-title"><b>Support Engineer</b><br /> <br /><i class="fas fa-user-tie"></i> SAM<br /><i class="fas fa-mobile-alt"></i> &nbsp;+971 56 409 5060<br /> <i class="fas fa-envelope-open-text"></i>&nbsp;sam@tmatsol.com</h5>*@
+                <p class="card-text"></p>
+                <a href="#popUp" onclick="up1()">Read the Bio ></a>
+
+            </div>
+        </div>
+        <!--<div class="card">
+    <img id="img3" class="card-img-top" height="65%" width="35%" src="~/images/team/faisal.jpeg" />
+
+    <div class="card-body">
+        <h5 class="card-title"><b>Support Engineer</b><br /> <br /><i class="fas fa-user-tie"></i> Muhammed Faisal</h5><p><b><i class="fas fa-mobile-alt"></i> &nbsp;+971 56 780 0470<br /> <i class="fas fa-envelope-open-text"></i>&nbsp;faisal@tmatsol.com</b></p>
+        @*<h5 class="card-title"><b>Support Engineer</b><br /> <br /><i class="fas fa-user-tie"></i> Muhammed Faisal<br /><i class="fas fa-mobile-alt"></i> &nbsp;+971 56 780 0470<br /> <i class="fas fa-envelope-open-text"></i>&nbsp;faisal@think.com</h5>*@
+        <p class="card-text"></p>
+        <a href="#popUp" onclick="up2()">Read the Bio ></a>
+    </div>
+        </div>-->
+        <!--<div class="card">
+        <img id="img3" class="card-img-top" height="65%" width="35%" src="~/images/team/zafar.jpeg" />
+
+        <div class="card-body">
+            <h5 class="card-title"><b>Support Engineer</b><br /> <br /><i class="fas fa-user-tie"></i> Zafar</h5><p><b><i class="fas fa-mobile-alt"></i> &nbsp;+971 56 780 0470<br /> <i class="fas fa-envelope-open-text"></i>&nbsp;zafar@tmatsol.com</b></p>-->
+        @*<h5 class="card-title"><b>Support Engineer</b><br /> <br /><i class="fas fa-user-tie"></i> Muhammed Faisal<br /><i class="fas fa-mobile-alt"></i> &nbsp;+971 56 780 0470<br /> <i class="fas fa-envelope-open-text"></i>&nbsp;faisal@think.com</h5>*@
+        <!--<p class="card-text"></p>
+            <a href="#popUp" onclick="up2()">Read the Bio ></a>
+        </div>
+    </div>-->
+    <div class="card">
+        <div class="card-body">
+        </div>
+    </div>
+</section>
+
+<div id="popUp" style="display:none">
+    <div>
+        <button onclick="cl()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Bio</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6><i class="fas fa-user-tie"></i><b> Managing Director</b>, <b> Dharmesh Shah</b></h6></center>
+                        <img style="float:left;height:30%;width:30%;" src="~/images/team/t1.jpg" />
+                        <p style="text-align:justify">Dharmesh Shah is Managing Director and chief executive officer of Think Softwares, an innovator and technology leader providing the essential infrastructure for organizations to build their digital future, transform IT and protect their most important information.</p>
+                        <p style="text-align:justify">Founded in 2001, Think Softwares specializes as an IT Solution,IT Poducts, IT POS services and IT Consulting Services Provider. We pride ourselves on being small enough to provide personal touch on every project; and on the other hand, big enough to assure that all aspects of every project are handled professionally and get done on time & budget. Whether it is Restaurant management software, Account Handling Software.IT Solutions, Products, Software Development; our global expert consultants can get it done.</p>
+                        <p style="text-align:justify">We provide best-in-class cost-effective solutions Having years of experience and ready to be deployed consultants in almost every industry, restaurant, shop, offices, food court, healthcare, security, transportation, consulting, logistics, high-tech, government and hospitality, we can assure you that we will assign a team to your project that understands your industry and your needs and can help you stay competitive in this digital economy.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div id="popUp1" style="display:none">
+    <div>
+        <button onclick="cl()">X</button>
+    </div>
+    <section id="services" class="container">
+        <!--Deck1-->
+        <div class="card-deck justify-content-around">
+
+            <div class="container">
+                <h4 class="text-center text-uppercase">Read the Bio</h4>
+                <hr />
+                <div style="float:left">
+                    <div style="height:100%;">
+                        <center><h6><i class="fas fa-user-tie"></i><b> Support Engineer</b>, <b> SAM</b></h6></center>
+                        <img style="float:left;height:25%;width:25%;" src="~/images/team/sam3.jpeg" />
+                        <p style="text-align:justify">SAM is responsible for running day-to-day business operations, shaping the company’s strategic agenda and aligning priorities across the Think Softwares executive Support team.SAM oversees the company’s operations, including its global manufacturing, procurement and supply chain activities.In fact, Think Softwares s’ supply chain is recognized among the world’s most innovative and continues to receive accolades for its achievements in closed-loop recycling and sustainable product development.</p>
+                        <p style="text-align:justify">Additionally, SAM oversees the engineering, design, development and sales of the Infrastructure Solutions Group across servers, storage, data protection and networking products.  He also oversees the engineering, design, development and sales of the Client Solutions Group, including computer desktops, notebooks, workstations, cloud client computing and end-user computing software solutions.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@*<div id="popUp2" style="display:none">
+        <div>
+            <button onclick="cl()">X</button>
+        </div>
+        <section id="services" class="container">
+
+            <div class="card-deck justify-content-around">
+
+                <div class="container">
+                    <h4 class="text-center text-uppercase">Read the Bio</h4>
+                    <hr />
+                    <div style="float:left">
+                        <div style="height:100%;">
+                            <center><h6><i class="fas fa-user-tie"></i><b> Support Engineer</b>, <b> Muhammed Faisal</b></h6></center>
+                            <img style="float:left;height:30%;width:30%;" src="~/images/team/faisal.jpeg" />
+                            <p style="text-align:justify">Faisal is responsible for running day-to-day business operations, shaping the company’s strategic agenda and aligning priorities across the Think Softwares executive Support team.Faisal oversees the company’s operations, including its global manufacturing, procurement and supply chain activities.In fact, Think Softwares s’ supply chain is recognized among the world’s most innovative and continues to receive accolades for its achievements in closed-loop recycling and sustainable product development.</p>
+                            <p style="text-align:justify">Additionally, Faisal oversees the engineering, design, development and sales of the Infrastructure Solutions Group across servers, storage, data protection and networking products.  He also oversees the engineering, design, development and sales of the Client Solutions Group, including computer desktops, notebooks, workstations, cloud client computing and end-user computing software solutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>*@
+<div id="popUp2" style="display:none">
+        <div>
+            <button onclick="cl()">X</button>
+        </div>
+        <section id="services" class="container">
+
+            <div class="card-deck justify-content-around">
+
+                <div class="container">
+                    <h4 class="text-center text-uppercase">Read the Bio</h4>
+                    <hr />
+                    <div style="float:left">
+                        <div style="height:100%;">
+                            <center><h6><i class="fas fa-user-tie"></i><b> Support Engineer</b>, <b> Zafar</b></h6></center>
+                            <img style="float:left;height:30%;width:30%;" src="~/images/team/zafar.jpeg" />
+                            <p style="text-align:justify">Zafar is responsible for running day-to-day business operations, shaping the company’s strategic agenda and aligning priorities across the Think Softwares executive Support team.Zafar oversees the company’s operations, including its global manufacturing, procurement and supply chain activities.In fact, Think Softwares s’ supply chain is recognized among the world’s most innovative and continues to receive accolades for its achievements in closed-loop recycling and sustainable product development.</p>
+                            <p style="text-align:justify">Additionally, Zafar oversees the engineering, design, development and sales of the Infrastructure Solutions Group across servers, storage, data protection and networking products.  He also oversees the engineering, design, development and sales of the Client Solutions Group, including computer desktops, notebooks, workstations, cloud client computing and end-user computing software solutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>

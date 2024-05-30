@@ -1,0 +1,598 @@
+﻿/*________________________Style-MS______________________________________*/
+
+/*-------------------Cover Page-----------------------------------------*/
+body.cover{
+margin:0;
+padding:0;
+font-size:100%;
+font-family:'Arial','sans-serif';
+}
+a.nav-link{
+color:#ffffff;
+}
+.cover-header {
+position: fixed;
+background: radial-gradient(circle at 110%, #333, #333 6%, #eee 0%, #333 77%);
+background-repeat:no-repeat;
+width: 100vw;
+height: 100vh;
+z-index: 1;
+}
+.cover-content{
+position: fixed;
+left: 0;
+right: 0;
+z-index: 2;
+margin-left: 20px;
+margin-right: 20px;
+filter: blur(0px);
+}
+.nav-item.cover{
+margin:1px;
+border-radius:25%;
+border-right:2px solid gray;
+padding-right:3px; 
+}
+.nav-item:hover.cover{
+border:1px solid gray;
+}
+.nav-item:active.cover{
+    border:1px solid blue;
+}
+
+/*--------------------------------------------------------------------------*/
+
+/*------------------General ------------------------------------------------*/
+.active-nav{
+    border-bottom:3px solid #ff3a3a;
+    border-radius:0%;
+    color: white;
+    /*background-color: black;*/
+}
+.shine {
+  position: absolute;
+  top: 0;
+  left: -70px;
+  height: 98px;
+  width: 50px;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all .3s linear;
+  transform: skewX(20deg) translateX(0);
+}
+
+.mybody-container{
+margin:5px;
+padding:5px;
+/*border:1px solid gray; my changes*/
+}
+.menu-header-text{
+background-image: -webkit-linear-gradient(left, red, black);
+color: transparent;
+-webkit-background-clip: text;
+background-clip: text;
+}
+.footer-btn{
+    color:#000;
+    border-color:#ff3a3a;
+    border-radius:0;
+}
+.footer-btn:hover{
+    color:#fff;
+    background-color:#ff3a3a;
+    border-color:#ff3a3a;
+    border-radius:25%;
+    transition:0.1s ease;
+}
+.footer-bottom{
+    color:rgb(255,58,58);
+    text-decoration:none;
+}
+.footer-bottom:hover{
+    color:rgb(255,58,58); 
+    text-decoration:underline;
+}
+a:visited{
+    text-decoration:none;
+}
+
+.facebook,.twitter,.linkedin,.google-plus{
+    margin:0.25em;
+    padding:0.25em;
+    color:#646464;
+}
+.instagram{
+     color:#646464;
+    margin-left:5px;
+    padding:5px; 
+}
+.facebook:hover{
+    color:#4867aa;
+}
+.instagram:hover{
+  color: transparent;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  background: -webkit-radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.linkedin:hover{
+    color:#0077b5;
+}
+.twitter:hover{
+    color:#1da1f2;
+}
+.google-plus:hover{
+    color:#dc5245;
+}
+/*------------------- Card-Demo ----------------------------------------------*/
+
+
+/*---------------- Split Layer ----------------------------------------------*/
+#wrapper{
+position: relative;
+width:100%;
+min-height:40vw;
+overflow: hidden;
+}
+
+.layer{
+  position: absolute;
+  width:100vw;
+  min-height: 55vw;
+  overflow: hidden;
+}
+
+.layer .content-wrap{
+  position: absolute;
+  width:100vw;
+  min-height: 55vw;
+}
+
+.layer .content-body{
+  width:25%;
+  position:absolute;
+  top:50%;
+  text-align: center;
+  transform:translateY(-50%);
+  color:#fff;
+}
+
+.layer h5{
+  font-size:2em;
+}
+
+.bottom{
+  background:#222;
+  z-index:1;
+}
+
+.bottom .content-body{
+  right:5%;
+}
+
+.bottom h5{
+  color:#FDAB00;
+}
+
+.top{
+  background:#eee;
+  color:#222;
+  z-index:2;
+  width:50vw;
+}
+
+.top .content-body{
+  left: 5%;
+  color:#222;
+}
+
+.handle{
+  position: absolute;
+  height: 100%;
+  display: block;
+  background-color: #FDAB00;
+  width:5px;
+  top:0;
+  left: 50%;
+  z-index:3;
+}
+
+.skewed .handle{
+  top:50%;
+  transform:rotate(30deg) translateY(-50%);
+  height: 200%;
+  transform-origin:top;
+}
+
+.skewed .top{
+  transform: skew(-30deg);
+  margin-left:-1075px;
+  width: calc(50vw + 1000px);
+}
+
+.skewed .top .content-wrap{
+  transform: skew(30deg);
+  margin-left:1000px;
+}
+
+/*-----------carousel----------------------------------------------------*/
+
+.carousel-img{
+   height:35vw;
+}
+
+@media(max-width:768px){
+  /*body{
+    font-size:75%;
+  }*/
+  .carousel-img{
+   height:auto;
+}
+}
+
+/*--------------- titles -------------------------------------------------*/
+.title-with-divider{
+    color:black;
+    margin: 4em 0 4em 0;
+    line-height: 0.5;
+    text-align: center;
+}
+.title-with-divider span {
+  font-size:2rem;
+  display: inline-block;
+  position: relative;  
+}
+.title-with-divider span:before,
+.title-with-divider span:after {
+  content: "";
+  position: absolute;
+  align-content:center;
+  height: 3px;
+  border-bottom: 1px solid #ff3a3a;
+  border-top: 1px solid #ff3a3a;
+  top: 0.2em;
+  margin:  0 0 0 0;
+  width: 30%;
+}
+.title-with-divider span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+.title-with-divider span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+/*-------------------------products----------------------------------------*/
+
+.card,.img-thumbnail{
+    border:none;
+}
+.img-thumbnail{
+    margin :2px 2px 2px 2px;
+    padding:5px 5px 10px 5px;
+    max-width:120px;
+    max-height:100px;
+    border-bottom:1px solid rgba(255,58,58,0.7);
+    border-radius:0px;
+}
+.card:hover {
+    border: 1px solid #fff;
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: #0067B8 10px 10px;
+    transition: 0.25s ease;
+}
+.skew,.skew:hover{
+    border:none;
+    cursor:default;
+    box-shadow:none;
+}
+
+.social-media-icons{
+    position:fixed;
+    margin: 0em 0em 7vh 85vw;
+    cursor:pointer;
+    width:4em;
+    height:4em;
+    overflow:hidden;
+}
+.whatsapp{
+    font-size:100%;
+}
+#whatsapp-btn{
+    margin-top:2em;
+    position:relative;
+    align-content:center;
+    height:90px; 
+    max-width:300px;
+    padding:5px;
+}
+
+.social-media-icons:hover{
+    font-size:100%;
+    border:1px solid #00e676;
+    transition: 0.25s ease;
+}
+
+/*------------------------clients----------------------------------------------*/
+
+#hexGrid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+  font-family: sans-serif;
+  list-style-type: none;
+}
+
+.hex {
+  position: relative;
+  visibility:hidden;
+  outline:1px solid transparent; 
+  transition: all 0.5s;
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: all 0.5s; 
+}
+.hex::after{
+  content:'';
+  display:block;
+  padding-bottom: 86.602%;  /* =  100 / tan(60) * 1.5 */
+}
+.hexIn{
+  position: absolute;
+  width:96%;
+  padding-bottom: 110.851%; /* =  width / sin(60) */
+  margin: 2%;
+  overflow: hidden;
+  visibility: hidden;
+  outline:1px solid transparent;  
+  -webkit-transform: rotate3d(0,0,1,-60deg) skewY(30deg);
+  -ms-transform: rotate3d(0,0,1,-60deg) skewY(30deg);
+   transform: rotate3d(0,0,1,-60deg) skewY(30deg);
+   transition: all 0.5s;
+}
+.hexIn * {
+  position: absolute;
+  visibility: visible;
+  outline:1px solid transparent;
+  border-right: 2px solid rgb(255,58,58);
+  border-left: 2px solid rgb(255,58,58);
+}
+
+.hexLink {
+    display:block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    -webkit-transform: skewY(-30deg) rotate3d(0,0,1,60deg);
+    -ms-transform: skewY(-30deg) rotate3d(0,0,1,60deg);
+    transform: skewY(-30deg) rotate3d(0,0,1,60deg);
+}
+/*** HEX CONTENT ************************************************s******************/
+.hex img {
+  left: -100%;
+  right: -100%;
+  width: auto;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.hex h1, .hex p {
+  width: 100%;
+  padding: 5%;
+  box-sizing:border-box;
+  font-weight: 300;
+  opacity: 0;
+}
+#demo1 {
+  color: #F5CE95;
+  text-transform: capitalize;
+  text-align: center;
+  bottom: 50%;
+  padding-top:50%;
+  font-size: 1.5em;
+  z-index: 1;
+}
+.hex h1:before, .hex h1:after {
+  display: inline-block;
+  margin: 0 0.5em;
+  width: 0.25em;
+  height: 0.03em;
+  background: #ffffff;
+  content: '';
+  vertical-align: middle;
+  transition: all 0.3s;
+  text-align:center;
+}
+#demo2 {
+top: 50%;
+text-align: center;
+text-transform: uppercase;    
+}
+.img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-position: center center;
+  background-size: cover;
+  overflow: hidden;
+  -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+.img:before, .img:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: '';
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.img:before {
+  background: rgba(22, 103, 137, 0.3)
+}
+.img:after {
+  background: linear-gradient(to top, transparent, rgba(0, 0, 0, 0.5), transparent);
+}
+/*** HOVER EFFECT  *****************************************************************/
+.hexLink:hover h1, .hexLink:focus h1,
+.hexLink:hover p, .hexLink:focus p{
+/*opacity:0.1;*/
+transition: 0.8s;
+}
+.hexIn:hover .img:before,
+.hexIn:hover .img:after,
+.hexIn:hover .hexLink {
+  opacity: 1;
+  border-left: 1px solid rgb(255,58,58); 
+  box-shadow: 2px 2px 1px rgba(255,58,58,0.7);
+}
+/*** HEXAGON SIZING AND EVEN ROW INDENTATION ***************************************/
+@media (min-width:1201px) { /* <- 5-4  hexagons per row */
+  #hexGrid{
+    padding-bottom: 4.4%
+  }
+  .hex {
+    width: 20%; /* = 100 / 5 */
+  }
+  .hex:nth-child(9n+6){ /* first hexagon of even rows */
+    margin-left:10%;  /* = width of .hex / 2  to indent even rows */
+  }
+}
+
+@media (max-width: 1200px) and (min-width:901px) { /* <- 4-3  hexagons per row */
+  #hexGrid{
+    padding-bottom: 5.5%;
+    font-size: 13px;
+  }
+  .hex {
+    width: 25%; /* = 100 / 4 */
+  }
+  .hex:nth-child(7n+5){ /* first hexagon of even rows */
+    margin-left:12.5%;  /* = width of .hex / 2  to indent even rows */
+  }
+}
+
+@media (max-width: 900px) and (min-width:601px) { /* <- 3-2  hexagons per row */
+  #hexGrid{
+    padding-bottom: 7.4%;
+    font-size: 14px;
+  }
+  .hex {
+    width: 33.333%; /* = 100 / 3 */
+  }
+  .hex:nth-child(5n+4){ /* first hexagon of even rows */
+    margin-left:16.666%;  /* = width of .hex / 2  to indent even rows */
+  }
+  .active-nav{
+    color:#000;
+    background-color:#ff3a3a;
+    border-bottom:3px solid #ff3a3a;
+    border-radius:0%;
+}
+}
+@media (max-width: 600px) { /* <- 2-1  hexagons per row */
+  #hexGrid{
+    padding-bottom: 11.2%;
+    font-size: 12px;
+  }
+  .hex {
+    width: 50%; /* = 100 / 3 */
+  }
+  .hex:nth-child(3n+3){ /* first hexagon of even rows */
+    margin-left:25%;  /* = width of .hex / 2  to indent even rows */
+  }
+    .active-nav{
+    color:#fff;
+    background-color:#ff3a3a;
+    border-bottom:3px solid #ff3a3a;
+    border-radius:0%;
+}
+}
+@media (max-width: 400px) {
+    #hexGrid {
+        font-size: 8px;
+    }
+      .active-nav{
+    color:#fff;
+    background-color:#ff3a3a;
+    border-bottom:3px solid #ff3a3a;
+    border-radius:0%;
+}
+}
+.client-services{
+    padding: 5px 5px 5px 5px;
+    border:1px solid #000000;
+    text-align:center;
+    border-radius:0%;
+}
+
+
+/*------------------- accomplishments ------------------------------------------*/
+.accomplishments-card{
+    border:1px solid #000;
+    border-radius:0;
+}
+
+    .accomplishments-card:hover {
+        border: 1px solid #0067B8;
+        border-radius: 0;
+        box-shadow: #0067B8 10px 10px;
+        transition: 0.25s ease;
+    }
+
+/*------------------- Card-Demo --------------------------------------------------*/
+#demo {
+    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.3)), 
+                     url('../images/index-demo1.gif') no-repeat;
+    /*background-size:cover;*/
+    background-size:auto;
+    width:100% !important;
+    background-color:white;
+}
+#demoh2{
+          color:#fff;
+          letter-spacing:4px;
+          font-weight:bold;
+      }
+
+#demoh4{
+        color:gray;
+        }
+.demoControl{
+    background:#111111;
+    border: 3px solid #2f2f2f;
+    padding:10px;
+}
+.demobtn{
+    padding:12px;
+    border:none;
+    color:#fff;
+}
+#dm.title-with-divider{
+    margin: 0 0 0 0;
+    font-size:medium;
+    color:#fff;
+}
+#dm.title-with-divider span:before,
+#dm.title-with-divider span:after {
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #fff;
+}
+
+
+/*------------------- Card-Demo --------------------------------------------------*/
+
+/*------------------- Updates ----------------------------------------------------*/
+
+.productimg{
+    max-height:200px;
+}

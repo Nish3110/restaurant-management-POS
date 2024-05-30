@@ -1,0 +1,615 @@
+﻿@using System.Configuration;
+@{
+    String currency_Code = "AED";
+    if (ConfigurationManager.AppSettings["Currency_code"] != null)
+    {
+        currency_Code = ConfigurationManager.AppSettings["Currency_code"].ToString();
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Think Softwares</title>
+    @*<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />*@
+
+    <link href="~/Content/Ecom/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Ecom/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="page-content container">
+        <div>
+            <span class="text-secondary-d1 text-105">Select Payment Method </span>
+            <br />
+            <div id="Payment_Method">
+
+            </div>
+            @*<a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" onclick="addamt();">AED</a>
+                <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" onclick="addamt();">VISA</a>
+                <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" onclick="addamt();">MASTER</a>
+                <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" onclick="addamt();">AMERICAN EXPRESS</a>
+                <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" onclick="addamt();">DEBIT CARD</a>
+                <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" onclick="addamt();">COMPLIMENTARY</a>
+                <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" onclick="addamt();">CHEQUE</a>
+                <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0" onclick="addamt();">STAFF MEAL</a>*@
+        </div>
+        <br />
+        <div>
+            <span class="text-secondary-d1 text-105">Direct Payment Method </span>
+            <br />
+            <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">CASH</a>
+            <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">MASTER</a>
+            <a href="#" class="btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0">VISA</a>
+            <a href="@Url.Action("Menu", "RTC")" class="btn btn-danger">EXIT</a>
+        </div>
+        <br />
+    </div>
+
+
+    <div class="page-content container">
+        <div class="page-header text-blue-d2">
+            <h1 class="page-title text-secondary-d1">
+                Invoice : @Session["RefNo"]
+
+                @*<small class="page-info">
+                        <i class="fa fa-angle-double-right text-80"></i>
+                        CUSTOMER ID: 7845125478
+                    </small>*@
+            </h1>
+
+            @*<div class="page-tools">
+                    <div class="action-buttons">
+                        <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print">
+                            <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
+                            Print
+                        </a>
+                        <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="PDF">
+                            <i class="mr-1 fa fa-file-pdf-o text-danger-m1 text-120 w-2"></i>
+                            Export
+                        </a>
+                    </div>
+                </div>*@
+        </div>
+
+        <div class="container px-0">
+            <div class="row mt-4">
+                <div class="col-12 col-lg-10 offset-lg-1">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center text-150">
+                                <i class="fa fa-book fa-2x text-success-m2 mr-1"></i>
+                                <span class="text-default-d3">RECEIPT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .row -->
+
+                    <hr class="row brc-default-l1 mx-n1 mb-4" />
+
+                    <div class="row">
+                        @*<div class="col-sm-6">
+                                <div>
+                                    <span class="text-sm text-grey-m2 align-middle">To:</span>
+                                    <span class="text-600 text-110 text-blue align-middle">Alex Doe</span>
+                                </div>
+                                <div class="text-grey-m2">
+                                    <div class="my-1">
+                                        Street, City
+                                    </div>
+                                    <div class="my-1">
+                                        State, Country
+                                    </div>
+                                    <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">111-111-111</b></div>
+                                </div>
+                            </div>*@
+                        <div class="col-sm-6">
+                            <div>
+                                <span class="text-sm text-grey-m2 align-middle">To:</span>
+                                <span class="text-600 text-110 text-blue align-middle">@Session["TableId"].ToString()</span>
+                            </div>
+                            <div class="text-grey-m2">
+                                <div class="my-1">
+                                    @Session["Mode"].ToString()
+                                </div>
+                                <div class="my-1">
+                                    @*Dubai, U.A.E*@
+                                </div>
+                                <div class="my-1">@*<i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">111-111-111</b>*@</div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+
+                        <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
+                            <div class="text-grey-m2">
+                                <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
+                                    Invoice
+                                </div>
+
+                                @*<div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> #111-222</div>*@
+                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> @Session["RefNo"]</div>
+
+                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Issue Date:</span> @Session["Date"]</div>
+
+                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Status:</span> <span class="badge badge-warning badge-pill px-25">Unpaid</span></div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+
+                    <!-- or use a table instead -->
+                    @*<div class="table-responsive">
+                            <table class="table table-striped table-borderless border-0 border-b-2 brc-default-l1">
+                                <thead class="bg-none bgc-default-tp1">
+                                    <tr class="text-white">
+                                        <th class="opacity-2">#</th>
+                                        <th>Description</th>
+                                        <th>Qty</th>
+                                        <th>Unit Price</th>
+                                        <th width="140">Amount</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="text-95 text-secondary-d3">
+                                    <tr></tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Domain registration</td>
+                                        <td>2</td>
+                                        <td class="text-95">$10</td>
+                                        <td class="text-secondary-d2">$20</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>*@
+                    <hr />
+
+                    <div class="row mt-3">
+                        <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0" id="ReceivedAMT">
+                            @*<div class="row my-2">
+                                    <div class="col-5">
+                                        <input type="button" value="21" class="btn btn-warning" style="font-size:large;" />
+                                    </div>
+                                </div>*@
+                        </div>
+                        <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
+                            <div class="row my-2">
+
+                                <div class="col-5">
+                                    <b>Gross Amount : </b><span class="text-120 text-secondary-d1" style="float:right;">@Session["Gross"]</span>
+                                </div>
+                            </div>
+
+                            <div class="row my-2">
+                                <div class="col-5">
+                                    <b>Discount Amount : </b> <span class="text-120 text-secondary-d1" style="float:right;">@Session["Discount"]</span>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-5">
+                                    <b>VAT Amount : </b> <span class="text-120 text-secondary-d1" style="float:right;">@Session["VAT"]</span>
+                                </div>
+
+                            </div>
+
+                            <div class="row my-2 align-items-center bgc-primary-l3 p-2" id="divsum">
+                                <div class="col-5">
+                                    <hr />
+                                    <b>Net Amount : </b><span class="text-150 text-success-d3 opacity-2" style="float:right;">@Session["Net"]</span>
+                                </div>
+                            </div>
+                            <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                <div class="col-5">
+                                    <b>Paid Amount : </b><span class="text-150 text-success-d3 opacity-2" style="float:right;" id="spanPaid">@Session["Paid"]</span>
+                                </div>
+                            </div>
+                            <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                <div class="col-5">
+                                    <b>Balance : </b><span class="text-150 text-success-d3 opacity-2" style="float:right;" id="spanBalance">@Session["Balance"]</span>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
+                                <div class="row my-2">
+
+                                    <div class="col-5">
+                                        <b>Total Amount Without : </b><span class="text-120 text-secondary-d1" style="float:right;">$2,250</span>
+                                    </div>
+                                </div>
+
+                                <div class="row my-2">
+                                    <div class="col-5">
+                                        <b>Total VAT Amount : </b> <span class="text-120 text-secondary-d1" style="float:right;">$250</span>
+                                    </div>
+                                </div>
+                                <div class="row my-2">
+                                    <div class="col-5">
+                                        <b>Total Discount Amount : </b> <span class="text-120 text-secondary-d1" style="float:right;">$0</span>
+                                    </div>
+                                </div>
+                                <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                    <div class="col-5">
+                                        <hr />
+                                        <b>Net Amount : </b><span class="text-150 text-success-d3 opacity-2" style="float:right;">$2,475</span>
+                                    </div>
+                                </div>
+                                <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                    <div class="col-5">
+                                        <b>Paid Amount : </b><span class="text-150 text-success-d3 opacity-2" style="float:right;">$0</span>
+                                    </div>
+                                </div>
+                                <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                    <div class="col-5">
+                                        <b>Balance : </b><span class="text-150 text-success-d3 opacity-2" style="float:right;">$2,475</span>
+                                    </div>
+                                </div>
+                            </div>*@
+                    </div>
+
+                    <hr />
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @*//---------------popup---------------------*@
+    <div style="display:none;" id="AmountAdd">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="display:inline-block">AMOUNT</h3>
+                    <button type="button" class="close" style="background-color :black;font-size:40px;color:white;float:right;" onclick="cl2();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*<div class="homepage-menu-area" style="background: white;">*@
+                    <div class="scrollmenu">
+                        <div class="container" style="width:100%;text-align:center;">
+                            <table style="color:black; margin-left: auto; margin-right: auto;">
+                                <tr style="font-size:small;color:black;">
+                                    @*<td>AED :</td>*@
+                                    <td>@currency_Code :</td>
+                                    <input type="hidden" id="Code" />
+                                    <p>Net <span id="model_net">(@Session["Net"])</span> - <span id="model_paid">Paid(@Session["Paid"])</span></p>
+                                    <center><img id="idbuffer" style="width:5%;display:none;" src="~/Images/loading-buffering.gif" /></center>
+                                    <td><input type="number" id="txtbillnote" class="form-control" style="width:100%;" value="@Session["Balance"]" autofocus required></td>
+                                </tr>
+                                @*<input type="hidden" id="txtReturnItemid" />*@
+                                @*<tbody id="Tab" style="color:black;">*@
+
+                            </table>
+                            <input type="button" id="btnsub" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="Submit" onclick="Storebillnote()" />
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @*//--------------popupend-------------------*@
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    @*@RenderSection("scripts", required: false)*@
+    <script>
+        $(document).ready(function () {
+
+            var refresher = setInterval(function () {
+                PageRefresh();
+            }, 120000);//evry 20 sec....
+
+            function PageRefresh() {
+                $.ajax({
+                    type: "get",
+                    url: "/RTC/PageRefresh",
+                    dataType: "json",
+                    traditional: true,
+                    success: function (data) {
+                        if (data.R_fresh == false) {
+                            alert("R_fresh request False !!!!!")
+                        }
+
+                    }
+                    //2022/2/2
+                    , error: function (request, status, error) {
+                        location.reload();
+                    }
+                });
+            }
+
+            Paymentmethod();
+            get_pay_data();
+        });
+        function Storebillnote() {
+            $("#idbuffer").css("display", "block");
+            document.getElementById("btnsub").disabled = true;
+            $.ajax({
+                type: "post",
+                url: "/Recipt/Paid_Amount",
+                data: { 'amt': $("#txtbillnote").val(), 'code': $("#Code").val() },/*JSON.stringify({ XmlParms: "data" }),*/
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.isRedirect) {
+                        window.location.href = data.redirectUrl;
+                    }
+                    $("#ReceivedAMT").html('');
+                    fill = "";
+                    //pay_data
+                    for (var i = 0; i < data.Pay_data.length; i++) {
+                        fill += "<div class='col-5'>" +
+                            "<input type='button' value='" + data.Pay_data[i].PaymentName + ":" + data.Pay_data[i].FC_Amount_Tendered + "' id='" + data.Pay_data[i].Payment_ID + "' class='btn btn-warning' style='font-size:larger;float:left;margin:5px;' onclick='remove_payment(this.id)'/>" +
+                            "</div>";
+                    }
+                    $("#ReceivedAMT").append(fill);
+                    $("#AmountAdd").css("display", "none");
+
+                    document.getElementById("spanPaid").innerHTML = data.Paid;
+                    document.getElementById("spanBalance").innerHTML = data.Pending_amt;
+                    document.getElementById("txtbillnote").value = data.Pending_amt;
+                    document.getElementById("model_paid").innerHTML = data.Paid;
+                    document.getElementById("model_net").innerHTML = data.Net;
+
+                    //pay_data=pay_data, paid= paid,net=net, pending_amt= pending_amt
+                    document.getElementById("btnsub").disabled = false;
+                    $("#idbuffer").css("display", "none");
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    location.reload();
+                }
+            });
+        }
+        //get_pay_data
+        function get_pay_data() {
+            $.ajax({
+                type: "get",
+                url: "/Recipt/get_pay_data",
+                data: {},/*JSON.stringify({ XmlParms: "data" }),*/
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    $("#ReceivedAMT").html('');
+                    fill = "";
+                    //pay_data
+                    for (var i = 0; i < data.length; i++) {
+                        fill += "<div class='col-5'>" +
+                            "<input type='button' value='" + data[i].PaymentName + ":" + data[i].FC_Amount_Tendered + "' id='" + data[i].Payment_ID + "' class='btn btn-warning' style='font-size:larger;float:left;margin:5px;' onclick='remove_payment(this.id)' />" +
+                            "</div>";
+                    }
+                    $("#ReceivedAMT").append(fill);
+                    // $("#AmountAdd").css("display", "none");
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    location.reload();
+                }
+            });
+        }
+        function Paymentmethod() {
+            $.ajax({
+                type: "get",
+                url: "/Recipt/fillPaymentmethod",
+                data: {},/*JSON.stringify({ XmlParms: "data" }),*/
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $("#Payment_Method").html('');
+                    fill = "";
+                    //pay_data
+                    for (var i = 0; i < data.length; i++) {
+                        fill += "<a href='#' id='" + data[i].Code + "' class='btn btn-info btn-bold px-4 float-right mt-3 mt-lg-0' style='margin:5px;' onclick='addamt(this.id);'>" + data[i].Name + "</a>";
+                    }
+                    $("#Payment_Method").append(fill);
+
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    location.reload();
+                }
+            });
+        }
+        function remove_payment(id) {
+            $.ajax({
+                type: "post",
+                url: "/Recipt/remove_payment",
+                data: { 'pid': id },/*JSON.stringify({ XmlParms: "data" }),*/
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.ismsg == true) {
+                        alert(data.msg);
+                    }
+                    else {
+                        $("#ReceivedAMT").html('');
+                        fill = "";
+                        //pay_data
+                        for (var i = 0; i < data.Pay_data.length; i++) {
+                            fill += "<div class='col-5'>" +
+                                "<input type='button' value='" + data.Pay_data[i].PaymentName + ":" + data.Pay_data[i].FC_Amount_Tendered + "' id='" + data.Pay_data[i].Payment_ID + "' class='btn btn-warning' style='font-size:larger;float:left;margin:5px;' onclick='remove_payment(this.id)' />" +
+                                "</div>";
+                        }
+                        $("#ReceivedAMT").append(fill);
+                        // $("#AmountAdd").css("display", "none");
+                        document.getElementById("spanPaid").innerHTML = data.Paid;
+                        document.getElementById("spanBalance").innerHTML = data.Pending_amt;
+                        document.getElementById("txtbillnote").value = data.Pending_amt;
+                        document.getElementById("model_paid").innerHTML = data.Paid;
+                        document.getElementById("model_net").innerHTML = data.Net;
+                    }
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    location.reload();
+                }
+            });
+        }
+        function addamt(id) {
+            document.getElementById("Code").value = id;
+
+            $("#AmountAdd").css("display", "block");
+        }
+        function cl2() {
+            $("#AmountAdd").css("display", "none");
+        }
+    </script>
+    <style>
+        body {
+            margin-top: 20px;
+            color: #484b51;
+        }
+
+        .text-secondary-d1 {
+            color: #728299 !important;
+        }
+
+        .page-header {
+            margin: 0 0 1rem;
+            padding-bottom: 1rem;
+            padding-top: .5rem;
+            border-bottom: 1px dotted #e2e2e2;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .page-title {
+            padding: 0;
+            margin: 0;
+            font-size: 1.75rem;
+            font-weight: 300;
+        }
+
+        .brc-default-l1 {
+            border-color: #dce9f0 !important;
+        }
+
+        .ml-n1, .mx-n1 {
+            margin-left: -.25rem !important;
+        }
+
+        .mr-n1, .mx-n1 {
+            margin-right: -.25rem !important;
+        }
+
+        .mb-4, .my-4 {
+            margin-bottom: 1.5rem !important;
+        }
+
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 0;
+            border-top: 1px solid rgba(0,0,0,.1);
+        }
+
+        .text-grey-m2 {
+            color: #888a8d !important;
+        }
+
+        .text-success-m2 {
+            color: #86bd68 !important;
+        }
+
+        .font-bolder, .text-600 {
+            font-weight: 600 !important;
+        }
+
+        .text-110 {
+            font-size: 110% !important;
+        }
+
+        .text-blue {
+            color: #478fcc !important;
+        }
+
+        .pb-25, .py-25 {
+            padding-bottom: .75rem !important;
+        }
+
+        .pt-25, .py-25 {
+            padding-top: .75rem !important;
+        }
+
+        .bgc-default-tp1 {
+            background-color: rgba(121,169,197,.92) !important;
+        }
+
+        .bgc-default-l4, .bgc-h-default-l4:hover {
+            background-color: #f3f8fa !important;
+        }
+
+        .page-header .page-tools {
+            -ms-flex-item-align: end;
+            align-self: flex-end;
+        }
+
+        .btn-light {
+            color: #757984;
+            background-color: #f5f6f9;
+            border-color: #dddfe4;
+        }
+
+        .w-2 {
+            width: 1rem;
+        }
+
+        .text-120 {
+            font-size: 120% !important;
+        }
+
+        .text-primary-m1 {
+            color: #4087d4 !important;
+        }
+
+        .text-danger-m1 {
+            color: #dd4949 !important;
+        }
+
+        .text-blue-m2 {
+            color: #68a3d5 !important;
+        }
+
+        .text-150 {
+            font-size: 150% !important;
+        }
+
+        .text-60 {
+            font-size: 60% !important;
+        }
+
+        .text-grey-m1 {
+            color: #7b7d81 !important;
+        }
+
+        .align-bottom {
+            vertical-align: bottom !important;
+        }
+
+        #AmountAdd {
+            width: 100%;
+            height: 100%;
+            /*background-color: #F3F3F3;*/
+            background-color: transparent;
+            background-size: cover;
+            position: fixed;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 1001;
+            overflow-y: auto;
+        }
+    </style>
+</body>
+</html>

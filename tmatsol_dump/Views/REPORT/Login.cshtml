@@ -1,0 +1,172 @@
+﻿@model tmatsol_dump.fi_usermast
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Utility</title>
+    <link rel="icon" href="~/images/icon1.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*@RenderSection("headerscripts", required: false)*@
+    @Scripts.Render("~/bundles/jquery")
+</head>
+
+<body onload="myFunctionClose()">
+    <div id="loading"></div>
+    <section id="services" class="container">
+        <!--Deck1-->
+
+        <div class="card-deck justify-content-around">
+            <div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <br />
+                        <br />
+                        <br />
+                        <center><img src="~/images/think login.png" height="50%" width="50%" /></center>
+                        <h6>@ViewBag.Error</h6>
+                        <h6>@ViewBag.M1</h6>
+                        <h6>@ViewBag.M2</h6>
+                        <hr />
+                        <div id="District">
+
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(m => m.Comp_Name, ViewBag.AList as SelectList, "Select Item", new { @id = "ddcompony", @class = "form-control" })
+                                @*@Html.DropDownListFor(m => m.Comp_Name, ViewBag.AList as SelectList, "Select Item", new { @id = "ddcompony", @class = "form-control" })*@
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.First_name, new { htmlAttributes = new { @class = "form-control", placeholder = "User Name", autofocus = "true", required = "true" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Authorize_Code, new { htmlAttributes = new { @class = "form-control", id="txtpass", placeholder = "Password", type = "Password", required = "true" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" class="btn btn-success" value="Login" onclick="myFunction()" />
+                            <input type="reset" class="btn btn-dark" value="Cancel" />
+                            <input type="button" class="btn btn-warning" value="Clear cache" onclick="clearcache()"/>
+                            @Html.HiddenFor(model => model.GetCustID, new { id = "txtgetid" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/tmatsCustomsMain.js"></script>
+    @*@RenderSection("scripts", required: false)*@
+    <script>
+        //function getid() {
+        //    var name = localStorage.getItem('id');
+        //    var a = $('#txtgetid').attr('value', name)
+        //}
+        $(document).ready(function () {          
+            var i = $("#txtpass").val();
+            if (i!=="") {
+               document.getElementById("txtpass").focus();
+            }
+            var name = localStorage.getItem('id');
+            var a = $('#txtgetid').attr('value', name)
+        });
+    </script>
+    @*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")*@
+    <script type="text/javascript">
+
+        //$(document).ready(function () {
+        //    $('#ddcompony').click(function () {
+        //        $.ajax({
+        //            type: "post",
+        //            url: "/Report/GetMembers",
+        //            data: { cname: $('#txtgetid').val() },
+        //            datatype: "json",
+        //            traditional: true,
+        //            success: function (data) {
+        //                var district = "<select id='ddcompony'  class = 'form-control'>";
+        //                district = district + '<option value="">Select Item</option>';
+        //                for (var i = 0; i < data.length; i++) {
+        //                    district = district + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+        //                }
+        //                district = district + '</select>';
+        //                $('#District').html(district);
+        //            }
+        //        });
+        //    });
+        //});
+        $(document).ready(function () {
+            // $('#ddcompony').click(function () {
+            $('#ddcompony').ready(function () {
+                $.ajax({
+                    type: "post",
+                    url: "/Report/GetMembers",
+                    data: { cname: $('#txtgetid').val() },
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        if (data.length > 0) {
+                            $('#ddcompony').html('');
+                            var options = '';
+                            //options += '<option value="Select">Select</option>';
+                            for (var i = 0; i < data.length; i++) {
+                                options += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                            }
+                            $('#ddcompony').append(options);
+                        }
+                    }
+
+                });
+            });
+        });
+
+
+    </script>
+    <script>
+        var preloader = document.getElementById('loading');
+        function myFunction() {
+            preloader.style.display = 'block';
+        }
+        function myFunctionClose() {
+            preloader.style.display = 'none';
+        }
+
+        function clearcache() {
+            let confirmAction = confirm("Are you sure to clear cache?");
+            if (confirmAction) {
+                document.cookie = "User=;expires=Sun, 31 Dec 2000 12:00:00 UTC;path=/";
+                document.cookie = "id=;expires=Sun, 31 Dec 2000 12:00:00 UTC;path=/";
+                document.cookie = "From_dt=;expires=Sun, 31 Dec 2000 12:00:00 UTC;path=/";
+                document.cookie = "To_dt=;expires=Sun, 31 Dec 2000 12:00:00 UTC;path=/";
+                document.cookie = "To_dtVal=;expires=Sun, 31 Dec 2000 12:00:00 UTC;path=/";
+                document.cookie = "DaysRemaining=;expires=Sun, 31 Dec 2000 12:00:00 UTC;path=/";
+                document.cookie = "Comp_Name=;expires=Sun, 31 Dec 2000 12:00:00 UTC;path=/";
+                document.cookie = "TABLE_GRP_CD=;expires=Sun, 31 Dec 2000 12:00:00 UTC;path=/";
+                document.cookie = "TableId=;expires=Sun, 31 Dec 2000 12:00:00 UTC;path=/";
+
+                var link = window.location.protocol+"//"+window.location.hostname + ":" + window.location.port+ "/Rest/"
+                /*alert(link);*/
+                window.location.href =link
+            }
+            else {
+                alert("Action canceled");
+            }
+        }
+    </script>
+</body>
+</html>

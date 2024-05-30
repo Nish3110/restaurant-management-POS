@@ -1,0 +1,41 @@
+﻿/*@media print{
+    img {
+        width:100%;
+        margin-top: 1in;
+        margin-right: 1in;
+        margin-bottom: 1in;
+        margin-left: 1in;
+    }
+    body {
+        margin-top: 1in;
+        margin-right: 1in;
+        margin-bottom: 1in;
+        margin-left: 1in;
+    }
+    @page {
+        size: 110mm;
+        margin-top: 1in;
+        margin-right: 1in;
+        margin-bottom: 1in;
+        margin-left: 1in;
+    }
+}*/
+@page {
+    width:100%;
+    size: 110mm;
+    margin-top: 1in;
+    margin-right: 1in;
+    margin-bottom: 1in;
+    margin-left: 1in;
+}
+@media print {
+    body {
+       margin:unset;
+    }
+    img{
+        
+        height:100px;
+        width:100px;
+        margin:unset;
+    }
+}

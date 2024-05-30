@@ -1,0 +1,458 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        .menu {
+            float: left;
+            width: 20%;
+            text-align: center;
+        }
+
+            .menu a {
+                background-color: #e5e5e5;
+                padding: 8px;
+                margin-top: 7px;
+                display: block;
+                width: 100%;
+                color: black;
+            }
+
+        .main {
+            float: left;
+            /*width: 60%;*/
+            /*margin-left:5%;*/
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .right {
+            background-color: #e5e5e5;
+            float: left;
+            /*width: 20%;*/
+            width: 40%;
+            padding: 15px;
+            margin-top: 7px;
+            text-align: center;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: blue;
+            color: white;
+            text-align: center;
+        }
+
+        @@media only screen and (max-width: 620px) {
+            /* For mobile phones: */
+            .menu, .main, .right {
+                width: 100%;
+            }
+        }
+    </style>
+    <title>Modifier</title>
+</head>
+<body style="font-family:Verdana;">
+
+    <div style="text-align:center;">
+        <h4 style="color:black;">Modifier & Combo Items </h4>
+        @*@Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })*@
+        <input type="button" value="Cancel and Back to MENU" class="btn btn-default" onclick="cancle_order()" />
+        <hr />
+        <input type="text" style="display :inline;" id="searchKeyWord"
+               placeholder="Enter your menu item" pattern="[A-Za-z ]" title="Only alphabets and space are allowed" required />
+        <input type="button" value="Clear" class="btn btn-success" onclick="clearsearch()" />
+
+    </div>
+
+    <div style="overflow:auto">
+        @*<div class="menu">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+                <a href="#">Link 4</a>
+            </div>*@
+
+        <div class="main">
+            @*<h5>Please Eneter Item for Combo Item :@Session["prod_nm"].ToString().Trim()</h5> *@
+            <div id="tab">
+                @ViewBag.step
+                <br />
+                <input type="submit" value="Finish" class="btn btn-danger" id="btnSave" @*onclick="finish();"*@ />
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+
+        @*<div class="right">
+                <h2>Item</h2>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+            </div>*@
+    </div>
+    <footer class="footer">
+        <div style="background-color:blue;text-align:center;padding:10px;margin-top:7px;color:white;">@DateTime.Now.Year Think. All Rights Reserved.</div>
+    </footer>
+
+    @*<script src="~/Scripts/js/sweetalert.min.js"></script>
+    <link href="~/WebMenu/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/js/client.min.js"></script>
+    <script src="~/Scripts/js/jquery.min.js"></script>*@
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+
+        //$(document).ready(function () {
+        //    //qtyz
+        //    var tObj = document.getElementsByClassName('qtyz');
+        //    for (var i = 0; i < tObj.length; i++) {
+        //        tObj[i].value = '0';
+        //    }
+        //});
+
+        $(document).ready(function () {
+
+            var refresher = setInterval(function () {
+                PageRefresh();
+            }, 120000);//evry 20 sec....
+
+            function PageRefresh() {
+                $.ajax({
+                    type: "get",
+                    url: "/RTC/PageRefresh",
+                    dataType: "json",
+                    traditional: true,
+                    success: function (data) {
+                        if (data.R_fresh == false) {
+                            alert("R_fresh request False !!!!!")
+                        }
+
+                    }
+                    //2022/2/2
+                    , error: function (request, status, error) {
+                        location.reload();
+                    }
+                });
+            }
+
+            //search--------------------------------------------------------------------------------
+            $("#searchKeyWord").on("keyup", function () {
+
+                var value = $(this).val().toLowerCase();
+                $("#tblCMitems tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+        function clearsearch() {
+            var $rows = $('#tblCMitems tr');
+            $rows.show();
+            $("#searchKeyWord").val('');
+
+        }
+        $("#btnSave").click(function () {
+            //const hiddenFields = [...document.querySelectorAll('input[type="hidden"]')]
+            //    .map(input => input.value);
+            var hiddenFields = $.map($('input[type="hidden"]'), input => $(input).val());
+
+            //alert(hiddenFields);
+            var str = hiddenFields;
+            //var str = removeDuplicates(hiddenFields);
+            //var abc = str.toString().replace(/,/g, '+');
+            //alert(str);
+
+
+            let strArr = str.toString().split(",");
+            let sum = strArr.reduce(function (total, num) {
+                return parseFloat(total) + parseFloat(num);
+            });
+
+            var textFields = $.map($('input[type="text"]'), input => $(input).val());
+            //alert(textFields);
+
+            let strArr1 = textFields.toString().split(",");
+            let sum1 = strArr1.reduce(function (total, num) {
+                return parseFloat(total) + parseFloat(num);
+            });
+            //alert(sum1);
+            //alert(sum);
+            //if (sum == sum1) {
+            if (sum == '0') {
+                var products = new Array();
+                $("#tblCMitems tbody tr").each(function () {
+                    var row = $(this);
+                    var product = {};
+
+                    //product.Qty = row.find("Qty").eq(0).html();
+
+                    product.qty = row.find("td:eq(1) input[type='text']").val();
+
+                    //product.Qty = row.find("Qty").eq(2).html();
+                    product.item = row.find("td").eq(3).html();
+                    product.price = row.find("td").eq(4).html();
+                    product.itemid = row.find("td").eq(5).html();
+                    product.comboid = row.find("td").eq(6).html();
+                    if (product.qty > 0) {
+                        products.push(product);
+                    }
+
+                });
+                //alert(products.toString());
+                //$.ajax({
+                //    type: "POST",
+                //    url: "/RTC/Modifier",//products=" + products,
+                //    data: JSON.stringify(products),
+                //    dataType: "json",
+                //    traditional: true,
+                //    success: function (data) {
+                //        alert(data);
+                //    }
+                //})
+                $.ajax({
+                    type: "POST",
+                    url: "/RTC/Modifier",
+                    data: JSON.stringify(products),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        // alert(data);
+                        if (data.isRedirect) {
+                            //alert(data.X_Return);
+                            window.location.href = data.redirectUrl;
+                        }
+                    }
+                    //2022/2/2
+                    , error: function (request, status, error) {
+                        location.reload();
+                    }
+                });
+                //alert(data);
+
+            }
+            else {
+                alert('Please fill Required Choice.');
+            }
+        });
+    </script>
+    <script>
+        function cancle_order() {
+            var id = $("#cmbid").text();
+            //alert(id);
+
+            $.ajax({
+                type: "POST",
+                url: "/RTC/Modifier_Cancle_Order?id=" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    // alert(data);
+                    if (data.isRedirect) {
+                        //alert(data.X_Return);
+                        window.location.href = data.redirectUrl;
+                    }
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    location.reload();
+                }
+            });
+        }
+        function finish() {
+            //const hiddenFields = [...document.querySelectorAll('input[type="hidden"]')]
+            //    .map(input => input.value);
+            var hiddenFields = $.map($('input[type="hidden"]'), input => $(input).val());
+
+
+            var str = removeDuplicates(hiddenFields);
+            //var abc = str.toString().replace(/,/g, '+');
+
+            let strArr = str.toString().split(",");
+            let sum = strArr.reduce(function (total, num) {
+                return parseFloat(total) + parseFloat(num);
+            });
+
+            var textFields = $.map($('input[type="text"]'), input => $(input).val());
+            //alert(textFields);
+
+            let strArr1 = textFields.toString().split(",");
+            let sum1 = strArr1.reduce(function (total, num) {
+                return parseFloat(total) + parseFloat(num);
+            });
+            alert(sum1);
+            alert(sum);
+            if (sum == sum1) {
+
+                var products = new Array();
+                $("#tblCMitems tbody tr").each(function () {
+                    var row = $(this);
+                    var product = {};
+
+                    //product.Qty = row.find("Qty").eq(0).html();
+                    product.qty = row.find("Qty").eq(1).html();
+                    //product.Qty = row.find("Qty").eq(2).html();
+                    product.item = row.find("ITEM").eq(3).html();
+                    product.price = row.find("Price").eq(4).html();
+                    products.push(product);
+                });
+                alert(products.toString());
+                $.ajax({
+                    type: "POST",
+                    url: "/RTC/Modifier",//products=" + products,
+                    data: JSON.stringify(products),
+                    dataType: "json",
+                    traditional: true,
+                    success: function (data) {
+                        alert(data);
+                    }
+                    //2022/2/2
+                    , error: function (request, status, error) {
+                        location.reload();
+                    }
+                });
+                alert('success');
+            }
+            else {
+                alert('Please fill Required Choice.');
+            }
+
+        }
+        function removeDuplicates(num) {
+            var x,
+                len = num.length,
+                out = [],
+                obj = {};
+
+            for (x = 0; x < len; x++) {
+                obj[num[x]] = 0;
+            }
+            for (x in obj) {
+                out.push(x);
+            }
+            return out;
+        }
+
+        function minusqty(id, step) {
+
+            //$.ajax({
+            //type: "post",
+            //url: "/RTC/ViewCurrentBill/",
+            //data: { id: bill_id },
+            //dataType: "json",
+            //traditional: true,
+            //success: function (Json) {
+
+            var newqty;
+
+            qty = $('#qty' + id).val();
+            var maxqty = $('#hidden' + step).val();
+
+
+            if (qty > 0) {
+                newqty = parseInt(qty) - 1;
+                maxqty = parseInt(maxqty) + 1;
+            }
+            else {
+                newqty = 0;
+                maxqty = maxqty;
+            }
+            document.getElementById("hidden" + step).value = maxqty;
+            //var idstr = "qty" + id;
+            //document.getElementById(idstr.toString()).value = newqty;
+            //alert(maxqty);
+            $('#' + id).html('');
+            $('#' + id).append("<input id='qty" + id + "' type='text' value='" + newqty + "' min='0' readonly/>");
+
+            //    }
+            //});
+
+        }
+        function plusqty(id, step) {
+            //debugger;
+            //$.ajax({
+            //    type: "post",
+            //    url: "/RTC/ViewCurrentBill/",
+            //    data: { id: bill_id },
+            //    dataType: "json",
+            //    traditional: true,
+            //    success: function (Json) {
+            var newqty;
+
+            qty = $('#qty' + id).val();
+            var maxqty = $('#hidden' + step).val();
+
+            if (maxqty == 0) {
+                newqty = qty;
+            }
+            else {
+                newqty = parseInt(qty) + 1;
+                if (newqty < 0) {
+                    newqty = 0;
+                }
+                else {
+                    maxqty = parseInt(maxqty) - 1;
+                }
+
+            }
+            document.getElementById("hidden" + step).value = maxqty;
+            //var idstr = "qty" + id;
+            //document.getElementById(idstr).value = newqty;
+            //document.getElementById("qty" + id).defaultValue = "Goofy";
+            //alert(maxqty);
+            $('#' + id).html('');
+            $('#' + id).append("<input id='qty" + id + "' type='text' value='" + newqty + "' min='0' readonly/>");
+
+            //    }
+            //});
+        }
+    </script>
+    <style>
+        input[type=text] {
+            /*width:100%;*/
+            border: 3px solid blue;
+        }
+
+        input[type=button] {
+            /*width:100%;*/
+            border: 2px solid gray;
+            background-color: navy;
+            color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            /*width: 100%;*/
+            border: 1px solid #ddd;
+            /*cellpadding:0;
+            cellspacing:0;*/
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        h5 {
+            font-weight: bold;
+        }
+    </style>
+</body>
+</html>

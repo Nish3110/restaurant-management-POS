@@ -1,0 +1,67 @@
+﻿@model tmatsol_dump.fi_usermast
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Utility</title>
+    <link rel="icon" href="~/images/icon1.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*@RenderSection("headerscripts", required: false)*@
+    @Scripts.Render("~/bundles/jquery")
+
+   
+
+</head>
+    <body>
+        <section id="services" class="container">
+            <!--Deck1-->
+
+            <div class="card-deck justify-content-around">
+                <div>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <br />
+                        <br />
+                        <br />
+                        <center><img src="~/images/think login.png" height="50%" width="50%" /></center>
+                        <hr />
+                        <input type="text" id="txtVal" class="form-control" placeholder="Enter your Uniqe Code" required/>
+                    </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="reset" class="btn btn-danger" onclick="myCookie();" value="Submit" />
+ 
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="~/Scripts/tmatsCustomsMain.js"></script>
+        @*@RenderSection("scripts", required: false)*@
+<script>
+    function myCookie() {
+        var Str = document.getElementById("txtVal").value;    
+         localStorage.setItem('id', "123");
+        localStorage.setItem('id', Str);
+        debugger;
+        alert('Set Parameter Successfully!!!');
+        window.location.replace("http://www.tmatsol.com/Report/Login");
+       // window.location.replace("http://localhost:2393//Report/Login");
+        }
+</script>
+    </body>
+</html>

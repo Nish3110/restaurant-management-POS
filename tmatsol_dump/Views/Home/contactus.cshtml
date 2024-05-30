@@ -1,0 +1,131 @@
+﻿@model tmatsol_dump.Models.ContactUs
+
+
+@{
+    ViewBag.Title = "contactus";
+}
+
+
+@section headerscripts{<script src="https://www.google.com/recaptcha/api.js" async defer></script>}
+<hr />
+<div class="container">
+    <h4 class="text-center text-uppercase">Contact Us</h4>
+    <hr/>
+<div class="row justify-content-around">
+    <div class="col-md-5">
+        @using (Html.BeginForm("contactus", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "PLEASE FILL THE REQUIRED INFORMATION AND SUBMIT AGAIN", new { @class = "text-danger text-left" })
+                <div class="form-group d-flex justify-content-around">
+                    <div class="flex-md-row flex-sm-column">
+                        <div class="justify-content-around">
+                            <div class="form-group">
+                                <div class="">
+                                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name:", autofocus = "true" } })
+                                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger text-left" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="">
+                                    @Html.EditorFor(model => model.companyName, new { htmlAttributes = new { @class = "form-control", placeholder = "Company Name:" } })
+                                    @Html.ValidationMessageFor(model => model.companyName, "", new { @class = "text-danger text-left" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="">
+                                    @Html.EditorFor(model => model.contactNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Contact No:" } })
+                                    @Html.ValidationMessageFor(model => model.contactNo, "", new { @class = "text-danger text-left" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="">
+                                    @Html.EditorFor(model => model.emailId, new { htmlAttributes = new { @class = "form-control", placeholder = "Email Id:" } })
+                                    @Html.ValidationMessageFor(model => model.emailId, "", new { @class = "text-danger text-left" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    @Html.DropDownListFor(model => model.selectedProduct, tmatsol_dump.Models.ContactUs.getProductList(), "---Select Product---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.selectedProduct, "", new { @class = "text-danger text-left" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="g-recaptcha" data-sitekey="6Lc_938UAAAAAOk6We-yc_7Vw2aN43wyQWsDV8TJ" data-callback='onSubmit' required></div>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <div class="">
+                                    <input type="submit" value="Submit" id="submit" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="col-md-5">
+        <div class="flex-wrap">
+            <div class="flex-md-column" style="border:1px solid black;">
+                <div class="p-2 text-center">
+                    <h4 class="bg-info  text-uppercase">Contact Information</h4>
+                    <p class="text-uppercase text-danger">Feel Free to call Us Between 10am to 7pm GST</p>
+                    <p class="text-uppercase">
+                        <i class="fas fa-phone"></i>&nbsp;:&nbsp;+971-43798394/95
+                        <br />
+                        <br />
+                        <a href="tel:+971505154103"
+                           title="Call" target="_blank" class="btn btn-block text-center btn-outline-primary">
+                            <i class="fas fa-phone"></i>&nbsp;call
+                        </a>
+                        <br />
+                        <a href="https://api.whatsapp.com/send?phone=971555614103&text=Hello,%20Give%20Me%20Further%20Information%20About%20Product.%20via%20WhatsApp%20Click%20To%20Chat"
+                           title="WhatsApp" target="_blank" class="btn btn-block text-center btn-outline-success">
+                            <i class="fab fa-whatsapp"></i>&nbsp;WhatsApp
+                        </a>
+                    <p class="text-uppercase text-danger">or email us to</p>
+                    <p><i class="fas fa-at text-lowercase"></i>&nbsp;:&nbsp;info@tmatsol.com&nbsp;</p>
+                </div>
+                <div class="p-2 text-center">
+                    <div>
+                        <h4 class="bg-info">Follow Us</h4>
+                        <a href="https://www.facebook.com/Al-Falah-International-Trading-Llc-693750267327405/" target="_blank" title="facebook" class="facebook"><i class="fab fa-facebook-square fa-2x"></i></a>
+                        <a href="https://www.youtube.com/channel/UCnqgFhsKqqhZJVPgRS2R9Mw/featured" target="_blank" title="youtube"><i class="fab fa-youtube fa-2x twitter"></i></a>
+                        <a href="https://www.instagram.com/thinksoftwares_dubai/" target="_blank" title="instagram"><i class="fab fa-instagram fa-2x instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+</div>
+<hr/>
+<div class="container">
+    <h3 class="text-center text-uppercase">Direction</h3>
+    <hr/>
+    <div class="w-100 m-2 p-2">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1804.1695578216159!2d55.294104057978984!3d25.259175345966874!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f433c1bc5f2b3%3A0x45f017c02fb79658!2sThink+Softwares!5e0!3m2!1sen!2sin!4v1544474614694"  frameborder="0" style="border:0;width:80vw;height:25vw;" allowfullscreen></iframe>
+    </div>
+</div>
+<br/>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            grecaptcha.ready(function () {
+                grecaptcha.execute('6Ld6jX8UAAAAAC3LMB8mHZetwpZk9QJBJ5XibvW3', { action: 'contactus' })
+            });
+        });
+
+       
+
+    </script>
+}

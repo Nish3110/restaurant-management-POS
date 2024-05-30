@@ -1,0 +1,131 @@
+﻿@*<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>*@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.title</title>
+
+    <link href="~/Content/Theme/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Theme/style.css" rel="stylesheet" />
+    <link href="~/Content/Theme/woocommerce.css" rel="stylesheet" />
+    <style>
+        body {
+             /*background-color: #ffe7bc;*/
+            /* background: rgba(0, 0, 0, 0) url(../Images/restaurant-menu.jpg) scroll;*/
+            color: #ffa939;
+        }
+
+        .homepage-menu-area .total-menu-area .menu-details ul.single-dish-list li .single-dish span {
+            left: 34% !important;
+            top: 17px !important;
+        }
+
+        .homepage-menu-area .total-menu-area .menu-details ul.single-dish-list li .single-dish a.pull-left {
+            margin-top: 12px !important;
+        }
+    </style>
+   
+</head>
+<body>
+    <div id="loading"></div>
+   
+    <div class="container"> <img src="~/Images/Think - Copy.png" style="width:20%;" /> 
+    <h4 style="color:yellow;">@Session["SelectedCompany"]</h4> 
+    <a class="btn btn-danger cls" href="@Url.Action("DeviceInfo", "Login")" style="font-size:small;" onclick="outdate()">Logout</a> </div>
+    <div id="contents" class="body-content" style="background: rgba(0, 0, 0, 0.3);">
+        @RenderBody()
+
+        <footer style="background:rgba(0, 0, 0, 0.5);color:white;text-align:center">
+            &copy; @DateTime.Now.Year - My Restaurant Cart Application V1.0[04-Sep-23]
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+    <script>
+        //var preloader = document.getElementById("loading");
+        //function myFun() {
+        //    alert('HIT POINT!!!');
+        //    preloader.style.display = "none";
+        //    //$('#loading').css('display', 'none');
+        //}
+
+        document.onreadystatechange = function () {
+            var state = document.readyState
+            if (state == 'interactive') {
+                document.getElementById('contents').style.visibility = "hidden";
+            } else if (state == 'complete') {
+                setTimeout(function () {
+                    document.getElementById('interactive');
+                    document.getElementById('loading').style.visibility = "hidden";
+                    document.getElementById('contents').style.visibility = "visible";
+                    document.getElementById('authcode').focus();
+                }, 1000);
+            }
+        }
+          function outdate() {
+            $.ajax({
+                type: "post",
+                url: "/RTC/logout",
+                //data: { receiver: $('#receiver').val() },
+                data: {},
+                dataType: "json",
+                traditional: true,
+                success: function (json) { }
+            });
+        }
+      
+    </script>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+    </style>
+</body>
+</html>

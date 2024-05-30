@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "PostMessage";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-around">
+        <div class="mr-auto">
+            <div><h2 class="text-capitalize">@Session["postmessage"]</h2></div>
+            <div class="text-uppercase">For More Information&nbsp;<a href="@Url.Action("coming_soon")" class="btn-link">CLICK HERE</a></div>
+        </div>
+    </div>
+</div>
+

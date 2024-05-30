@@ -1,0 +1,2246 @@
+﻿@using System.Configuration;
+@{
+    String currency_Code = "AED";
+    if (ConfigurationManager.AppSettings["Currency_code"] != null)
+    {
+        currency_Code = ConfigurationManager.AppSettings["Currency_code"].ToString();
+    }
+}
+@{
+    ViewBag.Title = "TEST";
+    Layout = "~/Views/Shared/WebMenu/_Layout_M.cshtml";
+}
+@*<h4>@Session["SelectedCompany"]</h4>*@
+@*<h5>@Session["TableId"]</h5>*@
+
+
+<style>
+    div#cartcount {
+        float: right;
+        margin-bottom: 15px;
+    }
+
+    .btn-gradient-2 {
+        background: linear-gradient(white, white) padding-box, linear-gradient(to right, darkblue, darkorchid) border-box;
+        border-radius: 50em;
+        border: 4px solid transparent;
+    }
+
+    
+</style>
+
+<div class="container-fluid" style="margin:12px;">
+    <div class="row test rounded-pill">
+        <div class="col-xs-3">
+            <b>Restaurant Name : </b>
+        </div>
+        <div class="col-xs-3">
+            @if (Request.Cookies["id"] != null)
+            {
+                <h4 style="color: #398439; ">@Request.Cookies["id"].Value</h4>
+            }
+        </div>
+        <div class="col-xs-3">
+            <b>Table No : </b>
+        </div>
+        <div class="col-xs-3 pull-right">
+
+            @if (Request.Cookies["table"] != null)
+            {
+                <h4 style="color: #398439; ">@Request.Cookies["table"].Value</h4>
+            }
+        </div>
+    </div>
+</div>
+
+<div style="width:100%;">
+
+    <div id="preloading" style="display :none;">
+        @*<img src="~/Images/loader.gif" alt="Loader" style="width :100%;height:100vh;" />*@
+    </div>
+</div>
+<div @*id="navmenu"*@ class="scrollmenu" role="presentation">
+    <div id="navmenu" class="scrollmenu" role="presentation">
+        @*<button type="button" class="btn btn-danger" href="#1" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true">{{m.Name}}</button>*@
+    </div>
+    <!--   <div class="mainmenu-area">
+             <div class="container">
+                 <div class="row">
+                       <div class="navbar-header">
+             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                 <span class="sr-only">Toggle navigation</span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+             </button>
+         </div>
+         <div class="navbar-collapse collapse">
+             <ul id="navmenu" class="nav navbar-nav">
+                 @*<li class="active"><a href="index.html">Home</a></li>
+                                     <li><a href="shop.html">Shop page</a></li>
+                     <li><a href="single-product.html">Single product</a></li>
+                     <li><a href="cart.html">Cart</a></li>
+                     <li><a href="checkout.html">Checkout</a></li>
+                     <li><a href="#">Category</a></li>
+                     <li><a href="#">Others</a></li>
+                     <li><a href="#">Contact</a></li>*@
+             </ul>
+         </div>
+
+
+    </div>
+            </div>
+        </div>  -->
+    @*<button type="button" class="btn btn-danger" href="#1" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true">{{m.Name}}</button>*@
+</div>
+<div id="menu-details">
+
+    <div>
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top:10px;">
+                        <div class="input-group" style="display:flex !important">
+                            <input class="form-control border-end-0 border rounded-pill" type="text" placeholder="Enter your menu item" pattern="[A-Za-z ]" title="Only alphabets and space are allowed" required id="example-search-input" />
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6" style="float: right;">
+
+                        <div id="cartcount" style="display:flex !important">
+                            @*<a href="cart.html" id="open_cart">Cart - <span>100</span> <i class="fa fa-shopping-cart"/></a>*@
+                            <button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width: 170px; background-color: #398439;" href="#1">Cart Items : 0</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+    @*---------------------------Sucess Cart--------------------------------------------*@
+    <div id="TXTAlertforcart" class="alert alert-success" style="display:none;">
+        <strong>Success!</strong> Item Sucessfully Added.
+    </div>
+    @*---------------------------Sucess Cart--------------------------------------------*@
+
+    <div class="cls2">
+        @*<div class="single-product-area cls2">*@
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+
+            <div class="row" id="fillmenu">
+                @*  <div class="col-md-3 col-sm-6">
+                        <div class="single-shop-product">
+                            <div class="product-upper">
+                                <img src="img/product-4.jpg" alt="">
+                            </div>
+                            <h2><a href="#">Apple new mac book 2015 March :P</a></h2>
+                            <div class="product-carousel-price">
+                                <ins>$899.00</ins> <del>$999.00</del>
+                            </div>
+
+                            <div class="product-option-shop">
+                                <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="https://www.freshdesignweb.com/canvas/shop/?add-to-cart=70">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+@*-------------------Cart---------*@
+@*<div class="col-sm-offset-7 col-sm-5" id="cart-details" style="display:none;text-align:right">*@
+<div class="col-sm-offset-1" id="cart-details" style="display:none;text-align:right">
+    <div class="panel panel-default" style="text-align:left">
+        <div id="CartHeadEng">
+            <div class="panel-heading"><b>Cart Summary</b> &nbsp; &nbsp;<button type="button" class="btn btn-success cart_show" id="back_menu" style="display:none;" href="#1">Back to Menu</button>  </div>
+        </div>
+        <div id="CartHeadArbc" style="display:none;">
+            <div class="panel-heading"><b>ملخص العربة</b>&nbsp; &nbsp;<button type="button" class="btn btn-success cart_show" id="back_menu1" style="display:none;" href="#1">عودة</button> </div>
+        </div>
+        <div id="cartdetails" class="panel-body">
+            <div class="list-group" style="height:290px;overflow:auto">
+                <table class="fillcartitem table-responsive" id="fillcartitem">
+                </table>
+            </div>
+            <div>
+                <table>
+                    <tr class="list-group-item">
+                        <td></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">
+                            <b>Total Amount:</b>
+                        </td>
+                        <td class="text-center" id="total">
+                        </td>
+                    </tr>
+                    <tr class="list-group-item" id="Cart_btn_Eng">
+                        <td colspan="2" style="padding:5px;">
+                            <button type="button" id="btn-sbt" class="btn btn-success btn-number" onclick="insert()" disabled>
+                                @*data-toggle="modal" data-target="#exampleModal2">*@
+                                Submit Order
+                            </button>
+                        </td>
+                        <td colspan="2">
+                            <button type="button" id="btn-cnl" class="btn btn-danger btn-number" href="#1" onclick="clearcart()" disabled>
+                                Cancel Order
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="list-group-item" id="Cart_btn_Arbc" style="display:none;">
+                        <td colspan="2" style="padding:5px;">
+                            <button type="button" id="btn-sbt1" class="btn btn-success btn-number" onclick="insert()" disabled>
+                                @*data-toggle="modal" data-target="#exampleModal2">*@
+                                إرسال
+                            </button>
+                        </td>
+                        <td colspan="2">
+                            <button type="button" id="btn-cnl1" class="btn btn-danger btn-number" href="#1" onclick="clearcart()" disabled>
+                                يلغي
+                            </button>
+
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@*-------------------Cart---------*@
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Change Mode</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<div class="homepage-menu-area" style="background: rgba(0, 0, 0, 0.3)">*@
+                <div class="homepage-menu-area" style="background: rgba(0, 0, 0, 0)">
+
+                    <div class="container" style="width:100%">
+                        <div class="row">
+                            <div class="total-menu-area">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    <form method="post">
+                                        <div id="Tab" style="text-align:center">
+                                            @*For English*@
+
+                                            <div id="eng">
+                                                <button type="button" class="tb" value="DINE IN" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px;width: 100%;max-width: 180px; box-sizing: border-box;" id="1" onclick="chgm(this.value)">
+                                                    <img src="~/Content/Ecom/img/icons/dining art.png" height="150px" width="190px" />
+                                                    DINE IN
+                                                </button>
+
+                                                @if (System.Configuration.ConfigurationManager.AppSettings["AllowTakeAway"].ToString() == "Yes")
+                                                {
+                                                    <button type="button" class="tb" value="TAKE AWAY" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px;width: 100%;max-width: 180px; box-sizing: border-box;" id="2" onclick="chgm(this.value)">
+                                                        <img src="~/Content/Ecom/img/icons/tak away.png" height="150px" width="190px" />
+                                                        TAKE AWAY
+                                                    </button>
+                                                }
+
+                                                @if (System.Configuration.ConfigurationManager.AppSettings["AllowDelivery"].ToString() == "Yes")
+                                                {
+                                                    <button type="button" class="tb" value="DELIVERY" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px;width: 100%;max-width: 180px; box-sizing: border-box;" id="3" onclick="chgm(this.value)">
+                                                        <img src="~/Content/Ecom/img/icons/delivery copy.png" height="150px" width="190px" />
+                                                        DELIVERY
+                                                    </button>
+                                                }
+
+                                                @if (System.Configuration.ConfigurationManager.AppSettings["AllowCorporate"].ToString() == "Yes")
+                                                {
+                                                    <button type="button" class="tb" value="CORPORATE" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px;width: 100%;max-width: 180px; box-sizing: border-box;" id="4" onclick="chgm(this.value)">
+                                                        <img src="~/Content/Ecom/img/icons/corporate copy.png" height="150px" width="190px" />
+                                                        CORPORATE
+                                                    </button>
+                                                }
+                                            </div>
+                                            @*For Arabic*@
+                                            <div id="arbc" style="display:none;">
+                                                <button type="submit" value="DINE IN" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 20px;width: 100%;max-width: 180px; box-sizing: border-box;" id="1" onclick="chgm(this.value)">
+                                                    <img src="~/Content/Ecom/img/icons/dining art.png" />
+                                                    طلبات داخلية
+                                                </button>
+
+                                                @if (System.Configuration.ConfigurationManager.AppSettings["AllowTakeAway"].ToString() == "Yes")
+                                                {
+                                                    <button type="submit" value="TAKE AWAY" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 20px;width: 100%;max-width: 180px; box-sizing: border-box;" id="2" onclick="chgm(this.value)">
+                                                        <img src="~/Content/Ecom/img/icons/tak away.png" />
+                                                        استقبال
+                                                    </button>
+                                                }
+
+                                                @if (System.Configuration.ConfigurationManager.AppSettings["AllowDelivery"].ToString() == "Yes")
+                                                {
+                                                    <button type="submit" value="DELIVERY" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 20px;width: 100%;max-width: 180px; box-sizing: border-box;" id="3" onclick="chgm(this.value)">
+                                                        <img src="~/Content/Ecom/img/icons/delivery copy.png" />
+                                                        توصيلات خارجية
+                                                    </button>
+                                                }
+
+                                                @if (System.Configuration.ConfigurationManager.AppSettings["AllowCorporate"].ToString() == "Yes")
+                                                {
+                                                    <button type="submit" value="CORPORATE" style="background-color: deepskyblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 20px;width: 100%;max-width: 180px; box-sizing: border-box;" id="4" onclick="chgm(this.value)">
+                                                        <img src="~/Content/Ecom/img/icons/corporate copy.png" />
+                                                        طلبات خاصة
+                                                    </button>
+                                                }
+                                            </div>
+                                            @*<input type="submit" class="tb" style="background-color: dodgerblue ;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="DINE IN" id="1" onclick="chgm(this.value)" />
+                                                <input type="submit" class="tb" style="background-color: dodgerblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="TAKE AWAY" id="2" onclick="chgm(this.value)" />
+                                                <input type="submit" class="tb" style="background-color: dodgerblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="DELIVERY" id="3" onclick="chgm(this.value)" />
+                                                <input type="submit" class="tb" style="background-color: dodgerblue;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;width: 100%;max-width: 180px; box-sizing: border-box;" value="CORPORATE" id="4" onclick="chgm(this.value)" />*@
+                                        </div>
+
+                                        @*@Html.HiddenFor(model => model.modetype, new { id = "mid" })*@
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+<!--model-->
+<!--View Bill Details-->
+
+<div style="display:none;" id="ViewBill">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">View Bill</h3>
+                <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<div class="homepage-menu-area" style="background: white;">*@
+                <div class="scrollmenu">
+                    <div class="container" style="width:100%">
+                        <div class="row">
+                            <div class="total-menu-area">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    <form method="post">
+                                        <div style="text-align:center">
+                                            <table style="color:black;">
+                                                <tr style="font-size:small;color:black;">
+                                                    <th>Entered NAME</th>
+                                                    <th>NAME</th>
+                                                    <th>Qty</th>
+                                                    <th>Rate</th>
+                                                    <th>Amount</th>
+                                                    <th>KOTNO</th>
+                                                    <th>Punc_D_Time</th>
+                                                    <th>Code</th>
+                                                    @*<th>userID</th>*@
+                                                    <th>UserName</th>
+                                                    @*<th>StationID</th>*@
+                                                    <th>StationNAME</th>
+                                                    @*<th>ItemID</th>
+                                                        <th>ComboID</th>
+                                                        <th>IMEI1_NO</th>
+                                                        <th>IMEI2_NO</th>*@
+                                                    <th>Item_Return_Remark</th>
+                                                    @*<th>Unique_ID</th>*@
+                                                    <th>Rate_WOT</th>
+                                                    <th>TAX1_RAmt</th>
+                                                    <th>TAX2_RAmt</th>
+                                                    <th>TAX_Price_Mode</th>
+                                                    <th>TAX1_Per</th>
+                                                    @*<th>TAX2_Per</th>
+                                                        <th>MC_Per</th>
+                                                        <th>MC_AMT</th>
+                                                        <th>SC_Per</th>
+                                                        <th>SC_AMT</th>*@
+                                                </tr>
+                                                <tbody id="Tab_1" style="color:black;">
+                                                    @*<tr>
+                                                            <td>January</td>
+                                                            <td>$100</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>February</td>
+                                                            <td>$80</td>
+                                                        </tr>*@
+                                                </tbody>
+
+                                            </table>
+                                            <div>
+                                                <table>
+                                                    <hr />
+                                                    <tr id="BillFtr">
+                                                        @*<td>Gross Value :</td>
+                                                            <td>Discount(-) :</td>
+                                                            <td>VAT Amount :</td>
+                                                            <td>Net Value:</td>*@
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--View Bill Details-->
+<!--ADD open qty-->
+
+<div style="display:none;" id="openqty">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Add Qty</h3>
+                <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<div class="homepage-menu-area" style="background: white;">*@
+                <div class="scrollmenu">
+                    <div class="container" style="width:100%">
+                        <div class="row">
+                            <div class="total-menu-area">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    <form>
+                                        <div style="text-align:center">
+                                            <table style="color:black;">
+                                                @*<tbody id="Tab" style="color:black;">*@
+                                                <tbody style="color:black;">
+                                                    <tr>
+                                                        @*<td>January</td>
+                                                            <td>$100</td>*@
+                                                        <td>Qty :</td>
+                                                        <td>
+                                                            <input type="text" id="txtopenqty" class="form-control" style="width:50%;" name="qty" required>
+                                                            <input type="hidden" id="txt_itm_id" class="form-control" style="width:50%;" name="itm">
+                                                        </td>
+                                                        @*<td><center>    @Html.EditorFor(model => model.ITEM_DESC, new { htmlAttributes = new { id = "txtitemname", @class = "form-control", autofocus = "autofocus", required = "true", @style = "width:50%;" } })</center> </td>
+                                                            <td><center>    @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { id = "txtitemrate", @class = "form-control", required = "true", @style = "width:35%;" } })</center></td>*@
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                            <input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="Submit" onclick="AddtoCartOpenQty();" />
+
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--ADD open item-->
+
+<div style="display:none;" id="openitem">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Add Item / Remark</h3>
+                <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<div class="homepage-menu-area" style="background: white;">*@
+                <div class="scrollmenu">
+                    <div class="container" style="width:100%">
+                        <div class="row">
+                            <div class="total-menu-area">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    <form>
+                                        <div style="text-align:center">
+                                            <table style="color:black;">
+                                                <tr style="font-size:small;color:black;">
+                                                    <td>NAME :</td>
+                                                    <td><input type="text" id="txtitemname" , class="form-control" style="width:50%;" autofocus required></td>
+                                                </tr>
+                                                @*<tbody id="Tab" style="color:black;">*@
+                                                <tbody style="color:black;">
+                                                    <tr>
+                                                        @*<td>January</td>
+                                                            <td>$100</td>*@
+                                                        <td>Rate :</td>
+                                                        <td>
+                                                            <input type="text" id="txtitemrate" class="form-control" style="width:50%;" name="rate" required>
+                                                        </td>
+                                                        @*<td><center>    @Html.EditorFor(model => model.ITEM_DESC, new { htmlAttributes = new { id = "txtitemname", @class = "form-control", autofocus = "autofocus", required = "true", @style = "width:50%;" } })</center> </td>
+                                                            <td><center>    @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { id = "txtitemrate", @class = "form-control", required = "true", @style = "width:35%;" } })</center></td>*@
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                            <input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="Submit" onclick="AddtoCartOpen();" />
+
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div style="display:none;" id="itemNote">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<div id="Btn_Rmrk_Itm_opn_Itm"><a href="#rmk" id="-2" onclick="FillDrdRemarkItems()">Remark Items</a></div>*@
+                <h3 class="modal-title" id="exampleModalLabel">Add Item / Remark</h3>
+                <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="scrollmenu">
+                    <div class="container" style="width:100%">
+                        <div class="row">
+                            <div class="total-menu-area">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    <form>
+                                        <div style="text-align:center">
+                                            <table style="color:black;">
+                                                <input type="hidden" id="atIndex" />
+                                                <tr style="font-size:small;color:black;">
+                                                    <td>NAME :</td>
+                                                    <td id="RemarkItemsInput1"><input type="text" id="txtitemname1" class="form-control" style="width:50%;" autofocus required></td>
+                                                </tr>
+                                                <tbody style="color:black;">
+                                                    <tr>
+                                                        <td>Rate :</td>
+                                                        <td id="RemarkItemsInput2">
+                                                            <input type="text" id="txtitemrate1" class="form-control" style="width:50%;" name="rate" value="0" required>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <input type="button" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="Submit" onclick="AddItemNote();" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----Bill Note-------*@
+<!--Return Item Remark-->
+<div style="display:none;" id="billnotediv">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Bill Note</h3>
+                <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<div class="homepage-menu-area" style="background: white;">*@
+                <div class="scrollmenu">
+                    <div class="container" style="width:100%">
+                        <div class="row">
+                            <div class="total-menu-area">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    <form>
+                                        <div style="text-align:center">
+                                            <table style="color:black;">
+                                                <tr style="font-size:small;color:black;">
+
+                                                    <td>Bill Note :</td>
+                                                    <td><input type="text" id="txtbillnote" class="form-control" style="width:50%;" autofocus required></td>
+                                                </tr>
+                                                @*<input type="hidden" id="txtReturnItemid" />*@
+                                                @*<tbody id="Tab" style="color:black;">*@
+
+                                            </table>
+                                            <input type="submit" class="tb" style="background-color: #FF0000;border: none;color: white;margin:5px;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;" value="Submit" onclick="Storebillnote()" />
+
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@*-----IMAGES-----*@
+<div style="display:none;" id="Imgdisplaydiv">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">IMAGES</h3>
+                <button type="button" class="close" style="background-color :black;font-size:40px;color:white;" onclick="cl();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @*<div class="homepage-menu-area" style="background: white;">*@
+                <div class="scrollmenu">
+                    <div class="container" style="width:100%">
+                        <div class="row">
+                            <div class="total-menu-area">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    <form>
+                                        <div id="ImgFullsize" style="text-align:center">
+
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--ADD open item-->
+
+@section scripts{
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ClientJS/0.1.11/client.min.js"></script>*@
+    <script src="~/Scripts/js/sweetalert.min.js"></script>
+    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+    <script src="~/Scripts/js/client.min.js"></script>
+    <script src="~/Scripts/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        //Menu
+        $(document).ready(function () {
+            $('#preloading').css('display', 'block');
+            //-------------------------------------------------------------------------------------
+            // self executing function here
+            (function () {
+                function getParameterByName(name, url = window.location.href) {
+                    name = name.replace(/[\[\]]/g, '\\$&');
+                    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                        results = regex.exec(url);
+                    if (!results) return null;
+                    if (!results[2]) return '';
+                    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                }
+
+                function setCookie(name, value, days) {
+
+                    var expires = "";
+                    if (days) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                        expires = "; expires=" + date.toUTCString();
+                    }
+                    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+                }
+
+                function getCookie(name) {
+                    var nameEQ = name + "=";
+                    var ca = document.cookie.split(';');
+                    for (var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                    }
+                    return null;
+                }
+
+                function eraseCookie(name) {
+                    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                }
+
+                // query string: ?ref=hotelname&loc=townname
+                //var ref = getParameterByName('ref');
+                //var loc = getParameterByName('loc');
+                var ref = getParameterByName('id');
+                var loc = getParameterByName('table');
+
+                if (ref !== null) {
+                    setCookie('id', ref, 365);
+                }
+                if (loc !== null) {
+                    setCookie('table', loc, 365);
+                }
+                //-------------Set Cookie-------------
+                if (loc !== null || loc === "") {
+                    setCookie('Mode', "DELIVERY", 365);
+                }
+                else {
+                    setCookie('Mode', "DINE IN", 365);
+                }
+                setCookie('PAX', "0", 365);
+
+                setCookie('FingerPrint', "FP:@DateTime.Now.ToString()", 365);
+                setCookie('UserType', "Guest:@DateTime.Now.ToString()", 365);
+                setCookie('User_ID', "0", 365);
+            })();
+
+            //-------------------------------------------------------------------------------------
+            Cartcount();
+            SSubmenu();
+
+            //search--------------------------------------------------------------------------------
+            $("#searchKeyWord").on("keyup", function () {
+
+                var value = $(this).val().toLowerCase();
+                $("#mytable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            //cart---------------------------------------------------------------------------------
+            $('.cart_show').click(function () {
+                //$('#open_cart').click(function () {
+
+                $('#navmenu').fadeToggle();
+                $('#menu-details').fadeToggle(500); $('#cart-details').fadeToggle(500);
+                $('#menu-list').fadeToggle(1000);
+                $('#cart_show').fadeToggle();
+                $('#back_menu').fadeToggle();
+                $('#back_menu1').fadeToggle();
+            });
+            //master menu--------------------------------------------------------------------
+            $.ajax({
+                type: "get",
+                url: "/RTC/GetMstMenu",
+                data: JSON.stringify({ XmlParms: "menu" }),
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.length > 0) {
+                        $('#navmenu').html('');
+                        //  var options = '';
+                        var option = '';
+
+                        options = '<input type="submit" class="menuclassA btn-gradient-2 " style="background-color: transparent;border: 1px solid black;color: #398439;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;font-weight:bolder;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="All" id="-1" onclick="Submenu(this.id);selectval(this.value);"/>';
+                        //option = '<li><a class="active" href="#" id="-1" onclick="Submenu(this.id);selectval(this.value);">Shop page</a></li>';
+                        // options += '<input type="submit" class="menuclass" style="background-color: #ADD8E6;border: none;color: Black;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="Remark" id="-2" onclick="Submenu(this.id);selectval(this.value);"/>';
+                        for (var i = 0; i < data.length; i++) {
+                        // options += '<input type="submit" class="menuclass" style="background-color: #00ced1;border: none;color: white;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="' + data[i].GRP_NAME + '" id="' + data[i].GRP_CD + '" onclick="Submenu(this.id);selectval(this.value);"/>';
+                               var x = localStorage.getItem("Lang");
+                            if (x == "Arabic") {
+                                if ($.trim(data[i].GRP_SNAME_SL) != '') {
+                                    options += '<input type="submit" class="menuclass btn-gradient-2 " style="background-color: #398439;border:  1px solid black;color: white;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="' + data[i].GRP_SNAME_SL + '" id="' + data[i].GRP_CD + '" onclick="Submenu(this.id);selectval(this.value);"/>';
+                                }
+                                else {
+                                    options += '<input type="submit" class="menuclass btn-gradient-2" style="background-color: #398439;border:  1px solid black;color: white;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="' + data[i].GRP_NAME + '" id="' + data[i].GRP_CD + '" onclick="Submenu(this.id);selectval(this.value);"/>';
+                                }
+                            }
+                            else {
+                                options += '<input type="submit" class="menuclass btn-gradient-2" style="background-color: #398439;border:  1px solid black;color: white;margin:2px;padding: 10px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 12px;" aria-controls="all" role="tab" data-toggle="tab" aria-expanded="true" value="' + data[i].GRP_NAME + '" id="' + data[i].GRP_CD + '" onclick="Submenu(this.id);selectval(this.value);"/>';
+                            }
+                        }
+                        $('#navmenu').append(options);
+
+                    }
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    alert('GetMstMenu' + error);
+                }
+            });
+
+            //window.addEventListener("load", SSubmenu, false);
+
+            //----back button disable ---------------
+            function disablePrev() { window.history.forward() }
+            window.onload = disablePrev();
+            window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+            //----back button disable ---------------
+
+            $('#preloading').css('display', 'none');
+        });
+
+
+
+        function showitemremark() {
+            //
+            document.getElementById("txtitemrate").value = 0.00;
+            //id="openitem";
+            $.ajax({
+                type: "get",
+                url: "/RTC/OpenItemRemark",
+                data: JSON.stringify({ XmlParms: "menu" }),
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.IsOpen) {
+                        $('#openitem').css('display', 'block');
+                    }
+
+
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    alert('showitemremark'+error);
+                }
+            });
+            //OpenItemRemark
+        }
+        function cl() {
+            $('#ViewBill').css('display', 'none');
+            $('#openitem').css('display', 'none');
+            $('#itemNote').css('display', 'none');
+            $('#openqty').css('display', 'none');
+            $('#billnotediv').css('display', 'none');
+            $('#Imgdisplaydiv').css('display', 'none');
+        };
+
+
+        function selectval(value) {
+            document.getElementById("selector").value = value;
+
+        }
+
+        function SSubmenu() {
+            //document.getElementById("mid").value = 00011;
+            $.ajax({
+                type: "post",
+                url: "/RTC/GetMenuItem",
+                //url: "/RTC/DefaultMenuItem",
+                //url: "/RTC/Menu",
+               // data: { grp_cd: '99999' },
+                 data: { grp_cd: '-1' },
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    var x = "";
+
+                    if (data.length > 0) {
+                        $('#fillmenu').html('');
+                        var fill = '';
+
+                        for (var i = 0; i < data.length; i++) {
+
+                            //  options += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+
+                            fill += '<div class="col-lg-4 col-md-4 col-sm-4">'
+                            if (data[i].Image_Path != null && data[i].Image_Path != '') {
+                                fill += '<img src="' + data[i].Image_Path + '" class="img-fluid" />'
+                                //fill += '<img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" class="img-fluid" />'
+
+                            }
+                            else {
+                                fill += '<img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" class="img-fluid" />'
+
+                            }
+                            fill += '<br/>'
+                            fill += '<br/>'
+                            if (x == "Arabic") {
+                                if ($.trim(data[i].ITEM_DESC_SL) != '') {
+                                    fill += '<h3>' + data[i].ITEM_DESC_SL + '</h3>'
+
+                                }
+                                else {
+                                    fill += '<h3>' + data[i].ITEM_DESC + '</h3>'
+
+                                }
+                            }
+                            else {
+                                fill += '<h3>' + data[i].ITEM_DESC + '</h3>'
+
+                            }
+                            fill += ' @currency_Code  '+data[i].SALE_PRICE+' </i>'
+                             fill+= '</p>'
+                            if (x == "Arabic") {
+                                fill += '<a id="' + data[i].ITEM_CD + '" href="#" class="btn btn-primary" onclick="AddtoCart(this.id)" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">أضف إلى السلة</a>'
+                            }
+                            else {
+                                fill += '<a id="' + data[i].ITEM_CD + '" href="#" class="btn btn-primary" onclick="AddtoCart(this.id)" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">Add to Cart</a>'
+                            }
+                            fill += '<br/>'
+                            fill += '<br/>'
+
+
+                            fill += '</div>'
+
+
+                        }
+                        $('#fillmenu').append(fill);
+
+                    }
+                    else {
+                         $('#fillmenu').html('');
+                         var fill = '<center><h3 style="color:red;">No Record Found !!!</h3></center>';
+                         $('#fillmenu').append(fill);
+                    }
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    alert('SSubmenu'+error);
+                }
+            });
+        }
+        //displayIMG-------------------------------------------------------------------------
+        function displayIMG(id) {
+
+            var fill = '';
+            $('#ImgFullsize').html('');
+            //fill='<img id="' + id + '" style="height:400px;width:400px;" src="/Images/products/' + id + '.jpeg" alt=""/>';
+             //fill='<img id="' + id + '" style="height:400px;width:400px;" src="/Pictures/items/' + id + '.jpeg" alt=""/>';
+            fill='<img id="' + id + '" style="height:400px;width:400px;" src="'+id+'" alt=""/>';
+            $('#ImgFullsize').append(fill);
+             $('#Imgdisplaydiv').css('display', 'block');
+
+        }
+        //Menu Item--------------------------------------------------------------------------
+        function Submenu(id) {
+
+            $.ajax({
+                type: "post",
+                url: "/RTC/GetMenuItem",
+                data: { grp_cd: id },
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.length > 0) {
+                        $('#fillmenu').html('');
+                        var fill = '';
+                        for (var i = 0; i < data.length; i++) {
+                            //  options += '<option value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                            var x = localStorage.getItem("Lang");
+
+                            if (data[i].TYPE_OF_ITEM === "GROUP") {
+                                fill += '<div class="col-lg-4 col-md-4 col-sm-4">'
+                                if (data[i].Image_Path != null && data[i].Image_Path != '') {
+                                    fill += '<img src="' + data[i].Image_Path + '" class="img-fluid" />'
+                                    //fill += '<img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" class="img-fluid" />'
+
+                                }
+                                else {
+                                    fill += '<img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" class="img-fluid" />'
+
+                                }
+                                fill += '<br/>'
+                                fill += '<br/>'
+                                if (x == "Arabic") {
+                                    if ($.trim(data[i].ITEM_DESC_SL) != '') {
+                                        fill += '<h3>' + data[i].ITEM_DESC_SL + '</h3>'
+
+                                    }
+                                    else {
+                                        fill += '<h3>' + data[i].ITEM_DESC + '</h3>'
+
+                                    }
+                                }
+                                else {
+                                    fill += '<h3>' + data[i].ITEM_DESC + '</h3>'
+
+                                }
+                                fill += ' @currency_Code  ' + data[i].SALE_PRICE + ' </i>'
+                                fill += '</p>'
+                                if (x == "Arabic") {
+                                    fill += '<a id="' + data[i].ITEM_CD + '" href="#" class="btn btn-primary" onclick="Submenu(this.id)" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">أضف إلى السلة</a>'
+                                }
+                                else {
+                                    fill += '<a id="' + data[i].ITEM_CD + '" href="#" class="btn btn-primary" onclick="Submenu(this.id)" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">Add to Cart</a>'
+                                }
+                                fill += '<br/>'
+                                fill += '<br/>'
+
+
+                                fill += '</div>'
+
+                            }
+                            else {
+
+                                fill += '<div class="col-lg-4 col-md-4 col-sm-4">'
+                                if (data[i].Image_Path != null && data[i].Image_Path != '') {
+                                    fill += '<img src="' + data[i].Image_Path + '" class="img-fluid" />'
+                                    //fill += '<img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" class="img-fluid" />'
+
+                                }
+                                else {
+                                    fill += '<img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" class="img-fluid" />'
+
+                                }
+                                fill += '<br/>'
+                                fill += '<br/>'
+                                if (x == "Arabic") {
+                                    if ($.trim(data[i].ITEM_DESC_SL) != '') {
+                                        fill += '<h3>' + data[i].ITEM_DESC_SL + '</h3>'
+
+                                    }
+                                    else {
+                                        fill += '<h3>' + data[i].ITEM_DESC + '</h3>'
+
+                                    }
+                                }
+                                else {
+                                    fill += '<h3>' + data[i].ITEM_DESC + '</h3>'
+
+                                }
+                                fill += ' @currency_Code  ' + data[i].SALE_PRICE + ' </i>'
+                                fill += '</p>'
+                                if (x == "Arabic") {
+                                    fill += '<a id="' + data[i].ITEM_CD + '" href="#" class="btn btn-primary" onclick="AddtoCart(this.id)" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">أضف إلى السلة</a>'
+                                }
+                                else {
+                                    fill += '<a id="' + data[i].ITEM_CD + '" href="#" class="btn btn-primary" onclick="AddtoCart(this.id)" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">Add to Cart</a>'
+                                }
+                                fill += '<br/>'
+                                fill += '<br/>'
+
+
+                                fill += '</div>'
+
+                            }
+                        }
+                            $('#fillmenu').append(fill);
+                        // document.getElementById("selector").value = id;
+
+                    }
+                    else {
+                         $('#fillmenu').html('');
+                         var fill = '<center><h3 style="color:red;">No Record Found !!!</h3></center>';
+                         $('#fillmenu').append(fill);
+                    } 
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    alert('Submenu' + error);
+                }
+            });
+        }
+
+        //Add to cart---------------------------------------------------------
+        function AddtoCart(id) {
+
+            var x = localStorage.getItem("Lang");
+            $.ajax({
+                type: "post",
+                url: "/RTC/AddCART?id="+id+"&lang="+x,
+                //data: { id: id, },
+                data: { },
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    //alert(data.IsOpen);
+
+                    if (data.IsOpenQty != null) {
+                        if (data.IsOpenQty) {
+                            //open div
+                            document.getElementById("txtopenqty").value = 1;
+                            document.getElementById("txt_itm_id").value = data.itm_id;
+                            $('#openqty').css('display', 'block');
+                            $('#txtopenqty').focus();
+                             return;
+                        }
+                    }
+                    if (data.IsOpen != null) {
+                        if (data.IsOpen) {
+                            //open div
+                             $('#openitem').css('display', 'block');
+                             return;
+                        }
+                    }
+                        if (data.isRedirect) {
+                            window.location.href = data.redirectUrl + "?id=" + data.mid + "&qty=1";
+                            //window.location.href = data.redirectUrl + "/"+data.mid;
+                                return;
+                        }
+                    $("#TXTAlertforcart").css("display","block");
+                    $('#cartcount').html('');
+                    $("#cartcount").append('<button type="button" class="btn btn-lg cart_show" id="open_cart" style="width:170px;background-color:#398439;float:right;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+
+                    setTimeout(function () {
+                        $("#TXTAlertforcart").css("display","none");
+                    }, 1000);
+                },
+                error: function (request, status, error) {
+                    alert('AddtoCart' + error);
+                }
+
+            });
+        }
+
+        function AddtoCartOpenQty() {
+            var qty = $('#txtopenqty').val();
+            var x = localStorage.getItem("Lang");
+
+            $.ajax({
+                type: "post",
+                url: "/RTC/AddOpenqty?qty=" + qty + "&id=" + $("#txt_itm_id").val() + "&lang=" + x,
+                // data: { id: id, },
+                data: {},
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    //alert(data.IsOpen);
+                    //if (data.IsOpen!=null) {
+                    //    if (data.IsOpen) {
+                    //        //open div
+                    //         $('#openitem').css('display', 'block');
+                    //         return;
+                    //    }
+                    //}
+
+                    if (data.isRedirect) {
+                        window.location.href = data.redirectUrl + "?id=" + data.mid+"&qty="+qty;
+                        return;
+                    }
+
+                    $("#TXTAlertforcart").css("display", "block");
+                    $('#cartcount').html('');
+                    $("#cartcount").append('<button type="button" class="btn btn-lg cart_show" id="open_cart" style="width:170px;float:right;background-color:#398439;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+                    setTimeout(function () {
+                        $("#TXTAlertforcart").css("display", "none");
+                    }, 1000);
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    alert('AddtoCartOpenQty' + error);
+                }
+            });
+        }
+
+        function AddtoCartOpen() {
+            //txtitemname txtitemrate
+            var itemname = $('#txtitemname').val();
+            var rate=$('#txtitemrate').val();
+
+            $.ajax({
+                type: "post",
+                url: "/RTC/AddOpenitem?itemname="+  itemname +"&rate=" + rate,
+               // data: { id: id, },
+                data: {  },
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    //alert(data.IsOpen);
+                    //if (data.IsOpen!=null) {
+                    //    if (data.IsOpen) {
+                    //        //open div
+                    //         $('#openitem').css('display', 'block');
+                    //         return;
+                    //    }
+                    //}
+                    $('#cartcount').html('');
+                    $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;background-color:#398439;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+                 }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                        alert('AddtoCartOpen' + error);
+                }
+            });
+        }
+        function Cartcount() {
+
+            $.ajax({
+                type: "get",
+                url: "/RTC/CART_COUNT",
+                data: JSON.stringify({ XmlParms: "count" }),
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+
+                    $('#cartcount').html('');
+                    $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right; background-color:#398439;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+                }
+
+            });
+        }
+        //ShowCart-------------------------------------------------------------------------------------
+
+        function Removeqty(id) {
+            $.ajax({
+                type: "get",
+                url: "/RTC/MinusItemCART?id=" + id,
+                data: JSON.stringify({ XmlParms: "count" }),
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.lineCollection.length > 0) {
+                        $("#fillcartitem").html('');
+                        $('#cartcount').html('');
+                        $("#total").html('');
+
+
+                         var bt = document.getElementById('btn-sbt');
+                        var bt1 = document.getElementById('btn-cnl');
+
+                        bt.disabled = false;
+                        bt1.disabled = false;
+
+                        var t = document.getElementById('btn-sbt1');
+                        var t1 = document.getElementById('btn-cnl1');
+
+                        t.disabled = false;
+                        t1.disabled = false;
+
+                        var total = 0.0;
+                        var Fill = '';
+                            Fill =
+                                '<tr>' +
+                                '<th style="min-width: 135px;max-width: 135px;">ITEM</th>' +
+                                '<th style="min-width: 46px;max-width: 46px;">RATE</th>' +
+                                '<th>QTY</th>' +
+                                '</tr>' +
+                                '<tr>';
+                        for (var i = 0; i < data.lineCollection.length; i++) {
+                            $('#cartcount').html('');
+                            $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;background-color:#398439;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+
+                            total += data.lineCollection[i].Product.Price * data.lineCollection[i].Qnautity;
+                            Fill +='<td style="min-width: 135px;max-width: 135px;">';
+
+                                if ($.trim(data.lineCollection[i].Product.Item_Description_SL) != '') {
+                                Fill +=    '<h4>' + data.lineCollection[i].Product.Item_Description_SL + '</h4>';
+                                }
+                                else {
+                                    Fill += '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>';
+                                }
+
+                               Fill +=  '</td>' +
+                                '<td style="min-width: 46px;max-width: 46px;">' +
+                                '' + data.lineCollection[i].Product.Price + '' +
+                                '</td>' +
+                                '<td style="width:35%;">' +
+                                '<div class="input-group">' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number" href="#1" onclick="Minusqty(this.id)">' +
+                                '  -' +
+                                '</button>' +
+                                '</span>' +
+                                '<div class="start" >' +
+                                '<input type="number" style="text-align: center;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Qnautity + '" min="1" disabled="disabled">' +
+                                '</div>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1" onclick="Addqty(this.id)">' +
+                                '  +' +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+                                'x' +
+                                '</button>' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="AddNote(this.id)">' +
+                                '+' +
+                                '</button>' +
+                                '</span>' +
+                                '</td>' +
+                                '</tr>'
+                        }
+                        $("#fillcartitem").append(Fill);
+                        $("#total").append(total);
+
+                    }
+                    else {
+                        $("#fillcartitem").html('');
+                        $("#fillcartitem").append('');
+
+                        $('#cartcount').html('');
+                        $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;background-color:#398439;" href="#1" onclick="ShowCartItem()">Cart Items : 0 </button>');
+                        $("#total").html('');
+                        $("#total").append('00.00');
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                        alert('Removeqty' + error);
+                }
+            });
+        }
+
+        function Addqty(id) {
+            $.ajax({
+                type: "get",
+              //url: "/RTC/AddCART?id=" + id,
+                url: "/RTC/AddCARTqty?id=" + id,
+                data: JSON.stringify({ XmlParms: "count" }),
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.lineCollection.length > 0) {
+                        $("#fillcartitem").html('');
+                        $("#total").html('');
+                        var total = 0.0;
+                        var Fill = '';
+                        Fill =
+                                '<tr>' +
+                                '<th style="min-width: 135px;max-width: 135px;">ITEM</th>' +
+                                '<th style="min-width: 46px;max-width: 46px;">RATE</th>' +
+                                '<th>QTY</th>' +
+                                '</tr>' +
+                                '<tr>';
+
+                        for (var i = 0; i < data.lineCollection.length; i++) {
+                            total += data.lineCollection[i].Product.Price * data.lineCollection[i].Qnautity;
+                            Fill +='<td style="min-width: 135px;max-width: 135px;">';
+
+                                if ($.trim(data.lineCollection[i].Product.Item_Description_SL) != '') {
+                                Fill +=    '<h4>' + data.lineCollection[i].Product.Item_Description_SL + '</h4>';
+                                }
+                                else {
+                                    Fill += '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>';
+                                }
+
+                            Fill += '</td>' +
+                                '<td  style="min-width: 46px;max-width: 46px;">' +
+                                '' + data.lineCollection[i].Product.Price + '' +
+                                '</td>' +
+                                '<td style="width:35%;">' +
+                                '<div class="input-group">' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number" href="#1" onclick="Minusqty(this.id)">' +
+                                '  -' +
+                                '</button>' +
+                                '</span>' +
+                                '<div class="start" >' +
+                                '<input type="number" style="text-align: center;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Qnautity + '" min="1" disabled="disabled">' +
+                                '</div>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1" onclick="Addqty(this.id)">' +
+                                '  +' +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+                                'x' +
+                                '</button>' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="AddNote(this.id)">' +
+                                '+' +
+                                '</button>' +
+                                '</span>' +
+                                '</td>' +
+                                '</tr>'
+                        }
+                        $("#fillcartitem").append(Fill);
+                        $("#total").append(total);
+
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                        alert('Addqty' + error);
+                }
+            });
+        }
+        function SetPrice_RemarkItem(s) {
+            document.getElementById('txtitemrate1').value=s[s.selectedIndex].id;
+        }
+        //const RemarkItems_Price
+        function FillDrdRemarkItems() {
+            $.ajax({
+                type: "post",
+                url: "/RTC/GetMenuItem",
+                data: { grp_cd: '-2' },
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                   if (data.length > 0) {
+                       //$('#Btn_Rmrk_Itm_opn_Itm').html('');
+
+                       $('#RemarkItemsInput1').html('');
+                       $('#RemarkItemsInput2').html('');
+
+
+                       var x = localStorage.getItem("Lang");
+
+                       var fill = '';
+                       var fill2 = '';
+
+                       fill += '<select id="txtitemname1" class="form-control" style="width:50%;" onchange="SetPrice_RemarkItem(this)">'
+
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].ITEM_CD.toUpperCase() !== "NA") {
+                                if (x == "Arabic") {
+                                    if ($.trim(data[i].ITEM_DESC_SL) != '') {
+                                        fill += '<option id="' + data[i].SALE_PRICE+'" value="' + data[i].ITEM_CD + '">' + data[i].ITEM_DESC_SL + '</option>';
+                                    }
+                                    else {
+                                        fill += '<option id="' + data[i].SALE_PRICE +'" value="' + data[i].ITEM_CD + '">' + data[i].ITEM_DESC + '</option>';
+                                    }
+                                }
+                                else {
+                                    fill += '<option id="' + data[i].SALE_PRICE +'" value="' + data[i].ITEM_CD + '">' + data[i].ITEM_DESC + '</option>';
+                                }
+
+                                //fill2 = '<input type="text" id="txtitemrate1" class="form-control" style="width:50%;" name="rate" value="' + data[0].SALE_PRICE + '" required>';
+                                fill2 = '<input type="text" id="txtitemrate1" class="form-control" style="width:50%;" name="rate" value="0" required>';
+
+                            // Check Language Add to cart button--------
+                            //if (x == "Arabic") {
+                            //    fill += '<button id="' + data[i].ITEM_CD + '" onclick="AddtoCart(this.id)" class="addtocartstyle" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">أضف إلى السلة</button>';
+                            //}
+                            //else {
+                            //    fill += '<button id="' + data[i].ITEM_CD + '" onclick="AddtoCart(this.id)" class="addtocartstyle" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">Add to Cart</button>';
+                            //}
+                            // Check Language Add to cart button--------
+                            }
+                       }
+                       fill += '</select>'
+                       //$('#Btn_Rmrk_Itm_opn_Itm').append('<a href = "#rmk" onclick = "FillOPNItems()" > Open Items</a>');
+                       $('#RemarkItemsInput1').append(fill);
+                       $('#RemarkItemsInput2').append(fill2);
+                   }
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    alert('FillDrdRemarkItems() : ' + error);
+                }
+            });
+        }
+        function FillOPNItems() {
+            //$('#Btn_Rmrk_Itm_opn_Itm').html('');
+            $('#RemarkItemsInput1').html('');
+            $('#RemarkItemsInput2').html('');
+
+            //$('#Btn_Rmrk_Itm_opn_Itm').append('<a href="#rmk" id="-2" onclick="FillDrdRemarkItems()">Remark Items</a>');
+            $('#RemarkItemsInput1').append('<input type="text" id="txtitemname1" class="form-control" style="width:50%;" autofocus required>');
+            $('#RemarkItemsInput2').append('<input type="text" id="txtitemrate1" class="form-control" style="width:50%;" name="rate" value="0" required>');
+        }
+        function AddNote(id) {
+            document.getElementById("atIndex").value = id;
+            document.getElementById("txtitemname1").value = "";
+            $('#itemNote').css('display', 'block');
+        }
+        function AddItemNote() {
+
+            var ele = document.getElementById('txtitemname1').tagName;
+            var itemname = "";
+            var rate = "";
+            var itmcd = "";
+
+            if (ele == 'INPUT') {
+                 itemname = $('#txtitemname1').val();
+                 rate = $('#txtitemrate1').val();
+                 itmcd = "NA";
+            }
+            if (ele == 'SELECT') {
+                itemname = $('#txtitemname1 option:selected').text();
+                rate = $('#txtitemrate1').val();
+                itmcd = $('#txtitemname1').val();
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/RTC/AdditemNote?index=" + $('#atIndex').val() + "&itemcd=" + itmcd + "&itemname=" + itemname + "&rate=" + rate,
+                data: JSON.stringify({ XmlParms: "count" }),
+
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    $('#itemNote').css('display', 'none');
+                    if (data.lineCollection.length > 0) {
+                        $("#fillcartitem").html('');
+                        $('#cartcount').html('');
+                        $("#total").html('');
+
+
+                        var bt = document.getElementById('btn-sbt');
+                        var bt1 = document.getElementById('btn-cnl');
+
+                        bt.disabled = false;
+                        bt1.disabled = false;
+
+                        var t = document.getElementById('btn-sbt1');
+                        var t1 = document.getElementById('btn-cnl1');
+
+                        t.disabled = false;
+                        t1.disabled = false;
+
+                        var total = 0.0;
+                        var Fill = '';
+                        Fill =
+                            '<tr>' +
+                            '<th style="min-width: 135px;max-width: 135px;">ITEM</th>' +
+                            '<th style="min-width: 46px;max-width: 46px;">RATE</th>' +
+                            '<th>QTY</th>' +
+                            '</tr>' +
+                            '<tr>';
+                        for (var i = 0; i < data.lineCollection.length; i++) {
+                            $('#cartcount').html('');
+                            $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;background-color:#398439;" href="#1" onclick="ShowCartItem()">Cart Items : ' + data.lineCollection.length + '</button>');
+
+                            total += data.lineCollection[i].Product.Price * data.lineCollection[i].Qnautity;
+                            Fill += '<td style="min-width: 135px;max-width: 135px;">';
+
+                            if ($.trim(data.lineCollection[i].Product.Item_Description_SL) != '') {
+                                Fill += '<h4>' + data.lineCollection[i].Product.Item_Description_SL + '</h4>';
+                            }
+                            else {
+                                Fill += '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>';
+                            }
+
+                            Fill += '</td>' +
+                                '<td style="min-width: 46px;max-width: 46px;">' +
+                                '' + data.lineCollection[i].Product.Price + '' +
+                                '</td>' +
+                                '<td style="width:35%;">' +
+                                '<div class="input-group">' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number" href="#1" onclick="Minusqty(this.id)">' +
+                                '  -' +
+                                '</button>' +
+                                '</span>' +
+                                '<div class="start" >' +
+                                '<input type="number" style="text-align: center;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Qnautity + '" min="1" disabled="disabled">' +
+                                '</div>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1" onclick="Addqty(this.id)">' +
+                                '  +' +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+                                'x' +
+                                '</button>' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="AddNote(this.id)">' +
+                                '+' +
+                                '</button>' +
+                                '</span>' +
+                                '</td>' +
+                                '</tr>'
+                        }
+                        $("#fillcartitem").append(Fill);
+                        $("#total").append(total);
+
+                    }
+                    else {
+                        $("#fillcartitem").html('');
+                        $("#fillcartitem").append('');
+
+                        $('#cartcount').html('');
+                        $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;background-color:#398439;" href="#1" onclick="ShowCartItem()">Cart Items : 0 </button>');
+                        $("#total").html('');
+                        $("#total").append('00.00');
+                    }
+                }
+                //2022/2/2
+                , error: function (request, status, error) {
+                    alert('AddNote' + error);
+                }
+            });
+        }
+        function Minusqty(id) {
+            $.ajax({
+                type: "get",
+                url: "/RTC/MinusqtyCART/?id=" + id,
+                //  data: { id:id, XmlParms: "count"},
+                data: JSON.stringify({ XmlParms: "count" }),
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.lineCollection.length > 0) {
+                        $("#fillcartitem").html('');
+                        $("#total").html('');
+                        var total = 0.0;
+                         var Fill = '';
+                        Fill =
+                                '<tr>' +
+                                '<th style="min-width: 135px;max-width: 135px;">ITEM</th>' +
+                                '<th style="min-width: 46px;max-width: 46px;">RATE</th>' +
+                                '<th>QTY</th>' +
+                                '</tr>' +
+                                '<tr>';
+
+                        for (var i = 0; i < data.lineCollection.length; i++) {
+                            total += data.lineCollection[i].Product.Price * data.lineCollection[i].Qnautity;
+                            Fill +='<td style="min-width: 135px;max-width: 135px;">';
+
+                                if ($.trim(data.lineCollection[i].Product.Item_Description_SL) != '') {
+                                Fill +=    '<h4>' + data.lineCollection[i].Product.Item_Description_SL + '</h4>';
+                                }
+                                else {
+                                    Fill += '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>';
+                                }
+
+                            Fill += '</td>' +
+                                '<td style="min-width: 46px;max-width: 46px;">' +
+                                '' + data.lineCollection[i].Product.Price + '' +
+                                '</td>' +
+                                '<td style="width:35%;">' +
+                                '<div class="input-group">' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number" href="#1" onclick="Minusqty(this.id)">' +
+                                '  -' +
+                                '</button>' +
+                                '</span>' +
+                                '<div class="start" >' +
+                                '<input type="number" style="text-align: center;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Qnautity + '" min="1" disabled="disabled">' +
+                                '</div>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1" onclick="Addqty(this.id)">' +
+                                '  +' +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+                                'x' +
+                                '</button>' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="AddNote(this.id)">' +
+                                '+' +
+                                '</button>' +
+                                '</span>' +
+                                '</td>' +
+                                '</tr>'
+                        }
+                        $("#fillcartitem").append(Fill);
+                        $("#total").append(total);
+
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                        alert('Minusqty' + error);
+                }
+            });
+        }
+        function ShowCartItem() {
+            $.ajax({
+                type: "get",
+                url: "/RTC/ShowCARTitem",
+                data: JSON.stringify({ XmlParms: "JsonData" }),
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.lineCollection.length > 0) {
+                        $("#fillcartitem").html('');
+                        $("#total").html('');
+
+                        var bt = document.getElementById('btn-sbt');
+                        var bt1 = document.getElementById('btn-cnl');
+
+                        bt.disabled = false;
+                        bt1.disabled = false;
+
+                        var t = document.getElementById('btn-sbt1');
+                        var t1 = document.getElementById('btn-cnl1');
+
+                        t.disabled = false;
+                        t1.disabled = false;
+
+
+                        var total = 0.0;
+                        var Fill = '';
+                        Fill =
+                                '<tr>' +
+                                '<th style="min-width: 135px;max-width: 135px;">ITEM</th>' +
+                                '<th style="min-width: 46px;max-width: 46px;">RATE</th>' +
+                                '<th>QTY</th>' +
+                                '</tr>' +
+                                '<tr>';
+                        for (var i = 0; i < data.lineCollection.length; i++) {
+                            //total += data.lineCollection[i].Product.Price * data.lineCollection[i].Product.Qnautity;
+                            total += data.lineCollection[i].Product.Price * data.lineCollection[i].Qnautity;
+                            Fill +='<td style="min-width: 135px;max-width: 135px;">';
+
+                                if ($.trim(data.lineCollection[i].Product.Item_Description_SL) != '') {
+                                Fill +=    '<h4>' + data.lineCollection[i].Product.Item_Description_SL + '</h4>';
+                                }
+                                else {
+                                    Fill += '<h4>' + data.lineCollection[i].Product.Item_Description + '</h4>';
+                                }
+
+                            Fill += '</td>' +
+                                '<td style="min-width: 46px;max-width: 46px;">'  +
+                                '' + data.lineCollection[i].Product.Price + '' +
+                                '</td>' +
+                                '<td style="width:35%;">' +
+                                '<div class="input-group">' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number" href="#1" onclick="Minusqty(this.id)">' +
+                                '  -' +
+                                '</button>' +
+                                '</span>' +
+                                '<div class="start" >' +
+                                '<input type="number" style="text-align: center;" required="" name="QuranTilawat_Sipara" class="form-control input-number ng-pristine ng-untouched ng-valid ng-valid-min ng-valid-required" value="' + data.lineCollection[i].Qnautity + '" min="1" disabled="disabled">' +
+                                '</div>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1" onclick="Addqty(this.id)">' +
+                                '  +' +
+                                '</button>' +
+                                '</span>' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<span class="input-group-btn">' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="Removeqty(this.id)">' +
+                                'x' +
+                                '</button>' +
+                                '<button id="' + data.lineCollection[i].Product.Sr + '" type="button" class="btn btn-default btn-number"  href="#1"  onclick="AddNote(this.id)">' +
+                                '+' +
+                                '</button>' +
+                                '</span>' +
+                                '</td>' +
+                                '</tr>'
+                        }
+                        $("#fillcartitem").append(Fill);
+                        $("#total").append(total);
+                           $('#navmenu').fadeToggle();
+                        $('#menu-details').fadeToggle(500); $('#cart-details').fadeToggle(500);
+                        $('#menu-list').fadeToggle(1000);
+                        $('#cart_show').fadeToggle();
+                        $('#back_menu').fadeToggle();
+                           $('#back_menu1').fadeToggle();
+                    }
+                }
+                //2022/2/2
+                    , error: function (request, status, error) {
+                        alert('ShowCartItem' + error);
+                }
+            });
+        }
+
+
+        function clearcart() {
+            swal({
+                title: "Are you sure?",
+                text: "Once Clear, you will not be able to recover this Order!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Your Order has been Cancle!", {
+                            icsson: "success",
+                        });
+                        //--------------
+                        $.ajax({
+                            type: "post",
+                            url: "/RTC/NullCARTitem",
+                            data: JSON.stringify({ XmlParms: "cartdata" }),
+                            dataType: "json",
+                            traditional: true,
+                            success: function (data) {
+                            }
+                            //2022/2/2
+                //    , error: function (request, status, error) {
+                //        alert('clearcart' + error);
+                //}
+                        });
+                        $("#fillcartitem").html('');
+                        $("#fillcartitem").append('');
+                        $("#total").html('');
+                        $("#total").append('00.00');
+                        $('#cartcount').html('');
+                        $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;background-color:#398439;" href="#1" onclick="ShowCartItem()">Cart Items : 0 </button>');
+
+                        $('#menu-details').fadeToggle(500);
+                        $('#cart-details').fadeToggle(500);
+                        $('#menu-list').fadeToggle(1000);
+                        $('#cart_show').fadeToggle();
+                        $('#back_menu').fadeToggle();
+                           $('#back_menu1').fadeToggle();
+                        $('#navmenu').fadeToggle();
+                        //---------------
+                    } else {
+                        swal("Your Order is safe!");
+                    }
+                });
+
+        }
+        function insert() {
+            swal({
+                title: "Are you want to confirm this Order?",
+                text: "Once Submitted, you will not be able to Cancel the Order!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                         $("#preloading").show();
+                        var counter = "0";
+
+
+                        $.ajax({
+                            type: "post",
+                            //url: "/RTC/Insert?fingerprint="+fingerprint,
+                            url: "/RTC/Insert?counter="+counter,
+                            data: JSON.stringify({ XmlParms: "cartdata" }),
+                            dataType: "json",
+                            traditional: true,
+                            success: function (response) {
+                                if (response.success) {
+                                    //swal("Poof! Your Order file has been Submited!", {
+                                    //    icon: "success",
+                                    //});
+                                    if (counter >= response.maxlimit) {
+                                        if (response.isRedirect) {
+                                            window.location.href = response.redirectUrl;
+                                        }
+                                    }
+
+                                    $("#fillcartitem").html('');
+
+                                    $("#fillcartitem").append('');
+
+                                    $("#total").html('');
+
+                                    $("#total").append('00.00');
+
+                                    $('#cartcount').html('');
+
+
+                                    $("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px;float:right;background-color:#398439;" href="#1" onclick="ShowCartItem()">Cart Items : 0 </button>');
+
+
+                                    $('#menu-details').fadeToggle(500);
+
+                                    $('#cart-details').fadeToggle(500);
+
+                                    $('#menu-list').fadeToggle(1000);
+
+                                    $('#cart_show').fadeToggle();
+
+                                    $('#back_menu').fadeToggle();
+
+                                       $('#back_menu1').fadeToggle();
+
+                                    $('#navmenu').fadeToggle();
+
+
+                                     //---LOADER close
+                                    $("#preloading").hide();
+                                   //------redirect to table
+                                    if (response.isRedirect) {
+                                              alert("Your Order file has been Submited!");
+                                            window.location.href = response.redirectUrl;
+                                    }
+
+                                    //------redirect to table
+                                    //jQuery.noConflict();
+                                    //$('#exampleModal2').modal('show');
+
+                                }
+                                else {
+                                    //alert('error');
+
+                                    alert(response.message);
+                                    if (response.isRedirect) {
+                                            window.location.href = response.redirectUrl;
+                                    }
+                                    //location.reload();
+                                }
+                            },
+                             error: function (response) {
+                                 alert(response.message);
+
+                                 location.reload();
+                            }
+                        });
+
+
+                        //$("#fillcartitem").html('');
+                        //$("#fillcartitem").append('');
+                        //$("#total").html('');
+                        //$("#total").append('00.00');
+                        //$('#cartcount').html('');
+                        //$("#cartcount").append('<button type="button" class="btn btn-lg btn-success cart_show" id="open_cart" style="width:170px" href="#1" onclick="ShowCartItem()">Cart Items : 0 </button>');
+                        //$('#menu-details').fadeToggle(500);
+                        //$('#cart-details').fadeToggle(500);
+                        //$('#menu-list').fadeToggle(1000);
+                        //$('#cart_show').fadeToggle();
+                        //$('#back_menu').fadeToggle();
+                        //$('#navmenu').fadeToggle();
+
+
+                        //-----------------------
+
+                    } else {
+
+                        swal("Your Order is Pending!");
+
+                    }
+                });
+
+
+        }
+        //bill note
+          function openbillnote() {
+
+             $('#billnotediv').css('display', 'block');
+              document.getElementById('txtbillnote').focus();
+        }
+        function Storebillnote() {
+            var bntxt = $("#txtbillnote").val();
+             $.ajax({
+                 type: "post",
+                 url: "/RTC/Storebillnote/",
+                 data: { blnote: bntxt },
+                 dataType: "json",
+                 traditional: true,
+                 success: function (Json) {
+                      $('#billnotediv').css('display', 'none');
+                 }
+                 //2022/2/2
+                    , error: function (request, status, error) {
+                        alert('Storebillnote' + error);
+                }
+             });
+
+        }
+        //--------------------------------------------------------
+    </script>
+    <style>
+        .modal-dialog {
+            top: -400px !important;
+            z-index: 10 !important;
+        }
+
+        .modal-header .close {
+            margin-top: -35px !important;
+        }
+    </style>
+    <style>
+
+        @@media only screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+                table thead {
+                    display: none;
+                }
+
+                table tr {
+                    margin-bottom: 10px;
+                    display: block;
+                }
+
+                table td {
+                    display: block;
+                    text-align: left;
+                    font-size: 13px;
+                }
+
+                    table td:last-child {
+                        border-bottom: 0;
+                    }
+
+                    table td:before {
+                        content: attr(data-label);
+                        float: left;
+                        text-transform: uppercase;
+                        font-weight: bold;
+                        margin-right: 20px;
+                    }
+        }
+    </style>
+    <style>
+        .scrollmenu {
+            background-color: transparent;
+            overflow: auto;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .cls {
+            display: inline;
+        }
+
+        .cls2 {
+            /*height:300px;*/
+            max-height: 820px;
+            min-height: 500px;
+            width: 100%;
+            overflow-y: scroll;
+        }
+
+        .menuclassA:active {
+            background-color: yellow !important;
+            color: #398439 !important;
+        }
+
+        .menuclassA:hover {
+            background-color: yellow !important;
+            color: #398439 !important;
+        }
+
+        .menuclass:active {
+            background-color: transparent !important;
+            color: #398439 !important;
+        }
+
+        .menuclass:hover {
+            background-color: transparent !important;
+            color: #398439 !important;
+        }
+        /*Add to cart*/
+        .addtocartstyle {
+            position: relative;
+            color: rgba(255,255,255,1);
+            text-decoration: none;
+            background-color: rgba(219,87,5,1);
+            font-family: 'Arial Black';
+            font-weight: 100;
+            /*display: block;*/
+            padding: 4px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            -webkit-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            -moz-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            margin: auto;
+            width: 160px;
+            text-align: center;
+            -webkit-transition: all .1s ease;
+            -moz-transition: all .1s ease;
+            -ms-transition: all .1s ease;
+            -o-transition: all .1s ease;
+            transition: all .1s ease;
+        }
+
+            .addtocartstyle:active {
+                -webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                position: relative;
+                top: 6px;
+            }
+        /*Next*/
+        .Nextstyle {
+            position: relative;
+            color: rgba(255,255,255,1);
+            text-decoration: none;
+            background-color: navy;
+            font-family: 'Arial Black';
+            font-weight: 100;
+            /*display: block;*/
+            padding: 4px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            -webkit-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            -moz-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+            margin: auto;
+            width: 160px;
+            text-align: center;
+            -webkit-transition: all .1s ease;
+            -moz-transition: all .1s ease;
+            -ms-transition: all .1s ease;
+            -o-transition: all .1s ease;
+            transition: all .1s ease;
+        }
+
+            .Nextstyle:active {
+                -webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+                position: relative;
+                top: 6px;
+            }
+    </style>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            width: 100%;
+        }
+
+        td, th {
+            text-align: left;
+            padding: 4px;
+        }
+    </style>
+    <style>
+        #preloading {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            /*background: transparent url(../images/loader.gif) no-repeat center;*/
+            background: white url(../images/loader.gif) no-repeat center;
+            z-index: 1002;
+        }
+    </style>
+    <style>
+
+        #fillcartitem {
+            width: 100%;
+        }
+
+            #fillcartitem td, #fillcartitem th {
+                padding: 4px;
+                display: table-cell;
+            }
+
+            #fillcartitem tr:nth-child(even) {
+            }
+
+            #fillcartitem tr:hover {
+                background-color: #ddd;
+            }
+
+            #fillcartitem th {
+                padding-top: 4px;
+                padding-bottom: 4px;
+                text-align: left;
+                color: black;
+            }
+    </style>
+    @*-----------------TOP--------------*@
+    <style>
+        .topnav {
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+            .topnav a {
+                float: left;
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 8px 10px;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+                .topnav a:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+                .topnav a.active {
+                    background-color: dodgerblue;
+                    color: white;
+                }
+
+            .topnav .icon {
+                display: none;
+            }
+
+        @@media screen and (max-width: 600px) {
+            .topnav a:not(:first-child) {
+                display: none;
+            }
+
+            .topnav a.icon {
+                float: right;
+                display: block;
+            }
+        }
+
+        @@media screen and (max-width: 600px) {
+            .topnav.responsive {
+                position: relative;
+            }
+
+                .topnav.responsive .icon {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+
+                .topnav.responsive a {
+                    float: none;
+                    display: block;
+                    text-align: left;
+                }
+        }
+    </style>
+    <script>
+        function mynavFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+    </script>
+
+    @*-----------------TOP--------------*@
+}

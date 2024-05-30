@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/WebMenu/Content/My/myLogin.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.title</title>
+</head>
+<body>
+    <div id="loading"></div>
+    @*<div class=" container "><img src="~/Images/Think - Copy.png" style="width:20%;"/></div>*@
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            @RenderBody()
+        </div>
+        <footer style="color:black;text-align:center">
+            &copy; @DateTime.Now.Year - My Restaurant Cart Application V1.0
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+    <script>
+        //var preloader = document.getElementById("loading");
+        //function myFun() {
+        //    alert('HIT POINT!!!');
+        //    preloader.style.display = "none";
+        //    //$('#loading').css('display', 'none');
+        //}
+
+        document.onreadystatechange = function () {
+
+             var refresher = setInterval(function () {
+                PageRefresh();
+              }, 120000);//evry 20 sec....
+
+              function PageRefresh() {
+            $.ajax({
+                type: "get",
+                url: "/RTC/PageRefresh",                
+                dataType: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data.R_fresh == false) {
+                        alert("R_fresh request False !!!!!")
+                    }
+                    
+                }   
+                //2022/2/2
+                    , error: function (request, status, error) {
+                  location.reload();
+                }
+            });
+        }
+
+            var state = document.readyState
+            if (state == 'interactive') {
+                document.getElementById('contents').style.visibility = "hidden";
+            } else if (state == 'complete') {
+                setTimeout(function () {
+                    document.getElementById('interactive');
+                    document.getElementById('loading').style.visibility = "hidden";
+                    document.getElementById('contents').style.visibility = "visible";
+                    document.getElementById('authcode').focus();
+                }, 1000);
+            }
+        }
+
+    </script>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</body>
+</html>
